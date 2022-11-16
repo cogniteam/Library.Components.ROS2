@@ -1,0 +1,124 @@
+#!/usr/bin/python3
+
+
+
+.staging-variables:
+  variables:
+    API: $STAGING_API
+    EMAIL: $EMAIL_STAGING
+    PASSWORD: $PASSWORD_STAGING
+    IMAGE_TAG: "develop"
+
+.staging2-variables:
+  variables:
+    API: $STAGING2_API
+    EMAIL: $EMAIL_STAGING2
+    PASSWORD: $PASSWORD_STAGING2
+    IMAGE_TAG: "staging2"
+
+.production-variables:
+  variables:
+    API: $PRODUCTION_API
+    EMAIL: $EMAIL_PROD
+    PASSWORD: $PASSWORD_PROD
+    IMAGE_TAG: "master"
+
+stages:
+  - prepare
+  - test
+  - deploy
+
+variables:
+    LIBRARY_LOADER_VERSION: latest
+    IMAGE_NAME: "fra.ocir.io/fr1gfcijhydg/nimbus/library.loader"
+    CMD: "library-update"
+    DIR_TO_LIBRARY_UPDATE: ".nimbus-library"
+    STAGING_API: "https://staging.api.cognimbus.com"
+    STAGING2_API: "https://staging2.api.cognimbus.com"
+    PRODUCTION_API: "https://api.cognimbus.com"
+    DEVICE_DIR: "./"
+
+create directory for components and devices to modify:
+  tags:
+    - docker
+  stage: prepare
+  image: $IMAGE_NAME:$CI_COMMIT_BRANCH
+  allow_failure: false
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "staging2" || $CI_COMMIT_BRANCH == "master"
+      when: always
+  script:
+    - pwd
+    - git fetch --all
+    - echo compare current branch with last commit
+    - python3 .filter_only_updated_items.py --dir-name $DIR_TO_LIBRARY_UPDATE
+    - ls $DIR_TO_LIBRARY_UPDATE -la
+    - ls $DIR_TO_LIBRARY_UPDATE -la
+  artifacts:
+    paths:
+      - "$DIR_TO_LIBRARY_UPDATE"
+    expire_in: 1 hrs
+
+
+test devices:
+  tags:
+    - docker
+  stage: test
+  image: $IMAGE_NAME:$IMAGE_TAG
+  allow_failure: false
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_COMMIT_BRANCH == "develop"
+      when: always
+      variables: !reference [.staging-variables, variables]
+    - if: $CI_PIPELINE_SOURCE == $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging2" || $CI_COMMIT_BRANCH == "staging2"
+      when: always
+      variables: !reference [.staging2-variables, variables]
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" || $CI_COMMIT_BRANCH == "master"
+      when: always
+      variables: !reference [.production-variables, variables]
+  script:
+      - ls -la
+      - ${CMD} $DEVICE_DIR -d -a -env $API -email $EMAIL -password $PASSWORD -v
+
+deploy modified devices:
+  tags:
+    - docker
+  stage: deploy
+  image: $IMAGE_NAME:$CI_COMMIT_BRANCH
+  needs: [create directory for components and devices to modify, test devices]
+  dependencies:
+    - create directory for components and devices to modify
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+      variables: !reference [ .staging-variables, variables ]
+    - if: $CI_COMMIT_BRANCH == "staging2"
+      when: on_success
+      variables: !reference [ .staging2-variables, variables ]
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
+      variables: !reference [ .production-variables, variables ]
+  script:
+    - echo "selected API=${API}"
+    - ${CMD} $DIR_TO_LIBRARY_UPDATE -d -a -env $API -email $EMAIL -password $PASSWORD
+
+
+deploy all library - devices:
+  tags:
+    - docker
+  stage: deploy
+  image: $IMAGE_NAME:$CI_COMMIT_BRANCH
+  needs: [test devices]
+  rules:
+     - if: $CI_COMMIT_BRANCH == "develop"
+       when: manual
+       variables: !reference [.staging-variables, variables]
+     - if: $CI_COMMIT_BRANCH == "staging2"
+       when: manual
+       variables: !reference [.staging2-variables, variables]
+     - if: $CI_COMMIT_BRANCH == "master"
+       when: manual
+       variables: !reference [.production-variables, variables]
+  script:
+    - ${CMD} $DEVICE_DIR -d -a -env $API -email $EMAIL -password $PASSWORD
+

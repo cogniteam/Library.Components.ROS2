@@ -1,0 +1,277 @@
+{
+  "name": "nimbus/lynx-navigation",
+  "type": "COMPONENT_TYPE_COMPONENT",
+  "className": "Ros1Component",
+  "instanceName": "",
+  "description": "Cogniteam lynx navigation\ngit: https://github.com/cognimbus/nimbus.library/tree/master/Library/Components/lynx\nLicense: BSD",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0,
+    "build": ""
+  },
+  "start": "START_MODE_AUTO",
+  "environment": {
+    "name": "",
+    "ipAddress": "",
+    "state": "ENVIRONMENT_STATE_UNLOADED",
+    "message": "",
+    "progress": 0,
+    "requiredDevices": [],
+    "ports": [],
+    "hostIpAddress": "",
+    "variables": [],
+    "dockerInfo": {
+      "image": "cognimbus/lynx",
+      "containerId": "",
+      "imageSize": 0,
+      "commands": [
+        "roslaunch",
+        "lynx_launch",
+        "navigation.launch",
+        "tf_prefix:=${tf_prefix}",
+        "rate:=${rate}",
+        "steer_range:=${steer_range}",
+        "steer_trajectories:=${steer_trajectories}",
+        "speed:=${speed}",
+        "speed_obstacle:=${speed_obstacle}",
+        "goal_tolerance:=${goal_tolerance}",
+        "steer_scale:=${steer_scale}",
+        "lidar_3d_min_obstacle_height:=${lidar_3d_min_obstacle_height}",
+        "lidar_3d_max_obstacle_height:=${lidar_3d_max_obstacle_height}",
+        "--screen"
+      ],
+      "privileged": false,
+      "gpu": false,
+      "networkHost": false,
+      "binds": []
+    },
+    "log": "",
+    "convertedCommands": "",
+    "onExit": "IGNORE"
+  },
+  "parameters": {
+    "parameters": [
+      {
+        "name": "tf_prefix",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "stringValue": ""
+      },
+      {
+        "name": "rate",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 30
+      },
+      {
+        "name": "steer_range",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 25
+      },
+      {
+        "name": "steer_trajectories",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 51
+      },
+      {
+        "name": "speed",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 1
+      },
+      {
+        "name": "speed_obstacle",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.7
+      },
+      {
+        "name": "goal_tolerance",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 2
+      },
+      {
+        "name": "steer_scale",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 1
+      },
+      {
+        "name": "lidar_3d_min_obstacle_height",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.2
+      },
+      {
+        "name": "lidar_3d_max_obstacle_height",
+        "description": "",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 1.5
+      }
+    ]
+  },
+  "state": "COMPONENT_STATE_UNLOADED",
+  "message": "",
+  "streams": {
+    "inputStreams": [
+      {
+        "name": "goal",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/commands/navigation/goal",
+          "type": "Messages.geometry_msgs.PoseStamped",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "mission_stop",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/commands/mission/stop",
+          "type": "Messages.std_msgs.Empty",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "odom_base_link",
+        "type": "Nimbus.Messages.nav_msgs.Odometry",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTf": {
+          "baseFrame": "odom",
+          "childFrame": "base_link",
+          "rate": 10,
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "point_Cloud",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/lslidar_point_cloud",
+          "type": "Messages.sensor_msgs.PointCloud2",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ],
+    "outputStreams": [
+      {
+        "name": "ackermann_cmd",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/ackermann_cmd",
+          "type": "Messages.ackermann_msgs.AckermannDriveStamped",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "mission_state",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/events/mission/state",
+          "type": "Messages.std_msgs.Bool",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "navigation_state",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/events/navigation/state",
+          "type": "Messages.std_msgs.Bool",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "costmap",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/costmap_node/costmap/costmap",
+          "type": "Messages.nav_msgs.OccupancyGrid",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "navigation_path",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/navigation_path",
+          "type": "Messages.visualization_msgs.MarkerArray",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ]
+  },
+  "requiredDevices": [],
+  "ros": {
+    "baseFrame": "base_link",
+    "rate": 10,
+    "publishTfDevices": true,
+    "rosMasterUri": "",
+    "rosIp": "",
+    "autoDetectIp": false
+  },
+  "tags": {},
+  "category": "Algorithms/Navigation",
+  "simulation": false,
+  "pluginFile": "",
+  "license": "BSD",
+  "id": ""
+}

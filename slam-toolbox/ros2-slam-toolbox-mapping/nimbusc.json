@@ -1,0 +1,543 @@
+{
+  "name": "nimbus/ros2-slam-toolbox-mapping",
+  "type": "COMPONENT_TYPE_COMPONENT",
+  "className": "Ros2Component",
+  "instanceName": "",
+  "description": "Slam toolbox in ROS2, mapping algorithm\nLicense: LGPL",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0,
+    "build": ""
+  },
+  "start": "START_MODE_AUTO",
+  "environment": {
+    "name": "",
+    "ipAddress": "",
+    "state": "ENVIRONMENT_STATE_UNLOADED",
+    "message": "",
+    "progress": 0,
+    "requiredDevices": [],
+    "ports": [],
+    "hostIpAddress": "",
+    "variables": [],
+    "dockerInfo": {
+      "image": "cognimbus/ros2-slam-toolbox",
+      "containerId": "",
+      "imageSize": 0,
+      "commands": [
+        "ros2",
+        "launch",
+        "slam_toolbox",
+        "online_async_launch.py",
+        "solver_plugin:=${solver_plugin}",
+        "ceres_linear_solver:=${ceres_linear_solver}",
+        "ceres_preconditioner:=${ceres_preconditioner}",
+        "ceres_trust_strategy:=${ceres_trust_strategy}",
+        "ceres_dogleg_type:=${ceres_dogleg_type}",
+        "ceres_loss_function:=${ceres_loss_function}",
+        "mode:=${mode}",
+        "odom_frame:=${odom_frame}",
+        "map_frame:=${map_frame}",
+        "base_frame:=${base_frame}",
+        "scan_topic:=${scan_topic}",
+        "debug_logging:=${debug_logging}",
+        "throttle_scans:=${throttle_scans}",
+        "transform_publish_period:=${transform_publish_period}",
+        "map_update_interval:=${map_update_interval}",
+        "resolution:=${resolution}",
+        "max_laser_range:=${max_laser_range}",
+        "minimum_time_interval:=${minimum_time_interval}",
+        "transform_timeout:=${transform_timeout}",
+        "tf_buffer_duration:=${tf_buffer_duration}",
+        "stack_size_to_use:=${stack_size_to_use}",
+        "enable_interactive_mode:=${enable_interactive_mode}",
+        "use_scan_matching:=${use_scan_matching}",
+        "use_scan_barycenter:=${use_scan_barycenter}",
+        "minimum_travel_distance:=${minimum_travel_distance}",
+        "minimum_travel_heading:=${minimum_travel_heading}",
+        "scan_buffer_size:=${scan_buffer_size}",
+        "scan_buffer_maximum_scan_distance:=${scan_buffer_maximum_scan_distance}",
+        "link_match_minimum_response_fine:=${link_match_minimum_response_fine}",
+        "link_scan_maximum_distance:=${link_scan_maximum_distance}",
+        "loop_search_maximum_distance:=${loop_search_maximum_distance}",
+        "do_loop_closing:=${do_loop_closing}",
+        "loop_match_minimum_chain_size:=${loop_match_minimum_chain_size}",
+        "loop_match_maximum_variance_coarse:=${loop_match_maximum_variance_coarse}",
+        "loop_match_minimum_response_coarse:=${loop_match_minimum_response_coarse}",
+        "loop_match_minimum_response_fine:=${loop_match_minimum_response_fine}",
+        "correlation_search_space_dimension:=${correlation_search_space_dimension}",
+        "correlation_search_space_resolution:=${correlation_search_space_resolution}",
+        "correlation_search_space_smear_deviation:=${correlation_search_space_smear_deviation}",
+        "loop_search_space_dimension:=${loop_search_space_dimension}",
+        "loop_search_space_resolution:=${loop_search_space_resolution}",
+        "loop_search_space_smear_deviation:=${loop_search_space_smear_deviation}",
+        "distance_variance_penalty:=${distance_variance_penalty}",
+        "angle_variance_penalty:=${angle_variance_penalty}",
+        "fine_search_angle_offset:=${fine_search_angle_offset}",
+        "coarse_search_angle_offset:=${coarse_search_angle_offset}",
+        "coarse_angle_resolution:=${coarse_angle_resolution}",
+        "minimum_angle_penalty:=${minimum_angle_penalty}",
+        "minimum_distance_penalty:=${minimum_distance_penalty}",
+        "use_response_expansion:=${use_response_expansion}"
+      ],
+      "privileged": false,
+      "gpu": false,
+      "networkHost": false,
+      "binds": []
+    },
+    "log": "",
+    "convertedCommands": "",
+    "onExit": "IGNORE"
+  },
+  "parameters": {
+    "parameters": [
+      {
+        "name": "solver_plugin",
+        "description": "The type of nonlinear solver to utilize for karto's scan solver. ",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "solver_plugins::CeresSolver"
+      },
+      {
+        "name": "ceres_linear_solver",
+        "description": "The linear solver for Ceres to use.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "SPARSE_NORMAL_CHOLESKY"
+      },
+      {
+        "name": "ceres_preconditioner",
+        "description": "The preconditioner to use with that solver.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "SCHUR_JACOBI"
+      },
+      {
+        "name": "ceres_trust_strategy",
+        "description": " The trust region strategy. Line searach strategies are not exposed because they perform poorly for this use.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "LEVENBERG_MARQUARDT"
+      },
+      {
+        "name": "ceres_dogleg_type",
+        "description": " The dogleg strategy to use if the trust strategy is DOGLEG.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "TRADITIONAL_DOGLEG"
+      },
+      {
+        "name": "ceres_loss_function",
+        "description": " The type of loss function to reject outlier measurements. None is equatable to a squared loss.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "None"
+      },
+      {
+        "name": "mode",
+        "description": "'mapping' or 'localization' mode for performance optimizations in the Ceres problem creation.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "mapping"
+      },
+      {
+        "name": "odom_frame",
+        "description": "Odometry frame.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "odom"
+      },
+      {
+        "name": "map_frame",
+        "description": "Map frame.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "map"
+      },
+      {
+        "name": "base_frame",
+        "description": "Base frame.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "base_link"
+      },
+      {
+        "name": "scan_topic",
+        "description": "Scan topic, absolute path, ei /scan not scan.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "/scan"
+      },
+      {
+        "name": "debug_logging",
+        "description": "Change logger to debug.",
+        "Category": "Static",
+        "node": "",
+        "booleanValue": "false"
+      },
+      {
+        "name": "throttle_scans",
+        "description": "Number of scans to throttle in synchronous mode.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 1
+      },
+      {
+        "name": "transform_publish_period",
+        "description": "The map to odom transform publish period. 0 will not publish transforms.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.02
+      },
+      {
+        "name": "map_update_interval",
+        "description": "Interval to update the 2D occupancy map for other applications / visualization.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 5
+      },
+      {
+        "name": "resolution",
+        "description": "Resolution of the 2D occupancy map to generate.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.05
+      },
+      {
+        "name": "max_laser_range",
+        "description": "Maximum laser range to use for 2D occupancy map rastering.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 20
+      },
+      {
+        "name": "minimum_time_interval",
+        "description": "The minimum duration of time between scans to be processed in synchronous mode.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.5
+      },
+      {
+        "name": "transform_timeout",
+        "description": "TF timeout for looking up transforms.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.2
+      },
+      {
+        "name": "tf_buffer_duration",
+        "description": "Duration to store TF messages for lookup. Set high if running offline at multiple times speed in synchronous mode.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 30
+      },
+      {
+        "name": "stack_size_to_use",
+        "description": "The number of bytes to reset the stack size to, to enable serialization/deserialization of files. A liberal default is 40000000, but less is fine.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 40000000
+      },
+      {
+        "name": "enable_interactive_mode",
+        "description": "Whether or not to allow for interactive mode to be enabled. Interactive mode will retain a cache of laser scans mapped to their ID for visualization in interactive mode.",
+        "Category": "Static",
+        "node": "",
+        "booleanValue": "true"
+      },
+      {
+        "name": "use_scan_matching",
+        "description": "Whether to use scan matching to refine odometric pose.",
+        "Category": "Static",
+        "node": "",
+        "booleanValue": "true"
+      },
+      {
+        "name": "use_scan_barycenter",
+        "description": "Whether to use the barycenter or scan pose.",
+        "Category": "Static",
+        "node": "",
+        "booleanValue": "true"
+      },
+      {
+        "name": "minimum_travel_distance",
+        "description": "Minimum distance of travel before processing a new scan.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.5
+      },
+      {
+        "name": "minimum_travel_heading",
+        "description": "Minimum changing in heading to justify an update.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.5
+      },
+      {
+        "name": "scan_buffer_size",
+        "description": "The number of scans to buffer into a chain, also used as the number of scans in the circular buffer of localization mode.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 10
+      },
+      {
+        "name": "scan_buffer_maximum_scan_distance",
+        "description": "Maximum distance of a scan from the pose before removing the scan from the buffer.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 10
+      },
+      {
+        "name": "link_match_minimum_response_fine",
+        "description": "The threshold link matching algorithm response for fine resolution to pass.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.1
+      },
+      {
+        "name": "link_scan_maximum_distance",
+        "description": "Maximum distance between linked scans to be valid.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 1.5
+      },
+      {
+        "name": "loop_search_maximum_distance",
+        "description": "Maximum threshold of distance for scans to be considered for loop closure.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 3
+      },
+      {
+        "name": "do_loop_closing",
+        "description": " Whether to do loop closure (if you're not sure, the answer is 'true').",
+        "Category": "Static",
+        "node": "",
+        "booleanValue": "true"
+      },
+      {
+        "name": "loop_match_minimum_chain_size",
+        "description": "The minimum chain length of scans to look for loop closure.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 10
+      },
+      {
+        "name": "loop_match_maximum_variance_coarse",
+        "description": "The threshold variance in coarse search to pass to refine.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 3
+      },
+      {
+        "name": "loop_match_minimum_response_coarse",
+        "description": "The threshold response of the loop closure algorithm in coarse search to pass to refine.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.35
+      },
+      {
+        "name": "loop_match_minimum_response_fine",
+        "description": "The threshold response of the loop closure algorithm in fine search to pass to refine.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.45
+      },
+      {
+        "name": "correlation_search_space_dimension",
+        "description": "Search grid size to do scan correlation over.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.5
+      },
+      {
+        "name": "correlation_search_space_resolution",
+        "description": "Search grid resolution to do scan correlation over.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.01
+      },
+      {
+        "name": "correlation_search_space_smear_deviation",
+        "description": "Amount of multimodal smearing to smooth out responses.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.1
+      },
+      {
+        "name": "loop_search_space_dimension",
+        "description": "Size of the search grid over the loop closure algorithm.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 8
+      },
+      {
+        "name": "loop_search_space_resolution",
+        "description": "Search grid resolution to do loop closure over.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.05
+      },
+      {
+        "name": "loop_search_space_smear_deviation",
+        "description": "Amount of multimodal smearing to smooth out responses.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.03
+      },
+      {
+        "name": "distance_variance_penalty",
+        "description": "A penalty to apply to a matched scan as it differs from the odometric pose.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.5
+      },
+      {
+        "name": "angle_variance_penalty",
+        "description": "A penalty to apply to a matched scan as it differs from the odometric pose.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 1
+      },
+      {
+        "name": "fine_search_angle_offset",
+        "description": "Range of angles to test for fine scan matching.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.00349
+      },
+      {
+        "name": "coarse_search_angle_offset",
+        "description": "Range of angles to test for coarse scan matching.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.349
+      },
+      {
+        "name": "coarse_angle_resolution",
+        "description": "Resolution of angles over the Offset range to test in scan matching.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.0349
+      },
+      {
+        "name": "minimum_angle_penalty",
+        "description": "Smallest penalty an angle can have to ensure the size doesn't blow up.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.9
+      },
+      {
+        "name": "minimum_distance_penalty",
+        "description": "Smallest penalty a scan can have to ensure the size doesn't blow up.",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 0.5
+      },
+      {
+        "name": "use_response_expansion",
+        "description": "Whether to automatically increase the search grid size if no viable match is found.",
+        "Category": "Static",
+        "node": "",
+        "booleanValue": "true"
+      }
+    ]
+  },
+  "state": "COMPONENT_STATE_UNLOADED",
+  "message": "",
+  "streams": {
+    "inputStreams": [
+      {
+        "name": "scan",
+        "type": "",
+        "description": "The input scan from your laser to utilize.",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/scan",
+          "type": "Messages.sensor_msgs.LaserScan",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "odom",
+        "type": "Nimbus.Messages.nav_msgs.Odometry",
+        "description": "A valid transform from your configured odom_frame to base_frame.",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTf": {
+          "baseFrame": "odom",
+          "childFrame": "base_link",
+          "rate": 10,
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ],
+    "outputStreams": [
+      {
+        "name": "map",
+        "type": "",
+        "description": "Occupancy grid representation of the pose-graph at map_update_interval frequency.",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/map",
+          "type": "Messages.nav_msgs.OccupancyGrid",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "robot_pose",
+        "type": "Messages.geometry_msgs.Pose",
+        "description": "TF from map to base_link, the position of the robot on the map.",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTf": {
+          "baseFrame": "map",
+          "childFrame": "base_link",
+          "rate": 10,
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "map_odom",
+        "type": "Nimbus.Messages.nav_msgs.Odometry",
+        "description": "TF from map to odom.",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTf": {
+          "baseFrame": "map",
+          "childFrame": "odom",
+          "rate": 10,
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ]
+  },
+  "requiredDevices": [],
+  "ros": {
+    "baseFrame": "base_link",
+    "rate": 10,
+    "publishTfDevices": true,
+    "rosMasterUri": "",
+    "rosIp": "",
+    "autoDetectIp": false
+  },
+  "tags": {},
+  "category": "Algorithms/Mapping 2D",
+  "simulation": false,
+  "pluginFile": "",
+  "license": "LGPL",
+  "id": ""
+}

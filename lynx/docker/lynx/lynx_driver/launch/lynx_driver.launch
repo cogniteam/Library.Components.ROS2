@@ -1,0 +1,32 @@
+<launch>
+
+    <arg name="port" default="/dev/ttyACM0" />
+    <arg name="baud" default="460800" />
+
+    <arg name="drive_steering_zero_pwm" default="1500" />
+    <arg name="drive_tick_to_m" default="0.004508" />
+    <arg name="pid_rate" default="50.0" />
+    <arg name="pid_kp" default="2.0" />
+    <arg name="pid_ki" default="0.0" />
+    <arg name="pid_kd" default="0.1" />
+    <arg name="pid_process_smooth_factor" default="0.0" />
+    <arg name="pid_control_smooth_factor" default="0.8" />
+
+	<node name="lynx_driver_node" pkg="lynx_driver" type="lynx_driver_node">
+	    <param name="port" value="$(arg port)" />
+        <param name="baud" value="$(arg baud)" />
+        <param name="drive/tick_to_m" value="$(arg drive_tick_to_m)" />
+        <param name="drive/steering_zero_pwm" value="$(arg drive_steering_zero_pwm)" />
+        <param name="speed_pid/rate" value="$(arg pid_rate)" />
+        <param name="speed_pid/kp" value="$(arg pid_kp)"/>
+        <param name="speed_pid/ki" value="$(arg pid_ki)"/>
+        <param name="speed_pid/kd" value="$(arg pid_kd)"/>
+        <param name="speed_pid/process_smooth_factor" value="$(arg pid_process_smooth_factor)"/>
+        <param name="speed_pid/control_smooth_factor" value="$(arg pid_control_smooth_factor)"/>
+    </node>
+
+    <node name="twist_to_ackermann_node" pkg="twist_to_ackermann" type="twist_to_ackermann_node.py" />
+
+    <node name="transform_map_odom" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 map odom 100" />
+
+</launch>
