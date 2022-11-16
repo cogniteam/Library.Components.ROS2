@@ -38,7 +38,29 @@ variables:
     PRODUCTION_API: "https://api.cognimbus.com"
     DEVICE_DIR: "./"
 
-.create directory for components and devices to modify:
+create directory for modified components:
+  tags:
+    - docker
+  stage: prepare
+  only:
+    - master
+  allow_failure: false
+  variables: !reference [.staging-variables, variables]
+  image: python:3.10
+  script:
+    - pwd
+    - git fetch --all
+    - echo compare current branch with last commit
+    - python3 .filter_only_updated_items.py --dir-name $DIR_TO_LIBRARY_UPDATE
+    - ls $DIR_TO_LIBRARY_UPDATE -la
+    - ls $DIR_TO_LIBRARY_UPDATE -la
+  artifacts:
+    paths:
+      - "$DIR_TO_LIBRARY_UPDATE"
+    expire_in: 1 hrs
+
+
+.create directory for components to modify:
   tags:
     - docker
   stage: prepare
@@ -59,7 +81,7 @@ variables:
       - "$DIR_TO_LIBRARY_UPDATE"
     expire_in: 1 hrs
 
-.test devices:
+.test components:
   tags:
     - docker
   stage: test
