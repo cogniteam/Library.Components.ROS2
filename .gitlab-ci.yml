@@ -115,7 +115,7 @@ deploy modified components - staging2:
     - docker
   stage: deploy
   image: $IMAGE_NAME:$IMAGE_TAG
-  needs: [create directory for modified components, test components - staging]
+  needs: [create directory for modified components, test components - staging2]
   dependencies:
     - create directory for modified components
   variables: !reference [.staging2-variables, variables]
@@ -130,7 +130,7 @@ deploy modified components - production:
     - docker
   stage: deploy
   image: $IMAGE_NAME:$IMAGE_TAG
-  needs: [create directory for modified components, test components - staging]
+  needs: [create directory for modified components, test components - production]
   dependencies:
     - create directory for modified components
   variables: !reference [.production-variables, variables]
