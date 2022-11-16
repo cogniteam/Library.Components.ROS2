@@ -8,7 +8,7 @@
     "major": 1,
     "minor": 0,
     "patch": 0,
-    "build": ""
+    "build": "" 
   },
   "start": "START_MODE_AUTO",
   "environment": {

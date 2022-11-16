@@ -38,7 +38,7 @@ variables:
     PRODUCTION_API: "https://api.cognimbus.com"
     DEVICE_DIR: "./"
 
-create directory for components and devices to modify:
+.create directory for components and devices to modify:
   tags:
     - docker
   stage: prepare
@@ -59,8 +59,7 @@ create directory for components and devices to modify:
       - "$DIR_TO_LIBRARY_UPDATE"
     expire_in: 1 hrs
 
-
-test devices:
+.test devices:
   tags:
     - docker
   stage: test
@@ -80,7 +79,7 @@ test devices:
       - ls -la
       - ${CMD} $DEVICE_DIR -d -a -env $API -email $EMAIL -password $PASSWORD -v
 
-deploy modified devices:
+.deploy modified devices:
   tags:
     - docker
   stage: deploy
@@ -103,7 +102,7 @@ deploy modified devices:
     - ${CMD} $DIR_TO_LIBRARY_UPDATE -d -a -env $API -email $EMAIL -password $PASSWORD
 
 
-deploy all library - devices:
+.deploy all library - devices:
   tags:
     - docker
   stage: deploy

@@ -10,7 +10,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends apt-utils
 
 COPY ./talker /talker_ws/src/talker
-
+ 
 WORKDIR /talker_ws
 
 RUN apt-get install ros-foxy-std-msgs -y && \

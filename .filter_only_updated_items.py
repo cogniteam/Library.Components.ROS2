@@ -7,6 +7,15 @@ import subprocess
 from distutils.dir_util import copy_tree
 
 
+def does_project_has_json(project_path):
+    for comp_dir in os.listdir(project_path):
+        if comp_dir == 'docker':
+            continue
+        abs_path = os.path.abspath(os.path.join(project_path, comp_dir))
+        if not os.path.isfile(os.path.join(abs_path, 'nimbusc.json')):
+            return False
+    return True
+
 
 def main():
     parser = OptionParser()
@@ -37,13 +46,16 @@ def main():
     ignore_paths = []
     for i in range(len(absolute_paths)):
         file_path = absolute_paths[i]
-        match = re.search(f'{os.getcwd()}/[a-zA-Z0-9\-]+/', file_path)
+        if f'{os.path.sep}docker{os.path.sep}' in file_path:
+            ignore_paths.append(file_path)
+            continue
+        match = re.search(f'{os.getcwd()}/[a-zA-Z0-9\-]+/[a-zA-Z0-9\-]+/', file_path)
         if match is not None:
-            file_path = file_path[:match.end()]
+            component_directory = file_path[:match.end()]
         else:
             ignore_paths.append(file_path)
             continue
-        absolute_paths[i] = file_path
+        absolute_paths[i] = os.path.abspath(component_directory)
     # remove files that should be ignored
     for f in ignore_paths:
         try:
@@ -53,10 +65,11 @@ def main():
     # remove duplicates
     absolute_paths = list(dict.fromkeys(absolute_paths))
     print('all items to update:')
+
     # remove non-existing paths
     absolute_paths = list(
         filter(
-            lambda path: os.path.isfile(os.path.join(path, 'nimbusd.json')),
+            lambda path: os.path.isfile(os.path.join(path, 'nimbusc.json')),
             absolute_paths
         )
     )
@@ -71,11 +84,12 @@ def main():
         shutil.rmtree(directory_name)
 
     os.mkdir(directory_name)
-
+    project_path = os.path.join(os.path.abspath(directory_name), 'all-modified-components')
+    os.mkdir(project_path)
     for p in absolute_paths:
-        device_name = [x for x in p.split(os.path.sep) if x][-1]
-        print(f'saving device {device_name} in {directory_name}/{device_name}')
-        copy_tree(p, f'{directory_name}/{device_name}')
+        comp_name = [x for x in p.split(os.path.sep) if x][-1]
+        print(f'saving component {comp_name} in {project_path}/{comp_name}')
+        copy_tree(p, f'{project_path}/{comp_name}')
 
 
 if __name__ == '__main__':
