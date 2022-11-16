@@ -152,7 +152,7 @@ deploy all library - staging:
   only:
     - master
   script:
-    - ${CMD} $DEVICE_DIR -d -a -env $API -email $EMAIL -password $PASSWORD
+    - ${CMD} $DEVICE_DIR -c -a -env $API -email $EMAIL -password $PASSWORD
 
 deploy all library - staging2:
   tags:
@@ -165,7 +165,7 @@ deploy all library - staging2:
   only:
     - master
   script:
-    - ${CMD} $DEVICE_DIR -d -a -env $API -email $EMAIL -password $PASSWORD
+    - ${CMD} $DEVICE_DIR -d -c -env $API -email $EMAIL -password $PASSWORD
 
 deploy all library - production:
   tags:
@@ -178,4 +178,4 @@ deploy all library - production:
   only:
     - master
   script:
-    - ${CMD} $DEVICE_DIR -d -a -env $API -email $EMAIL -password $PASSWORD
+    - ${CMD} $DEVICE_DIR -c -a -env $API -email $EMAIL -password $PASSWORD
