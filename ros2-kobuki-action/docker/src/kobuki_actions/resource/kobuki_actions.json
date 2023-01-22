@@ -1,0 +1,183 @@
+{
+    "forward_backward": [
+        {   
+            "name": "move",
+            "args":{
+                "isForward":true,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":false,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":true,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":false,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":true,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":false,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        }
+    ],
+    "circle":[        
+        {   
+        "name": "moveAndRotate",
+        "args":{
+            "isForward":true,
+            "speed":0.3,
+            "distance":5,
+            "clockwise":false,
+            "angle":45
+        },
+        "repetitions":1
+        }
+    ],
+    
+    "elevator": [
+        {   
+            "name": "move",
+            "args":{
+                "isForward":true,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {
+            "name": "rotate",
+            "args":{
+                "clockwise":true,
+                "speed":40,
+                "angle":45
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":true,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":false,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {
+            "name": "rotate",
+            "args":{
+                "clockwise":false,
+                "speed":40,
+                "angle":45
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":false,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":true,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {
+            "name": "rotate",
+            "args":{
+                "clockwise":false,
+                "speed":40,
+                "angle":45
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":true,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":false,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        },
+        {
+            "name": "rotate",
+            "args":{
+                "clockwise":true,
+                "speed":40,
+                "angle":45
+            },
+            "repetitions":1
+        },
+        {   
+            "name": "move",
+            "args":{
+                "isForward":false,
+                "speed":0.3,
+                "distance":0.3
+            },
+            "repetitions":1
+        }
+
+    ]
+}

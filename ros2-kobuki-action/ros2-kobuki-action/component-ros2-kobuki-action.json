@@ -1,0 +1,126 @@
+{
+  "name": "nimbus/ros2-kobuki-action",
+  "type": "COMPONENT_TYPE_COMPONENT",
+  "className": "Ros2Component",
+  "instanceName": "",
+  "description": "Local ROS2 gateway",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 8,
+    "build": ""
+  },
+  "start": "START_MODE_AUTO",
+  "environment": {
+    "name": "",
+    "ipAddress": "",
+    "state": "ENVIRONMENT_STATE_UNLOADED",
+    "message": "",
+    "progress": 0,
+    "requiredDevices": [],
+    "ports": [],
+    "hostIpAddress": "",
+    "variables": [],
+    "dockerInfo": {
+      "image": "cognimbus/ros2-kobuki-action:latest",
+      "containerId": "",
+      "imageSize": 0,
+      "commands": [
+      "ros2", 
+      "launch", 
+      "kobuki_actions", 
+      "kobuki_actions.launch.py",
+      "jsonPath:=/kobuki_actions_ws/src/kobuki_actions/resource/json/kobuki_actions.json"
+    ],
+      "privileged": true,
+      "gpu": false,
+      "networkHost": true,
+      "binds": [
+        {
+          "source": "/opt/nimbus/data/kobuki_actions/resource/",
+          "target": "/kobuki_actions_ws/src/kobuki_actions/resource/json/"
+        }
+      ],
+      "user": "",
+      "runtime": ""
+    },
+    "log": "",
+    "convertedCommands": "",
+    "onExit": "IGNORE"
+  },
+  "parameters": {
+    "parameters": []
+  },
+  "state": "COMPONENT_STATE_UNLOADED",
+  "message": "",
+  "streams": {
+    "inputStreams": [
+      {
+        "name": "odom",
+        "type": "nav_msgs.Odometry",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTf": {
+          "baseFrame": "odom",
+          "childFrame": "base_link",
+          "rate": 10,
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "command",
+        "type": "std_msgs.String",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "reload_Json",
+        "type": "std_msgs.String",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ],
+    "outputStreams": [
+      {
+        "name": "cmd_vel",
+        "type": "",
+        "description": "",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/mobile_base/commands/velocity",
+          "type": "geometry_msgs.Twist",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ]
+  },
+  "requiredDevices": [],
+  "ros": {
+    "baseFrame": "base_link",
+    "rate": 10,
+    "publishTfDevices": true,
+    "generatePort": false,
+    "rosMasterUri": "",
+    "rosIp": "",
+    "autoDetectIp": false,
+    "ros2DomainId": 0
+  },
+  "tags": {},
+  "category": "Algorithms/Navigation",
+  "simulation": false,
+  "pluginFile": "",
+  "license": "BSD",
+  "id": "8c5b79da-b186-4d96-b303-b387d093f5ec"
+}
