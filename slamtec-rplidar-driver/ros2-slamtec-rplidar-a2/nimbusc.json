@@ -30,7 +30,8 @@
         "launch",
         "rplidar_ros",
         "rplidar.launch.py",
-        "frame_id:=${laser.name}"
+        "frame_id:=${laser.name}",
+        "serial_baudrate:=${serial_baudrate}"
       ],
       "privileged": false,
       "gpu": false,
@@ -42,7 +43,15 @@
     "onExit": "IGNORE"
   },
   "parameters": {
-    "parameters": []
+    "parameters": [
+      {
+        "name": "serial_baudrate",
+        "description": "Lidar baudrate, 115200 for a2 8M range, 256000 for a2 12M range",
+        "Category": "Static",
+        "node": "",
+        "integerValue": "115200"
+      }
+    ]
   },
   "state": "COMPONENT_STATE_UNLOADED",
   "message": "",

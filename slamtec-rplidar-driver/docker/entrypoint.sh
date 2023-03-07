@@ -1,7 +1,5 @@
-#!/bin/bash
-set -e
+#!/bin/sh
 
-source /opt/ros/eloquent/setup.bash
-source /colcon_ws/install/setup.bash
+. /rplidar_ros2_ws/install/setup.sh
 
 exec "$@"
