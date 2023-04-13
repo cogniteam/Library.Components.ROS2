@@ -27,9 +27,12 @@ the source code for the device/component deployment is located in https://git.co
 Algorithm | Architecture | Link
 --- | --- | ---
 generic-webcam | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-usb-cam/general
+kobuki-action | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-kobuki-action
 lynx-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-lynx/general
 realsense-camera | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-realsense-camera/general
-kobuki-action | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-kobuki-action
+ros2-gateway | linux/amd64 , linux/arm64 | N/A
 rover-mini-driver | linux/amd64 , linux/arm64 | https://git.cognimbus.com/nimbus/Nimbus.Library.Components.ROS2/-/tree/master/rover-mini-driver
 slam-toolbox | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-slam-toolbox/general
 slamtec-rplidar-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-slamtec-rplidar-a2/general
+slamtec-rplidar-s2-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/slamtec-rplidar-driver-ros2/general
+tutorials-talker | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-tutorials-talker/general
