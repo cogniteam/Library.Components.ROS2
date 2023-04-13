@@ -23,4 +23,13 @@ In addition, there are 3 manual jobs for deploying all the components in the rep
 ## Dependencies
 the source code for the device/component deployment is located in https://git.cognimbus.com/nimbus/nimbus.library.loader. any changes in the deployment source code should be in this repository. 
 
-
+# Images in Docker Hub
+Algorithm | Architecture | Link
+--- | --- | ---
+generic-webcam | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-usb-cam/general
+lynx-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-lynx/general
+realsense-camera | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-realsense-camera/general
+kobuki-action | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-kobuki-action
+rover-mini-driver | linux/amd64 , linux/arm64 | https://git.cognimbus.com/nimbus/Nimbus.Library.Components.ROS2/-/tree/master/rover-mini-driver
+slam-toolbox | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-slam-toolbox/general
+slamtec-rplidar-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-slamtec-rplidar-a2/general
