@@ -7,10 +7,10 @@ export DOCKER_CLI_EXPERIMENTAL=enabled
 #
 # on the terminal (inside the folder of the Dockerfile
 # 
-sudo docker buildx create --name nimbus-builder 
-sudo docker buildx use nimbus-builder
-sudo docker run --privileged --rm tonistiigi/binfmt --install all
-sudo docker buildx inspect --bootstrap
+docker buildx create --name nimbus-builder 
+docker buildx use nimbus-builder
+docker run --privileged --rm tonistiigi/binfmt --install all
+docker buildx inspect --bootstrap
 
 
 #
@@ -18,6 +18,6 @@ sudo docker buildx inspect --bootstrap
 #
 
 
-sudo docker buildx build --platform linux/arm64,linux/amd64 -t cognimbus/tracer-mobile-driver:latest --push .
+docker buildx build --platform linux/arm64,linux/amd64 -t cognimbus/tracer-mobile-driver:latest --push .
 
 
