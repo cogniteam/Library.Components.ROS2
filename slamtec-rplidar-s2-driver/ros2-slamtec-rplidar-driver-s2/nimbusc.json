@@ -29,7 +29,7 @@
           "ros2",
           "launch",
           "sllidar_ros2",
-          "sllidar_s2_launch",
+          "sllidar_s2_launch.py",
           "frame_id:=${laser.name}",
           "serial_baudrate:=${serial_baudrate}"
         ],
