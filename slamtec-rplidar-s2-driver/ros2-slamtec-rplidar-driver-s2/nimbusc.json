@@ -94,7 +94,7 @@
           "internalId": ""
         },
         "mountAs": "/dev/ttyUSB0",
-        "optional": false
+        "optional": true
       }
     ],
     "tags": {},
