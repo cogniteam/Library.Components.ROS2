@@ -11,7 +11,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get -y install python3-pip && ap
 
 RUN apt-get install build-essential git cmake libasio-dev -y
 RUN apt install iproute2 -y
-
+RUN apt-get install kmod -y
 # Cloning this repository into your workspace
 RUN mkdir -p ~/tracer_driver_ws/src
 WORKDIR /root/tracer_driver_ws/src

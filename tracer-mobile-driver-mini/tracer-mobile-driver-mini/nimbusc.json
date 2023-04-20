@@ -36,7 +36,8 @@
       "networkHost": true,
       "binds": [
         {
-
+          "source": "/lib/modules/",
+          "target": "/lib/modules/"
         }
       ],
       "user": "",
