@@ -32,11 +32,11 @@
         "detectnet.ros2.launch"
       ],
       "privileged": false,
-      "gpu": true,
-      "networkHost": false,
+      "gpu": false,
+      "networkHost": true,
       "binds": [],
       "user": "",
-      "runtime": ""
+      "runtime": "nvidia"
     },
     "log": "",
     "convertedCommands": "",

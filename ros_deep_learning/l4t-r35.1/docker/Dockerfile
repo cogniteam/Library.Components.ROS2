@@ -1,9 +1,13 @@
-FROM dustynv/ros:foxy-pytorch-l4t-r35.1.0
+FROM saarcogniteam/ros-deep-learning:l4t-r35.1
 
 SHELL ["/bin/bash", "-c"]
+WORKDIR /ros_deep_learning
 
-COPY ./launch /ros_deep_learning/src/ros_deep_learning/launch
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "/ros_entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+
 
 
