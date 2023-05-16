@@ -7,7 +7,7 @@
   "version": {
     "major": 1,
     "minor": 0,
-    "patch": 17,
+    "patch": 19,
     "build": ""
   },
   "start": "START_MODE_AUTO",
@@ -55,7 +55,7 @@
         "description": "Raw input image",
         "streamMode": "STREAM_MODE_TOPIC",
         "rosTopic": {
-          "topic": "/image_in",
+          "topic": "/video_source/raw",
           "type": "Messages.sensor_msgs.Image",
           "qosProfile": ""
         },
@@ -71,7 +71,7 @@
         "description": "Detection results (bounding boxes, class IDs, confidences)",
         "streamMode": "STREAM_MODE_TOPIC",
         "rosTopic": {
-          "topic": "/detections",
+          "topic": "/detectnet/detections",
           "type": "Messages.vision_msgs.Detection2DArray",
           "qosProfile": ""
         },
@@ -85,7 +85,7 @@
         "description": "Vision metadata (class labels parameter list name)",
         "streamMode": "STREAM_MODE_TOPIC",
         "rosTopic": {
-          "topic": "/vision_info",
+          "topic": "/detectnet/vision_info",
           "type": "Messages.vision_msgs.VisionInfo",
           "qosProfile": ""
         },
@@ -99,7 +99,7 @@
         "description": "Input image overlayed with the detection results",
         "streamMode": "STREAM_MODE_TOPIC",
         "rosTopic": {
-          "topic": "/overlay",
+          "topic": "/detectnet/overlay",
           "type": "Messages.sensor_msgs.Image",
           "qosProfile": ""
         },
@@ -121,9 +121,9 @@
     "ros2DomainId": 0
   },
   "tags": {},
-  "category": "Drivers/Robots",
+  "category": "Algorithms/Object detection",
   "simulation": false,
   "pluginFile": "",
-  "license": "GPL",
-  "id": "37b43550-ca44-4edd-85ef-3e53368c4d5c"
+  "license": "BSD",
+  "id": "d751a183-e165-4dbe-8916-09caab6859f6"
 }
