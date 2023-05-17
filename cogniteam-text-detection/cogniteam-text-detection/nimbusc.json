@@ -3,7 +3,7 @@
   "type": "COMPONENT_TYPE_COMPONENT",
   "className": "Ros2Component",
   "instanceName": "",
-  "description": "Local ROS2 gateway",
+  "description": "Component for text detection",
   "version": {
     "major": 1,
     "minor": 0,
@@ -62,14 +62,14 @@
         "description": "Preprocess input image by resizing to a specific width. It should be multiple by 32.",
         "Category": "Static",
         "node": "",
-        "integervalue": 640
+        "integerValue": 640
       },
       {
         "name": "height",
         "description": "Preprocess input image by resizing to a specific height. It should be multiple by 32.",
         "Category": "Static",
         "node": "",
-        "integervalue": 480
+        "integerValue": 480
       },
       {
         "name": "confidence_threshold",
@@ -117,7 +117,7 @@
       {
         "name": "image_bbox",
         "type": "",
-        "description": "Raw input image",
+        "description": "bbox output image",
         "streamMode": "STREAM_MODE_TOPIC",
         "rosTopic": {
           "topic": "/image_bbox",
@@ -156,7 +156,7 @@
     "ros2DomainId": 0
   },
   "tags": {},
-  "category": "Algorithms/Navigation",
+  "category": "Algorithms/Object detection",
   "simulation": false,
   "pluginFile": "",
   "license": "BSD",
