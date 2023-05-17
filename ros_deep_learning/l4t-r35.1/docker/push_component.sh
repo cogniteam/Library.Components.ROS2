@@ -18,6 +18,6 @@ docker buildx inspect --bootstrap
 #
 
 
-docker buildx build --platform linux/arm64,linux/amd64 -t cognimbus/ros-deep-learning:latest --push .
+docker buildx build --platform linux/arm64,linux/amd64 -t cognimbus/ros-deep-learning:xavier-l4t-r35.1 --push .
 
 
