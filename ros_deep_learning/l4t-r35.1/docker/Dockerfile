@@ -1,4 +1,4 @@
-FROM cognimbus/ros-deep-learning:xavier
+FROM saarcogniteam/ros-deep-learning:orin-agx-l4t-r35.1
 
 SHELL ["/bin/bash", "-c"]
 WORKDIR /ros_deep_learning

@@ -1,0 +1,143 @@
+{
+  "name": "nimbus/jetson-inference-detectnet-orin-agx-l4t-r35.1",
+  "type": "COMPONENT_TYPE_COMPONENT",
+  "className": "Ros2Component",
+  "instanceName": "",
+  "description": "Jetson inference detectNet for object detection",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0,
+    "build": ""
+  },
+  "start": "START_MODE_AUTO",
+  "environment": {
+    "name": "",
+    "ipAddress": "",
+    "state": "ENVIRONMENT_STATE_UNLOADED",
+    "message": "",
+    "progress": 0,
+    "requiredDevices": [],
+    "ports": [],
+    "hostIpAddress": "",
+    "variables": [],
+    "dockerInfo": {
+      "image": "cognimbus/ros-deep-learning:orin-agx-l4t-r35.1",
+      "containerId": "",
+      "imageSize": 0,
+      "commands": [
+        "ros2",
+        "launch",
+        "ros_deep_learning",
+        "detectnet.ros2.launch"
+      ],
+      "privileged": false,
+      "gpu": false,
+      "networkHost": true,
+      "binds": [],
+      "user": "",
+      "runtime": "nvidia"
+    },
+    "log": "",
+    "convertedCommands": "",
+    "onExit": "IGNORE"
+  },
+  "parameters": {
+    "parameters": []
+  },
+  "state": "COMPONENT_STATE_UNLOADED",
+  "message": "",
+  "streams": {
+    "inputStreams": [
+      {
+        "name": "image_in",
+        "type": "",
+        "description": "Raw input image",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/video_source/raw",
+          "type": "Messages.sensor_msgs.Image",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ],
+    "outputStreams": [
+      {
+        "name": "detections",
+        "type": "",
+        "description": "Detection results (bounding boxes, class IDs, confidences)",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/detectnet/detections",
+          "type": "Messages.vision_msgs.Detection2DArray",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "vision_info",
+        "type": "",
+        "description": "Vision metadata (class labels parameter list name)",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/detectnet/vision_info",
+          "type": "Messages.vision_msgs.VisionInfo",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "overlay",
+        "type": "",
+        "description": "Input image overlayed with the detection results",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/detectnet/overlay",
+          "type": "Messages.sensor_msgs.Image",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
+        "name": "overlay_compressed",
+        "type": "",
+        "description": "Input image overlayed with the detection results",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/detectnet/overlay/compressed",
+          "type": "Messages.sensor_msgs.CompressedImage",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ]
+  },
+  "requiredDevices": [],
+  "ros": {
+    "baseFrame": "base_link",
+    "rate": 10,
+    "publishTfDevices": true,
+    "generatePort": false,
+    "rosMasterUri": "",
+    "rosIp": "",
+    "autoDetectIp": false,
+    "ros2DomainId": 0
+  },
+  "tags": {},
+  "category": "Algorithms/Object detection",
+  "simulation": false,
+  "pluginFile": "",
+  "license": "BSD",
+  "id": "d751a183-e165-4dbe-8916-09caab6859f6"
+}
