@@ -1,6 +1,4 @@
 <launch>
-
-
 	<!-- SEGNET -->
 	<arg name="model_name" default="fcn-resnet18-mhp-512x320"/>
 	<arg name="model_path" default=""/>
@@ -26,7 +24,4 @@
 		<param name="overlay_filter" value="$(var overlay_filter)"/>
 		<param name="overlay_alpha" value="$(var overlay_alpha)"/>
 	</node>
-
-
-
 </launch>
