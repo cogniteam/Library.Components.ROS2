@@ -33,10 +33,6 @@ RUN mkdir -p ~/rover_driver_ws/src
 WORKDIR /root/rover_driver_ws/src
 RUN git clone https://github.com/RoverRobotics/roverrobotics_ros2.git -b ros2-foxy-driver
 
-# Install Udev rules for robot
-# WORKDIR /root/rover_driver_ws/src/roverrobotics_ros2/roverrobotics_driver/udev
-# RUN sudo cp 55-roverrobotics.rules /etc/udev/rules.d/55-roverrobotics.rules 
-# RUN udevadm trigger
 
 # Install shared library
 RUN cd ~/ && mkdir library/
