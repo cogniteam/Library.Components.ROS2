@@ -26,7 +26,7 @@ public:
     bbox_publisher_ = this->create_publisher<vision_msgs::msg::BoundingBox2D>("bounding_box", 10);
     bbox_image_publisher_= this->create_publisher<sensor_msgs::msg::Image>("image_bbox", 10);
     cbbox_image_publisher_= this->create_publisher<sensor_msgs::msg::CompressedImage>("image_bbox/compressed", 10);
-    subscription_ = this->create_subscription<sensor_msgs::msg::Image>("image_raw", 10, std::bind(&TextDetection::topic_callback, this, _1));
+    subscription_ = this->create_subscription<sensor_msgs::msg::Image>("image_raw", rclcpp::SensorDataQoS(), std::bind(&TextDetection::topic_callback, this, _1));
     this->declare_parameter<std::string>("model", "src/cogniteam-text-detection/resource/frozen_east_text_detection.pb");
     this->declare_parameter<int>("width", 320);
     this->declare_parameter<int>("height", 320);
@@ -129,11 +129,7 @@ private:
     cv_ptr->toImageMsg(img_msg);
     bbox_image_publisher_->publish(img_msg);
     cbbox_image_publisher_->publish(cimg_msg);
-    // sensor_msgs::msg::Image::SharedPtr msg =
-    // cv_bridge::CvImage(std_msgs::msg::Header(), "bgr8", frame)
-    //     .toImageMsg();
-    // bbox_image_publisher_->publish(img_msg);
-    // RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+    RCLCPP_INFO(this->get_logger(), label);
   }
   
   void decode(const Mat& scores, const Mat& geometry, float scoreThresh,
