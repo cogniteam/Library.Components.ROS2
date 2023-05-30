@@ -118,6 +118,7 @@ bool publish_mask_color( uint32_t width, uint32_t height )
       const char* err_msg = e.what();
       return false;
     }
+	sensor_msgs::msg::CompressedImage cimg_msg = *cv_ptr->toCompressedImageMsg(cv_bridge::Format::JPEG).get();
 	// publish the message
 	mask_color_pub->publish(msg);
 	compressed_mask_color_pub->publish(cimg_msg);
@@ -150,6 +151,7 @@ bool publish_mask_class( uint32_t width, uint32_t height )
       const char* err_msg = e.what();
       return false;
     }
+	sensor_msgs::msg::CompressedImage cimg_msg = *cv_ptr->toCompressedImageMsg(cv_bridge::Format::JPEG).get();
 	// publish the message
 	mask_class_pub->publish(msg);
 	compressed_mask_class_pub->publish(cimg_msg);
