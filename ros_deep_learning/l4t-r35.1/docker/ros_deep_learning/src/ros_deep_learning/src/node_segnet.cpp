@@ -339,7 +339,7 @@ int main(int argc, char **argv)
 	/*
 	 * subscribe to image topic
 	 */
-	auto img_sub = ROS_CREATE_SUBSCRIBER(sensor_msgs::Image, "image_in", 5, img_callback);
+	auto img_sub = ROS_CREATE_SUBSCRIBER(sensor_msgs::Image, "image_in", rclcpp::SensorDataQoS(), img_callback);
 
 	
 	/*
