@@ -7,7 +7,7 @@
   "version": {
     "major": 1,
     "minor": 0,
-    "patch": 0,
+    "patch": 6,
     "build": ""
   },
   "start": "START_MODE_AUTO",
@@ -29,7 +29,11 @@
         "ros2",
         "launch",
         "ros_deep_learning",
-        "segnet.ros2.launch"
+        "segnet.ros2.launch",
+        "model_name:=${model}",
+        "mask_filter:=${mask_filter}",
+        "overlay_filter:=${overlay_filter}",
+        "overlay_alpha:=${overlay_alpha}"
       ],
       "privileged": false,
       "gpu": false,
@@ -43,7 +47,36 @@
     "onExit": "IGNORE"
   },
   "parameters": {
-    "parameters": []
+    "parameters": [
+      {
+        "name": "model",
+        "description": "Built-in model name",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "fcn-resnet18-cityscapes-2048x1024"
+      },
+      {
+        "name": "mask_filter",
+        "description": "Filtering to apply to color_mask topic (linear or point)",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "linear"
+      },
+      {
+        "name": "overlay_filter",
+        "description": "Filtering to apply to overlay topic (linear or point)",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "linear"
+      },
+      {
+        "name": "overlay_alpha",
+        "description": "Alpha blending value used by overlay topic (0.0 - 255.0)",
+        "Category": "Static",
+        "node": "",
+        "doubleValue": 180
+      }
+    ]
   },
   "state": "COMPONENT_STATE_UNLOADED",
   "message": "",
@@ -57,11 +90,11 @@
         "rosTopic": {
           "topic": "/video_source/raw",
           "type": "Messages.sensor_msgs.Image",
-          "qosProfile": ""
+          "qosProfile": "sensors_data"
         },
         "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
+        "maxRate": 15,
+        "expectedRate": 15
       }
     ],
     "outputStreams": [
@@ -177,9 +210,9 @@
     "ros2DomainId": 0
   },
   "tags": {},
-  "category": "Algorithms/Object detection",
+  "category": "Algorithms/Image processing",
   "simulation": false,
   "pluginFile": "",
   "license": "BSD",
-  "id": "d751a183-e165-4dbe-8916-09caab6859f6"
+  "id": "71d74655-a3ff-49b4-b046-5d0b2ef742ad"
 }
