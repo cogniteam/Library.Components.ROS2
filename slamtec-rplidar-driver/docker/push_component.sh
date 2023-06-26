@@ -18,5 +18,5 @@ docker buildx inspect --bootstrap
 #
 
 
-docker buildx build --platform linux/arm64,linux/amd64 -t cognimbus/slamtec-rplidar-driver-ROS2:latest --push .
+docker buildx build --platform linux/arm64,linux/amd64 -t cognimbus/ros2-slamtec-rplidar-a2:latest --push .
 

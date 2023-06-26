@@ -17,7 +17,6 @@ sudo docker buildx inspect --bootstrap
 # on the terminal (inside the folder of the Dockerfile
 #
 
-
 sudo docker buildx build --platform linux/arm64,linux/amd64 -t cognimbus/rover-mini-driver:latest --push .
 
 

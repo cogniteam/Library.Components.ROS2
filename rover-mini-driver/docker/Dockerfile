@@ -45,7 +45,7 @@ RUN sudo make install
 
 # Rebuild your workspace
 WORKDIR /root/rover_driver_ws
-RUN rosdep install -i --from-path src --ignore-src
+#RUN rosdep install -i --from-path src --ignore-src
 RUN . /opt/ros/foxy/setup.sh && colcon build
 
 COPY entrypoint.sh /entrypoint.sh
