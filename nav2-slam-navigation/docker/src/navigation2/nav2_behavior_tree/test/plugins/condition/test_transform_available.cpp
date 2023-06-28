@@ -19,7 +19,7 @@
 #include <chrono>
 #include <string>
 
-#include "../../test_behavior_tree_fixture.hpp"
+#include "utils/test_behavior_tree_fixture.hpp"
 #include "nav2_behavior_tree/plugins/condition/transform_available_condition.hpp"
 
 class TransformAvailableConditionTestFixture : public ::testing::Test
@@ -44,8 +44,10 @@ public:
       transform_handler_->getBuffer());
     config_->blackboard->set<std::chrono::milliseconds>(
       "server_timeout",
+      std::chrono::milliseconds(20));
+    config_->blackboard->set<std::chrono::milliseconds>(
+      "bt_loop_duration",
       std::chrono::milliseconds(10));
-    config_->blackboard->set<bool>("path_updated", false);
     config_->blackboard->set<bool>("initial_pose_received", false);
   }
 

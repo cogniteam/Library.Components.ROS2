@@ -24,25 +24,37 @@ NavigateToPoseAction::NavigateToPoseAction(
   const std::string & xml_tag_name,
   const std::string & action_name,
   const BT::NodeConfiguration & conf)
-: BtActionNode<nav2_msgs::action::NavigateToPose>(xml_tag_name, action_name, conf)
-{
-}
+: BtActionNode<Action>(xml_tag_name, action_name, conf)
+{}
 
 void NavigateToPoseAction::on_tick()
 {
-  // Use the position and orientation fields from the XML attributes to initialize the goal
-  geometry_msgs::msg::Point position;
-  geometry_msgs::msg::Quaternion orientation;
-
-  if (!getInput("position", position) || !getInput("orientation", orientation)) {
+  if (!getInput("goal", goal_.pose)) {
     RCLCPP_ERROR(
       node_->get_logger(),
-      "NavigateToPoseAction: position or orientation not provided");
+      "NavigateToPoseAction: goal not provided");
     return;
   }
+  getInput("behavior_tree", goal_.behavior_tree);
+}
 
-  goal_.pose.pose.position = position;
-  goal_.pose.pose.orientation = orientation;
+BT::NodeStatus NavigateToPoseAction::on_success()
+{
+  setOutput("error_code_id", ActionGoal::NONE);
+  return BT::NodeStatus::SUCCESS;
+}
+
+BT::NodeStatus NavigateToPoseAction::on_aborted()
+{
+  setOutput("error_code_id", result_.result->error_code);
+  return BT::NodeStatus::FAILURE;
+}
+
+BT::NodeStatus NavigateToPoseAction::on_cancelled()
+{
+  // Set empty error code, action was cancelled
+  setOutput("error_code_id", ActionGoal::NONE);
+  return BT::NodeStatus::SUCCESS;
 }
 
 }  // namespace nav2_behavior_tree

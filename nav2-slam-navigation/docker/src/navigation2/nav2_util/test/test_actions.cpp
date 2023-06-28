@@ -75,12 +75,12 @@ public:
   void on_term()
   {
     // when nothing's running make sure everything's dead.
-    const std::shared_ptr<const Fibonacci::Goal> a = action_server_->accept_pending_goal();
-    const std::shared_ptr<const Fibonacci::Goal> b = action_server_->get_current_goal();
-    assert(a == b);
-    assert(action_server_->is_cancel_requested() == false);
-    auto feedback = std::make_shared<Fibonacci::Feedback>();
-    action_server_->publish_feedback(feedback);
+    // const std::shared_ptr<const Fibonacci::Goal> a = action_server_->accept_pending_goal();
+    // const std::shared_ptr<const Fibonacci::Goal> b = action_server_->get_current_goal();
+    // assert(a == b);
+    // assert(action_server_->is_cancel_requested() == false);
+    // auto feedback = std::make_shared<Fibonacci::Feedback>();
+    // action_server_->publish_feedback(feedback);
     action_server_.reset();
   }
 
@@ -236,6 +236,8 @@ protected:
 
 TEST_F(ActionTest, test_simple_action)
 {
+  node_->activate_server();
+
   // The goal for this invocation
   auto goal = Fibonacci::Goal();
   goal.order = 12;

@@ -12,28 +12,41 @@ find_package(action_msgs REQUIRED)
 
 nav2_package()
 
+# TODO(jwallace42): This is a work around for https://github.com/ros2/rosidl_typesupport_fastrtps/issues/28
+add_compile_options(-Wno-error=deprecated)
+
 rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/CollisionMonitorState.msg"
   "msg/Costmap.msg"
   "msg/CostmapMetaData.msg"
+  "msg/CostmapFilterInfo.msg"
+  "msg/SpeedLimit.msg"
   "msg/VoxelGrid.msg"
   "msg/BehaviorTreeStatusChange.msg"
   "msg/BehaviorTreeLog.msg"
   "msg/Particle.msg"
   "msg/ParticleCloud.msg"
+  "msg/MissedWaypoint.msg"
   "srv/GetCostmap.srv"
+  "srv/IsPathValid.srv"
   "srv/ClearCostmapExceptRegion.srv"
   "srv/ClearCostmapAroundRobot.srv"
   "srv/ClearEntireCostmap.srv"
   "srv/ManageLifecycleNodes.srv"
   "srv/LoadMap.srv"
   "srv/SaveMap.srv"
+  "action/AssistedTeleop.action"
   "action/BackUp.action"
   "action/ComputePathToPose.action"
+  "action/ComputePathThroughPoses.action"
+  "action/DriveOnHeading.action"
+  "action/SmoothPath.action"
   "action/FollowPath.action"
   "action/NavigateToPose.action"
+  "action/NavigateThroughPoses.action"
   "action/Wait.action"
   "action/Spin.action"
-  "action/DummyRecovery.action"
+  "action/DummyBehavior.action"
   "action/FollowWaypoints.action"
   DEPENDENCIES builtin_interfaces geometry_msgs std_msgs action_msgs nav_msgs
 )

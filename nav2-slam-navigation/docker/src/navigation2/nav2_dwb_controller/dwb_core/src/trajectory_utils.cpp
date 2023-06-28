@@ -33,9 +33,12 @@
  */
 
 #include <dwb_core/trajectory_utils.hpp>
-#include <dwb_core/exceptions.hpp>
-#include <rclcpp/duration.hpp>
+
 #include <cmath>
+
+#include "rclcpp/duration.hpp"
+
+#include "dwb_core/exceptions.hpp"
 
 namespace dwb_core
 {
@@ -46,7 +49,7 @@ const geometry_msgs::msg::Pose2D & getClosestPose(
   rclcpp::Duration goal_time = rclcpp::Duration::from_seconds(time_offset);
   const unsigned int num_poses = trajectory.poses.size();
   if (num_poses == 0) {
-    throw nav2_core::PlannerException("Cannot call getClosestPose on empty trajectory.");
+    throw nav2_core::InvalidPath("Cannot call getClosestPose on empty trajectory.");
   }
   unsigned int closest_index = num_poses;
   double closest_diff = 0.0;
@@ -70,7 +73,7 @@ geometry_msgs::msg::Pose2D projectPose(
   rclcpp::Duration goal_time = rclcpp::Duration::from_seconds(time_offset);
   const unsigned int num_poses = trajectory.poses.size();
   if (num_poses == 0) {
-    throw nav2_core::PlannerException("Cannot call projectPose on empty trajectory.");
+    throw nav2_core::InvalidPath("Cannot call projectPose on empty trajectory.");
   }
   if (goal_time <= (trajectory.time_offsets[0])) {
     return trajectory.poses[0];
