@@ -69,9 +69,7 @@ namespace dwb_core
 class DWBPublisher
 {
 public:
-  explicit DWBPublisher(
-    const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
-    const std::string & plugin_name);
+  explicit DWBPublisher(nav2_util::LifecycleNode::SharedPtr node, const std::string & plugin_name);
 
   nav2_util::CallbackReturn on_configure();
   nav2_util::CallbackReturn on_activate();
@@ -124,10 +122,9 @@ protected:
   std::shared_ptr<LifecyclePublisher<nav_msgs::msg::Path>> transformed_pub_;
   std::shared_ptr<LifecyclePublisher<nav_msgs::msg::Path>> local_pub_;
   std::shared_ptr<LifecyclePublisher<visualization_msgs::msg::MarkerArray>> marker_pub_;
-  std::shared_ptr<LifecyclePublisher<sensor_msgs::msg::PointCloud2>> cost_grid_pc_pub_;
+  std::shared_ptr<LifecyclePublisher<sensor_msgs::msg::PointCloud>> cost_grid_pc_pub_;
 
-  rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
-  rclcpp::Clock::SharedPtr clock_;
+  nav2_util::LifecycleNode::SharedPtr node_;
   std::string plugin_name_;
 };
 

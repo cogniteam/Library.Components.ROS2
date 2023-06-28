@@ -37,7 +37,7 @@ GoalTool::~GoalTool()
 void GoalTool::onInitialize()
 {
   PoseTool::onInitialize();
-  setName("Nav2 Goal");
+  setName("Navigation2 Goal");
   setIcon(rviz_common::loadPixmap("package://rviz_default_plugins/icons/classes/SetGoal.png"));
 }
 

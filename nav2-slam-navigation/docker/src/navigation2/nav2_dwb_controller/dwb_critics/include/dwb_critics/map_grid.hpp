@@ -37,9 +37,6 @@
 
 #include <vector>
 #include <memory>
-#include <string>
-#include <utility>
-
 #include "dwb_core/trajectory_critic.hpp"
 #include "costmap_queue/costmap_queue.hpp"
 
@@ -64,8 +61,7 @@ public:
   // Standard TrajectoryCritic Interface
   void onInit() override;
   double scoreTrajectory(const dwb_msgs::msg::Trajectory2D & traj) override;
-  void addCriticVisualization(
-    std::vector<std::pair<std::string, std::vector<float>>> & cost_channels) override;
+  void addCriticVisualization(sensor_msgs::msg::PointCloud & pc) override;
   double getScale() const override {return costmap_->getResolution() * 0.5 * scale_;}
 
   // Helper Functions

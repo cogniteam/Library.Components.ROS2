@@ -24,7 +24,7 @@
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "utils/test_action_server.hpp"
+#include "../../test_action_server.hpp"
 #include "nav2_behavior_tree/plugins/action/navigate_to_pose_action.hpp"
 
 class NavigateToPoseActionServer : public TestActionServer<nav2_msgs::action::NavigateToPose>
@@ -64,10 +64,8 @@ public:
       node_);
     config_->blackboard->set<std::chrono::milliseconds>(
       "server_timeout",
-      std::chrono::milliseconds(20));
-    config_->blackboard->set<std::chrono::milliseconds>(
-      "bt_loop_duration",
       std::chrono::milliseconds(10));
+    config_->blackboard->set<bool>("path_updated", false);
     config_->blackboard->set<bool>("initial_pose_received", false);
 
     BT::NodeBuilder builder =
@@ -118,7 +116,7 @@ TEST_F(NavigateToPoseActionTestFixture, test_tick)
     R"(
       <root main_tree_to_execute = "MainTree" >
         <BehaviorTree ID="MainTree">
-            <NavigateToPose goal="{goal}" />
+            <NavigateToPose position="{position}" orientation="{orientation}" />
         </BehaviorTree>
       </root>)";
 
@@ -126,14 +124,15 @@ TEST_F(NavigateToPoseActionTestFixture, test_tick)
 
   geometry_msgs::msg::PoseStamped pose;
 
+  // first tick should send the goal to our server
+  EXPECT_EQ(tree_->rootNode()->executeTick(), BT::NodeStatus::RUNNING);
+  EXPECT_EQ(action_server_->getCurrentGoal()->pose, pose);
+
   // tick until node succeeds
   while (tree_->rootNode()->status() != BT::NodeStatus::SUCCESS) {
     tree_->rootNode()->executeTick();
   }
-
-  // goal should have reached our server
   EXPECT_EQ(tree_->rootNode()->status(), BT::NodeStatus::SUCCESS);
-  EXPECT_EQ(action_server_->getCurrentGoal()->pose, pose);
 
   // halt node so another goal can be sent
   tree_->rootNode()->halt();
@@ -142,13 +141,16 @@ TEST_F(NavigateToPoseActionTestFixture, test_tick)
   // set new goal
   pose.pose.position.x = -2.5;
   pose.pose.orientation.x = 1.0;
-  config_->blackboard->set<geometry_msgs::msg::PoseStamped>("goal", pose);
+  config_->blackboard->set<geometry_msgs::msg::Point>("position", pose.pose.position);
+  config_->blackboard->set<geometry_msgs::msg::Quaternion>("orientation", pose.pose.orientation);
+
+  EXPECT_EQ(tree_->rootNode()->executeTick(), BT::NodeStatus::RUNNING);
+  EXPECT_EQ(action_server_->getCurrentGoal()->pose, pose);
 
   while (tree_->rootNode()->status() != BT::NodeStatus::SUCCESS) {
     tree_->rootNode()->executeTick();
   }
 
-  EXPECT_EQ(action_server_->getCurrentGoal()->pose, pose);
   EXPECT_EQ(tree_->rootNode()->status(), BT::NodeStatus::SUCCESS);
 }
 

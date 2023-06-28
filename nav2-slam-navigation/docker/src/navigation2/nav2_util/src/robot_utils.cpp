@@ -15,10 +15,8 @@
 // limitations under the License.
 
 #include <string>
-#include <cmath>
 #include <memory>
 
-#include "tf2/convert.h"
 #include "nav2_util/robot_utils.hpp"
 #include "rclcpp/logger.hpp"
 
@@ -28,42 +26,33 @@ namespace nav2_util
 bool getCurrentPose(
   geometry_msgs::msg::PoseStamped & global_pose,
   tf2_ros::Buffer & tf_buffer, const std::string global_frame,
-  const std::string robot_frame, const double transform_timeout,
-  const rclcpp::Time stamp)
+  const std::string robot_frame, const double transform_timeout)
 {
+  static rclcpp::Logger logger = rclcpp::get_logger("getCurrentPose");
+  geometry_msgs::msg::PoseStamped robot_pose;
+
   tf2::toMsg(tf2::Transform::getIdentity(), global_pose.pose);
-  global_pose.header.frame_id = robot_frame;
-  global_pose.header.stamp = stamp;
-
-  return transformPoseInTargetFrame(
-    global_pose, global_pose, tf_buffer, global_frame, transform_timeout);
-}
-
-bool transformPoseInTargetFrame(
-  const geometry_msgs::msg::PoseStamped & input_pose,
-  geometry_msgs::msg::PoseStamped & transformed_pose,
-  tf2_ros::Buffer & tf_buffer, const std::string target_frame,
-  const double transform_timeout)
-{
-  static rclcpp::Logger logger = rclcpp::get_logger("transformPoseInTargetFrame");
+  tf2::toMsg(tf2::Transform::getIdentity(), robot_pose.pose);
+  robot_pose.header.frame_id = robot_frame;
+  robot_pose.header.stamp = rclcpp::Time();
 
   try {
-    transformed_pose = tf_buffer.transform(
-      input_pose, target_frame,
+    global_pose = tf_buffer.transform(
+      robot_pose, global_frame,
       tf2::durationFromSec(transform_timeout));
     return true;
   } catch (tf2::LookupException & ex) {
     RCLCPP_ERROR(
       logger,
-      "No Transform available Error looking up target frame: %s\n", ex.what());
+      "No Transform available Error looking up robot pose: %s\n", ex.what());
   } catch (tf2::ConnectivityException & ex) {
     RCLCPP_ERROR(
       logger,
-      "Connectivity Error looking up target frame: %s\n", ex.what());
+      "Connectivity Error looking up robot pose: %s\n", ex.what());
   } catch (tf2::ExtrapolationException & ex) {
     RCLCPP_ERROR(
       logger,
-      "Extrapolation Error looking up target frame: %s\n", ex.what());
+      "Extrapolation Error looking up robot pose: %s\n", ex.what());
   } catch (tf2::TimeoutException & ex) {
     RCLCPP_ERROR(
       logger,
@@ -71,105 +60,10 @@ bool transformPoseInTargetFrame(
   } catch (tf2::TransformException & ex) {
     RCLCPP_ERROR(
       logger, "Failed to transform from %s to %s",
-      input_pose.header.frame_id.c_str(), target_frame.c_str());
+      global_frame.c_str(), robot_frame.c_str());
   }
 
   return false;
-}
-
-bool getTransform(
-  const std::string & source_frame_id,
-  const std::string & target_frame_id,
-  const tf2::Duration & transform_tolerance,
-  const std::shared_ptr<tf2_ros::Buffer> tf_buffer,
-  tf2::Transform & tf2_transform)
-{
-  geometry_msgs::msg::TransformStamped transform;
-  tf2_transform.setIdentity();  // initialize by identical transform
-
-  if (source_frame_id == target_frame_id) {
-    // We are already in required frame
-    return true;
-  }
-
-  try {
-    // Obtaining the transform to get data from source to target frame
-    transform = tf_buffer->lookupTransform(
-      target_frame_id, source_frame_id,
-      tf2::TimePointZero, transform_tolerance);
-  } catch (tf2::TransformException & e) {
-    RCLCPP_ERROR(
-      rclcpp::get_logger("getTransform"),
-      "Failed to get \"%s\"->\"%s\" frame transform: %s",
-      source_frame_id.c_str(), target_frame_id.c_str(), e.what());
-    return false;
-  }
-
-  // Convert TransformStamped to TF2 transform
-  tf2::fromMsg(transform.transform, tf2_transform);
-  return true;
-}
-
-bool getTransform(
-  const std::string & source_frame_id,
-  const rclcpp::Time & source_time,
-  const std::string & target_frame_id,
-  const rclcpp::Time & target_time,
-  const std::string & fixed_frame_id,
-  const tf2::Duration & transform_tolerance,
-  const std::shared_ptr<tf2_ros::Buffer> tf_buffer,
-  tf2::Transform & tf2_transform)
-{
-  geometry_msgs::msg::TransformStamped transform;
-  tf2_transform.setIdentity();  // initialize by identical transform
-
-  try {
-    // Obtaining the transform to get data from source to target frame.
-    // This also considers the time shift between source and target.
-    transform = tf_buffer->lookupTransform(
-      target_frame_id, target_time,
-      source_frame_id, source_time,
-      fixed_frame_id, transform_tolerance);
-  } catch (tf2::TransformException & ex) {
-    RCLCPP_ERROR(
-      rclcpp::get_logger("getTransform"),
-      "Failed to get \"%s\"->\"%s\" frame transform: %s",
-      source_frame_id.c_str(), target_frame_id.c_str(), ex.what());
-    return false;
-  }
-
-  // Convert TransformStamped to TF2 transform
-  tf2::fromMsg(transform.transform, tf2_transform);
-  return true;
-}
-
-bool validateTwist(const geometry_msgs::msg::Twist & msg)
-{
-  if (std::isinf(msg.linear.x) || std::isnan(msg.linear.x)) {
-    return false;
-  }
-
-  if (std::isinf(msg.linear.y) || std::isnan(msg.linear.y)) {
-    return false;
-  }
-
-  if (std::isinf(msg.linear.z) || std::isnan(msg.linear.z)) {
-    return false;
-  }
-
-  if (std::isinf(msg.angular.x) || std::isnan(msg.angular.x)) {
-    return false;
-  }
-
-  if (std::isinf(msg.angular.y) || std::isnan(msg.angular.y)) {
-    return false;
-  }
-
-  if (std::isinf(msg.angular.z) || std::isnan(msg.angular.z)) {
-    return false;
-  }
-
-  return true;
 }
 
 }  // end namespace nav2_util

@@ -46,7 +46,6 @@
 #include "yaml-cpp/yaml.h"
 #include "tf2/LinearMath/Matrix3x3.h"
 #include "tf2/LinearMath/Quaternion.h"
-#include "nav2_util/occ_grid_values.hpp"
 
 #ifdef _WIN32
 // https://github.com/rtv/Stage/blob/master/replace/dirname.c
@@ -86,7 +85,7 @@ char * dirname(char * path)
     /* This assignment is ill-designed but the XPG specs require to
        return a string containing "." in any case no directory part is
        found and so a static and constant string is required.  */
-    path = reinterpret_cast<char *>(dot);
+    path = const_cast<char *>(&dot[0]);
   }
 
   return path;
@@ -221,20 +220,20 @@ void loadMapFromFile(
       switch (load_parameters.mode) {
         case MapMode::Trinary:
           if (load_parameters.occupied_thresh < occ) {
-            map_cell = nav2_util::OCC_GRID_OCCUPIED;
+            map_cell = 100;
           } else if (occ < load_parameters.free_thresh) {
-            map_cell = nav2_util::OCC_GRID_FREE;
+            map_cell = 0;
           } else {
-            map_cell = nav2_util::OCC_GRID_UNKNOWN;
+            map_cell = -1;
           }
           break;
         case MapMode::Scale:
           if (pixel.alphaQuantum() != OpaqueOpacity) {
-            map_cell = nav2_util::OCC_GRID_UNKNOWN;
+            map_cell = -1;
           } else if (load_parameters.occupied_thresh < occ) {
-            map_cell = nav2_util::OCC_GRID_OCCUPIED;
+            map_cell = 100;
           } else if (occ < load_parameters.free_thresh) {
-            map_cell = nav2_util::OCC_GRID_FREE;
+            map_cell = 0;
           } else {
             map_cell = std::rint(
               (occ - load_parameters.free_thresh) /
@@ -243,12 +242,10 @@ void loadMapFromFile(
           break;
         case MapMode::Raw: {
             double occ_percent = std::round(shade * 255);
-            if (nav2_util::OCC_GRID_FREE <= occ_percent &&
-              occ_percent <= nav2_util::OCC_GRID_OCCUPIED)
-            {
+            if (0 <= occ_percent && occ_percent <= 100) {
               map_cell = static_cast<int8_t>(occ_percent);
             } else {
-              map_cell = nav2_util::OCC_GRID_UNKNOWN;
+              map_cell = -1;
             }
             break;
           }
@@ -505,13 +502,10 @@ void tryWriteMapToFile(
     double yaw, pitch, roll;
     mat.getEulerYPR(yaw, pitch, roll);
 
-    const int file_name_index = mapdatafile.find_last_of("/\\");
-    std::string image_name = mapdatafile.substr(file_name_index + 1);
-
     YAML::Emitter e;
     e << YAML::Precision(3);
     e << YAML::BeginMap;
-    e << YAML::Key << "image" << YAML::Value << image_name;
+    e << YAML::Key << "image" << YAML::Value << mapdatafile;
     e << YAML::Key << "mode" << YAML::Value << map_mode_to_string(save_parameters.mode);
     e << YAML::Key << "resolution" << YAML::Value << map.info.resolution;
     e << YAML::Key << "origin" << YAML::Flow << YAML::BeginSeq << map.info.origin.position.x <<

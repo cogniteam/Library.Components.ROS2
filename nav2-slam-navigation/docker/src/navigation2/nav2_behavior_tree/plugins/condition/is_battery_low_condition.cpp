@@ -33,23 +33,15 @@ IsBatteryLowCondition::IsBatteryLowCondition(
   getInput("battery_topic", battery_topic_);
   getInput("is_voltage", is_voltage_);
   node_ = config().blackboard->get<rclcpp::Node::SharedPtr>("node");
-  callback_group_ = node_->create_callback_group(
-    rclcpp::CallbackGroupType::MutuallyExclusive,
-    false);
-  callback_group_executor_.add_callback_group(callback_group_, node_->get_node_base_interface());
-
-  rclcpp::SubscriptionOptions sub_option;
-  sub_option.callback_group = callback_group_;
   battery_sub_ = node_->create_subscription<sensor_msgs::msg::BatteryState>(
     battery_topic_,
     rclcpp::SystemDefaultsQoS(),
-    std::bind(&IsBatteryLowCondition::batteryCallback, this, std::placeholders::_1),
-    sub_option);
+    std::bind(&IsBatteryLowCondition::batteryCallback, this, std::placeholders::_1));
 }
 
 BT::NodeStatus IsBatteryLowCondition::tick()
 {
-  callback_group_executor_.spin_some();
+  std::lock_guard<std::mutex> lock(mutex_);
   if (is_battery_low_) {
     return BT::NodeStatus::SUCCESS;
   }
@@ -58,6 +50,7 @@ BT::NodeStatus IsBatteryLowCondition::tick()
 
 void IsBatteryLowCondition::batteryCallback(sensor_msgs::msg::BatteryState::SharedPtr msg)
 {
+  std::lock_guard<std::mutex> lock(mutex_);
   if (is_voltage_) {
     is_battery_low_ = msg->voltage <= min_battery_;
   } else {

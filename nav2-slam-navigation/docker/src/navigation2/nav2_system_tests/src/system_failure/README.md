@@ -1,3 +1,3 @@
-# Nav2 System Tests - Failure
+# Navigation2 System Tests - Failure
 
 High level system failures tests

@@ -15,7 +15,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <chrono>
 
 #include "gtest/gtest.h"
 #include "rclcpp/rclcpp.hpp"
@@ -72,9 +71,8 @@ class DummyFootprintSubscriber : public nav2_costmap_2d::FootprintSubscriber
 public:
   DummyFootprintSubscriber(
     nav2_util::LifecycleNode::SharedPtr node,
-    std::string & topic_name,
-    tf2_ros::Buffer & tf)
-  : FootprintSubscriber(node, topic_name, tf)
+    std::string & topic_name)
+  : FootprintSubscriber(node, topic_name, 10.0)
   {}
 
   void setFootprint(geometry_msgs::msg::PolygonStamped::SharedPtr msg)
@@ -88,7 +86,7 @@ class TestCollisionChecker : public nav2_util::LifecycleNode
 {
 public:
   explicit TestCollisionChecker(std::string name)
-  : LifecycleNode(name),
+  : LifecycleNode(name, "", true),
     global_frame_("map")
   {
     // Declare non-plugin specific costmap parameters
@@ -106,13 +104,10 @@ public:
   on_configure(const rclcpp_lifecycle::State & /*state*/)
   {
     RCLCPP_INFO(get_logger(), "Configuring");
-    callback_group_ = create_callback_group(
-      rclcpp::CallbackGroupType::MutuallyExclusive, false);
     tf_buffer_ = std::make_shared<tf2_ros::Buffer>(get_clock());
     auto timer_interface = std::make_shared<tf2_ros::CreateTimerROS>(
-      get_node_base_interface(),
-      get_node_timers_interface(),
-      callback_group_);
+      rclcpp_node_->get_node_base_interface(),
+      rclcpp_node_->get_node_timers_interface());
     tf_buffer_->setCreateTimerInterface(timer_interface);
     tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
     tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(shared_from_this());
@@ -126,27 +121,23 @@ public:
 
     footprint_sub_ = std::make_shared<DummyFootprintSubscriber>(
       shared_from_this(),
-      footprint_topic,
-      *tf_buffer_);
+      footprint_topic);
 
     collision_checker_ = std::make_unique<nav2_costmap_2d::CostmapTopicCollisionChecker>(
-      *costmap_sub_, *footprint_sub_, get_name());
+      *costmap_sub_, *footprint_sub_, *tf_buffer_, get_name(), "map");
 
     layers_ = new nav2_costmap_2d::LayeredCostmap("map", false, false);
     // Add Static Layer
     std::shared_ptr<nav2_costmap_2d::StaticLayer> slayer = nullptr;
-    addStaticLayer(*layers_, *tf_buffer_, shared_from_this(), slayer, callback_group_);
+    addStaticLayer(*layers_, *tf_buffer_, shared_from_this(), slayer);
 
     while (!slayer->isCurrent()) {
       rclcpp::spin_some(this->get_node_base_interface());
     }
     // Add Inflation Layer
     std::shared_ptr<nav2_costmap_2d::InflationLayer> ilayer = nullptr;
-    addInflationLayer(*layers_, *tf_buffer_, shared_from_this(), ilayer, callback_group_);
+    addInflationLayer(*layers_, *tf_buffer_, shared_from_this(), ilayer);
 
-    executor_ = std::make_shared<rclcpp::executors::SingleThreadedExecutor>();
-    executor_->add_callback_group(callback_group_, get_node_base_interface());
-    executor_thread_ = std::make_unique<nav2_util::NodeThread>(executor_);
     return nav2_util::CallbackReturn::SUCCESS;
   }
 
@@ -171,7 +162,6 @@ public:
     delete layers_;
     layers_ = nullptr;
 
-    executor_thread_.reset();
     tf_buffer_.reset();
 
     footprint_sub_.reset();
@@ -184,14 +174,13 @@ public:
 
   bool testPose(double x, double y, double theta)
   {
-    rclcpp::Time stamp = now();
-    publishPose(x, y, theta, stamp);
+    publishPose(x, y, theta);
     geometry_msgs::msg::Pose2D pose;
     pose.x = x;
     pose.y = y;
     pose.theta = theta;
 
-    setPose(x, y, theta, stamp);
+    setPose(x, y, theta);
     publishFootprint();
     publishCostmap();
     rclcpp::sleep_for(std::chrono::milliseconds(1000));
@@ -208,25 +197,23 @@ public:
   }
 
 protected:
-  void setPose(double x, double y, double theta, const rclcpp::Time & stamp)
+  void setPose(double x, double y, double theta)
   {
     x_ = x;
     y_ = y;
     yaw_ = theta;
-    stamp_ = stamp;
 
     current_pose_.pose.position.x = x_;
     current_pose_.pose.position.y = y_;
     current_pose_.pose.position.z = 0;
     current_pose_.pose.orientation = orientationAroundZAxis(yaw_);
-    current_pose_.header.stamp = stamp;
   }
 
   void publishFootprint()
   {
     geometry_msgs::msg::PolygonStamped oriented_footprint;
     oriented_footprint.header.frame_id = global_frame_;
-    oriented_footprint.header.stamp = stamp_;
+    oriented_footprint.header.stamp = now();
     nav2_costmap_2d::transformFootprint(x_, y_, yaw_, footprint_, oriented_footprint);
     footprint_sub_->setFootprint(
       std::make_shared<geometry_msgs::msg::PolygonStamped>(oriented_footprint));
@@ -239,11 +226,11 @@ protected:
       std::make_shared<nav2_msgs::msg::Costmap>(toCostmapMsg(layers_->getCostmap())));
   }
 
-  void publishPose(double x, double y, double /*theta*/, const rclcpp::Time & stamp)
+  void publishPose(double x, double y, double /*theta*/)
   {
     geometry_msgs::msg::TransformStamped tf_stamped;
     tf_stamped.header.frame_id = "map";
-    tf_stamped.header.stamp = stamp;
+    tf_stamped.header.stamp = now() + rclcpp::Duration(1.0);
     tf_stamped.child_frame_id = "base_link";
     tf_stamped.transform.translation.x = x;
     tf_stamped.transform.translation.y = y;
@@ -263,7 +250,7 @@ protected:
 
     nav2_msgs::msg::Costmap costmap_msg;
     costmap_msg.header.frame_id = global_frame_;
-    costmap_msg.header.stamp = stamp_;
+    costmap_msg.header.stamp = now();
     costmap_msg.metadata.layer = "master";
     costmap_msg.metadata.resolution = resolution;
     costmap_msg.metadata.size_x = costmap->getSizeInCellsX();
@@ -285,10 +272,6 @@ protected:
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
   std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
 
-  rclcpp::CallbackGroup::SharedPtr callback_group_;
-  rclcpp::executors::SingleThreadedExecutor::SharedPtr executor_;
-  std::unique_ptr<nav2_util::NodeThread> executor_thread_;
-
   std::shared_ptr<DummyCostmapSubscriber> costmap_sub_;
   std::shared_ptr<DummyFootprintSubscriber> footprint_sub_;
   std::unique_ptr<nav2_costmap_2d::CostmapTopicCollisionChecker> collision_checker_;
@@ -296,7 +279,6 @@ protected:
   nav2_costmap_2d::LayeredCostmap * layers_{nullptr};
   std::string global_frame_;
   double x_, y_, yaw_;
-  rclcpp::Time stamp_;
   geometry_msgs::msg::PoseStamped current_pose_;
   std::vector<geometry_msgs::msg::Point> footprint_;
 };
@@ -322,7 +304,7 @@ protected:
   std::shared_ptr<TestCollisionChecker> collision_checker_;
 };
 
-TEST_F(TestNode, unknownSpace)
+TEST_F(TestNode, uknownSpace)
 {
   collision_checker_->setFootprint(0, 1);
 

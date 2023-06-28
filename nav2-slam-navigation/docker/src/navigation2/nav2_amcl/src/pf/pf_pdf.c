@@ -34,7 +34,7 @@
 
 #include "nav2_amcl/pf/pf_pdf.hpp"
 
-#include "nav2_amcl/portable_utils.hpp"
+#include "portable_utils.h"
 
 // Random number generator seed value
 static unsigned int pf_pdf_seed;

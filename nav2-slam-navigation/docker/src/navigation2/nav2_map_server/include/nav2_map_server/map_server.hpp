@@ -38,9 +38,8 @@ class MapServer : public nav2_util::LifecycleNode
 public:
   /**
    * @brief A constructor for nav2_map_server::MapServer
-   * @param options Additional options to control creation of the node.
    */
-  explicit MapServer(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
+  MapServer();
 
   /**
    * @brief A Destructor for nav2_map_server::MapServer
@@ -138,9 +137,6 @@ protected:
 
   // The message to publish on the occupancy grid topic
   nav_msgs::msg::OccupancyGrid msg_;
-
-  // true if msg_ was initialized
-  bool map_available_;
 };
 
 }  // namespace nav2_map_server

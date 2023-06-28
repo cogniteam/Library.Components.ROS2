@@ -24,72 +24,27 @@ FollowPathAction::FollowPathAction(
   const std::string & xml_tag_name,
   const std::string & action_name,
   const BT::NodeConfiguration & conf)
-: BtActionNode<Action>(xml_tag_name, action_name, conf)
+: BtActionNode<nav2_msgs::action::FollowPath>(xml_tag_name, action_name, conf)
 {
+  config().blackboard->set("path_updated", false);
 }
 
 void FollowPathAction::on_tick()
 {
   getInput("path", goal_.path);
   getInput("controller_id", goal_.controller_id);
-  getInput("goal_checker_id", goal_.goal_checker_id);
-  getInput("progress_checker_id", goal_.progress_checker_id);
 }
 
-BT::NodeStatus FollowPathAction::on_success()
+void FollowPathAction::on_wait_for_result()
 {
-  setOutput("error_code_id", ActionGoal::NONE);
-  return BT::NodeStatus::SUCCESS;
-}
+  // Check if the goal has been updated
+  if (config().blackboard->get<bool>("path_updated")) {
+    // Reset the flag in the blackboard
+    config().blackboard->set("path_updated", false);
 
-BT::NodeStatus FollowPathAction::on_aborted()
-{
-  setOutput("error_code_id", result_.result->error_code);
-  return BT::NodeStatus::FAILURE;
-}
-
-BT::NodeStatus FollowPathAction::on_cancelled()
-{
-  // Set empty error code, action was cancelled
-  setOutput("error_code_id", ActionGoal::NONE);
-  return BT::NodeStatus::SUCCESS;
-}
-
-void FollowPathAction::on_wait_for_result(
-  std::shared_ptr<const Action::Feedback>/*feedback*/)
-{
-  // Grab the new path
-  nav_msgs::msg::Path new_path;
-  getInput("path", new_path);
-
-  // Check if it is not same with the current one
-  if (goal_.path != new_path) {
+    // Grab the new goal and set the flag so that we send the new goal to
     // the action server on the next loop iteration
-    goal_.path = new_path;
-    goal_updated_ = true;
-  }
-
-  std::string new_controller_id;
-  getInput("controller_id", new_controller_id);
-
-  if (goal_.controller_id != new_controller_id) {
-    goal_.controller_id = new_controller_id;
-    goal_updated_ = true;
-  }
-
-  std::string new_goal_checker_id;
-  getInput("goal_checker_id", new_goal_checker_id);
-
-  if (goal_.goal_checker_id != new_goal_checker_id) {
-    goal_.goal_checker_id = new_goal_checker_id;
-    goal_updated_ = true;
-  }
-
-  std::string new_progress_checker_id;
-  getInput("progress_checker_id", new_progress_checker_id);
-
-  if (goal_.progress_checker_id != new_progress_checker_id) {
-    goal_.progress_checker_id = new_progress_checker_id;
+    getInput("path", goal_.path);
     goal_updated_ = true;
   }
 }

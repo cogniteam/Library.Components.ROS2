@@ -52,7 +52,7 @@
 #include "tf2/transform_datatypes.h"
 #include "nav2_util/lifecycle_node.hpp"
 #include "tf2/LinearMath/Quaternion.h"
-#include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.h"
 
 namespace nav2_costmap_2d
 {
@@ -67,7 +67,7 @@ public:
    * @brief  Constructor for the Costmap2DPublisher
    */
   Costmap2DPublisher(
-    const nav2_util::LifecycleNode::WeakPtr & parent,
+    nav2_util::LifecycleNode::SharedPtr ros_node,
     Costmap2D * costmap,
     std::string global_frame,
     std::string topic_name,
@@ -78,34 +78,19 @@ public:
    */
   ~Costmap2DPublisher();
 
-  /**
-   * @brief Configure node
-   */
   void on_configure() {}
-
-  /**
-   * @brief Activate node
-   */
   void on_activate()
   {
     costmap_pub_->on_activate();
     costmap_update_pub_->on_activate();
     costmap_raw_pub_->on_activate();
   }
-
-  /**
-   * @brief deactivate node
-   */
   void on_deactivate()
   {
     costmap_pub_->on_deactivate();
     costmap_update_pub_->on_deactivate();
     costmap_raw_pub_->on_deactivate();
   }
-
-  /**
-   * @brief Cleanup node
-   */
   void on_cleanup() {}
 
   /** @brief Include the given bounds in the changed-rectangle. */
@@ -145,9 +130,7 @@ private:
     const std::shared_ptr<nav2_msgs::srv::GetCostmap::Request> request,
     const std::shared_ptr<nav2_msgs::srv::GetCostmap::Response> response);
 
-  rclcpp::Clock::SharedPtr clock_;
-  rclcpp::Logger logger_{rclcpp::get_logger("nav2_costmap_2d")};
-
+  nav2_util::LifecycleNode::SharedPtr node_;
   Costmap2D * costmap_;
   std::string global_frame_;
   std::string topic_name_;

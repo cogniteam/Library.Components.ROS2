@@ -117,7 +117,7 @@ class RewrittenYaml(launch.Substitution):
         for path in yaml_paths:
             if path in param_rewrites:
                 # this is an absolute path (ex. 'key.keyA.keyB.val')
-                rewrite_val = self.convert(param_rewrites[path])
+                rewrite_val = param_rewrites[path]
                 yaml_keys = path.split('.')
                 yaml = self.updateYamlPathVals(yaml, yaml_keys, rewrite_val)
 
@@ -157,11 +157,11 @@ class RewrittenYaml(launch.Substitution):
             return paths
         pn = p
         if p != "":
-            pn += joinchar
+            pn += '.'
         if isinstance(d, dict):
             for k in d:
                 v = d[k]
-                self.pathify(v, str(pn) + str(k), paths, joinchar=joinchar)
+                self.pathify(v, pn + k, paths, joinchar=joinchar)
         elif isinstance(d, list):
             for idx, e in enumerate(d):
                 self.pathify(e, pn + str(idx), paths, joinchar=joinchar)

@@ -23,65 +23,23 @@
 namespace nav2_behavior_tree
 {
 
-/**
- * @brief A nav2_behavior_tree::BtActionNode class that wraps nav2_msgs::action::Spin
- */
 class SpinAction : public BtActionNode<nav2_msgs::action::Spin>
 {
-  using Action = nav2_msgs::action::Spin;
-  using ActionResult = Action::Result;
-  using ActionGoal = Action::Goal;
-
 public:
-  /**
-   * @brief A constructor for nav2_behavior_tree::SpinAction
-   * @param xml_tag_name Name for the XML tag for this node
-   * @param action_name Action name this node creates a client for
-   * @param conf BT node configuration
-   */
   SpinAction(
     const std::string & xml_tag_name,
     const std::string & action_name,
     const BT::NodeConfiguration & conf);
 
-  /**
-   * @brief Function to perform some user-defined operation on tick
-   */
   void on_tick() override;
 
-  /**
-   * @brief Creates list of BT ports
-   * @return BT::PortsList Containing basic ports along with node-specific ports
-   */
   static BT::PortsList providedPorts()
   {
     return providedBasicPorts(
       {
-        BT::InputPort<double>("spin_dist", 1.57, "Spin distance"),
-        BT::InputPort<double>("time_allowance", 10.0, "Allowed time for spinning"),
-        BT::InputPort<bool>("is_recovery", true, "True if recovery"),
-        BT::OutputPort<ActionResult::_error_code_type>(
-          "error_code_id", "The spin behavior error code")
+        BT::InputPort<double>("spin_dist", 1.57, "Spin distance")
       });
   }
-
-  /**
-   * @brief Function to perform some user-defined operation upon successful completion of the action
-   */
-  BT::NodeStatus on_success() override;
-
-  /**
-   * @brief Function to perform some user-defined operation upon abortion of the action
-   */
-  BT::NodeStatus on_aborted() override;
-
-  /**
-   * @brief Function to perform some user-defined operation upon cancellation of the action
-   */
-  BT::NodeStatus on_cancelled() override;
-
-private:
-  bool is_recovery_;
 };
 
 }  // namespace nav2_behavior_tree

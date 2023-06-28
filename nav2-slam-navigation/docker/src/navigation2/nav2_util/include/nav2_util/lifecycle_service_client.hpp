@@ -22,7 +22,6 @@
 #include "lifecycle_msgs/srv/change_state.hpp"
 #include "lifecycle_msgs/srv/get_state.hpp"
 #include "nav2_util/service_client.hpp"
-#include "nav2_util/node_utils.hpp"
 
 namespace nav2_util
 {
@@ -40,7 +39,7 @@ public:
   /**
    * Throws std::runtime_error on failure
    */
-  bool change_state(
+  void change_state(
     const uint8_t transition,  // takes a lifecycle_msgs::msg::Transition id
     const std::chrono::seconds timeout);
 
@@ -51,7 +50,7 @@ public:
   /**
    * Throws std::runtime_error on failure
    */
-  uint8_t get_state(const std::chrono::seconds timeout = std::chrono::seconds(2));
+  uint8_t get_state(const std::chrono::seconds timeout = std::chrono::seconds::max());
 
 protected:
   rclcpp::Node::SharedPtr node_;

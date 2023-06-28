@@ -25,47 +25,37 @@
 
 namespace nav2_costmap_2d
 {
-/**
- * @class CostmapSubscriber
- * @brief Subscribes to the costmap via a ros topic
- */
+
 class CostmapSubscriber
 {
 public:
-  /**
-   * @brief A constructor
-   */
   CostmapSubscriber(
-    const nav2_util::LifecycleNode::WeakPtr & parent,
+    nav2_util::LifecycleNode::SharedPtr node,
     const std::string & topic_name);
 
-  /**
-   * @brief A constructor
-   */
   CostmapSubscriber(
-    const rclcpp::Node::WeakPtr & parent,
+    rclcpp::Node::SharedPtr node,
     const std::string & topic_name);
 
-  /**
-   * @brief A destructor
-   */
+  CostmapSubscriber(
+    const rclcpp::node_interfaces::NodeBaseInterface::SharedPtr node_base,
+    const rclcpp::node_interfaces::NodeTopicsInterface::SharedPtr node_topics,
+    const rclcpp::node_interfaces::NodeLoggingInterface::SharedPtr node_logging,
+    const std::string & topic_name);
+
   ~CostmapSubscriber() {}
 
-  /**
-   * @brief A Get the costmap from topic
-   */
   std::shared_ptr<Costmap2D> getCostmap();
 
-  /**
-   * @brief Convert an occ grid message into a costmap object
-   */
+protected:
+  // Interfaces used for logging and creating publishers and subscribers
+  rclcpp::node_interfaces::NodeBaseInterface::SharedPtr node_base_;
+  rclcpp::node_interfaces::NodeTopicsInterface::SharedPtr node_topics_;
+  rclcpp::node_interfaces::NodeLoggingInterface::SharedPtr node_logging_;
+
   void toCostmap2D();
-  /**
-   * @brief Callback for the costmap topic
-   */
   void costmapCallback(const nav2_msgs::msg::Costmap::SharedPtr msg);
 
-protected:
   std::shared_ptr<Costmap2D> costmap_;
   nav2_msgs::msg::Costmap::SharedPtr costmap_msg_;
   std::string topic_name_;

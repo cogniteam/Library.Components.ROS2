@@ -19,21 +19,25 @@
  *
  */
 
-#include "nav2_amcl/motion_model/differential_motion_model.hpp"
+
+#include <sys/types.h>
+#include <math.h>
+#include <algorithm>
+
+#include "nav2_amcl/motion_model/motion_model.hpp"
+#include "nav2_amcl/angleutils.hpp"
 
 namespace nav2_amcl
 {
 
-void
-DifferentialMotionModel::initialize(
-  double alpha1, double alpha2, double alpha3, double alpha4,
-  double alpha5)
+DifferentialMotionModel::DifferentialMotionModel(
+  double alpha1, double alpha2, double alpha3,
+  double alpha4)
 {
   alpha1_ = alpha1;
   alpha2_ = alpha2;
   alpha3_ = alpha3;
   alpha4_ = alpha4;
-  alpha5_ = alpha5;
 }
 
 void
@@ -112,6 +116,3 @@ DifferentialMotionModel::odometryUpdate(
 }
 
 }  // namespace nav2_amcl
-
-#include <pluginlib/class_list_macros.hpp>
-PLUGINLIB_EXPORT_CLASS(nav2_amcl::DifferentialMotionModel, nav2_amcl::MotionModel)

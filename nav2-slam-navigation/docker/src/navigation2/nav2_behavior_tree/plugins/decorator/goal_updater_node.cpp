@@ -33,22 +33,13 @@ GoalUpdater::GoalUpdater(
   const BT::NodeConfiguration & conf)
 : BT::DecoratorNode(name, conf)
 {
-  node_ = config().blackboard->get<rclcpp::Node::SharedPtr>("node");
-  callback_group_ = node_->create_callback_group(
-    rclcpp::CallbackGroupType::MutuallyExclusive,
-    false);
-  callback_group_executor_.add_callback_group(callback_group_, node_->get_node_base_interface());
+  auto node = config().blackboard->get<rclcpp::Node::SharedPtr>("node");
 
   std::string goal_updater_topic;
-  node_->get_parameter_or<std::string>("goal_updater_topic", goal_updater_topic, "goal_update");
+  node->get_parameter_or<std::string>("goal_updater_topic", goal_updater_topic, "goal_update");
 
-  rclcpp::SubscriptionOptions sub_option;
-  sub_option.callback_group = callback_group_;
-  goal_sub_ = node_->create_subscription<geometry_msgs::msg::PoseStamped>(
-    goal_updater_topic,
-    10,
-    std::bind(&GoalUpdater::callback_updated_goal, this, _1),
-    sub_option);
+  goal_sub_ = node->create_subscription<geometry_msgs::msg::PoseStamped>(
+    goal_updater_topic, 10, std::bind(&GoalUpdater::callback_updated_goal, this, _1));
 }
 
 inline BT::NodeStatus GoalUpdater::tick()
@@ -56,8 +47,6 @@ inline BT::NodeStatus GoalUpdater::tick()
   geometry_msgs::msg::PoseStamped goal;
 
   getInput("input_goal", goal);
-
-  callback_group_executor_.spin_some();
 
   if (rclcpp::Time(last_goal_received_.header.stamp) > rclcpp::Time(goal.header.stamp)) {
     goal = last_goal_received_;

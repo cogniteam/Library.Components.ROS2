@@ -20,7 +20,7 @@
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "utils/test_action_server.hpp"
+#include "../../test_action_server.hpp"
 #include "nav2_behavior_tree/plugins/action/spin_action.hpp"
 
 class SpinActionServer : public TestActionServer<nav2_msgs::action::Spin>
@@ -32,19 +32,9 @@ public:
 
 protected:
   void execute(
-    const typename std::shared_ptr<rclcpp_action::ServerGoalHandle<nav2_msgs::action::Spin>>
-    goal_handle)
+    const typename std::shared_ptr<rclcpp_action::ServerGoalHandle<nav2_msgs::action::Spin>>)
   override
-  {
-    nav2_msgs::action::Spin::Result::SharedPtr result =
-      std::make_shared<nav2_msgs::action::Spin::Result>();
-    bool return_success = getReturnSuccess();
-    if (return_success) {
-      goal_handle->succeed(result);
-    } else {
-      goal_handle->abort(result);
-    }
-  }
+  {}
 };
 
 class SpinActionTestFixture : public ::testing::Test
@@ -64,10 +54,8 @@ public:
       node_);
     config_->blackboard->set<std::chrono::milliseconds>(
       "server_timeout",
-      std::chrono::milliseconds(20));
-    config_->blackboard->set<std::chrono::milliseconds>(
-      "bt_loop_duration",
       std::chrono::milliseconds(10));
+    config_->blackboard->set<bool>("path_updated", false);
     config_->blackboard->set<bool>("initial_pose_received", false);
     config_->blackboard->set<int>("number_recoveries", 0);
 
@@ -152,39 +140,7 @@ TEST_F(SpinActionTestFixture, test_tick)
 
   tree_ = std::make_shared<BT::Tree>(factory_->createTreeFromText(xml_txt, config_->blackboard));
   EXPECT_EQ(config_->blackboard->get<int>("number_recoveries"), 0);
-
-  while (tree_->rootNode()->status() != BT::NodeStatus::SUCCESS) {
-    tree_->rootNode()->executeTick();
-  }
-
-  EXPECT_EQ(tree_->rootNode()->status(), BT::NodeStatus::SUCCESS);
-  EXPECT_EQ(config_->blackboard->get<int>("number_recoveries"), 1);
-  EXPECT_EQ(action_server_->getCurrentGoal()->target_yaw, 3.14f);
-}
-
-TEST_F(SpinActionTestFixture, test_failure)
-{
-  std::string xml_txt =
-    R"(
-      <root main_tree_to_execute = "MainTree" >
-        <BehaviorTree ID="MainTree">
-            <Spin spin_dist="3.14" />
-        </BehaviorTree>
-      </root>)";
-
-  tree_ = std::make_shared<BT::Tree>(factory_->createTreeFromText(xml_txt, config_->blackboard));
-  action_server_->setReturnSuccess(false);
-
-  EXPECT_EQ(config_->blackboard->get<int>("number_recoveries"), 0);
-  while (tree_->rootNode()->status() != BT::NodeStatus::SUCCESS &&
-    tree_->rootNode()->status() != BT::NodeStatus::FAILURE)
-  {
-    tree_->rootNode()->executeTick();
-  }
-
-  std::cout << tree_->rootNode()->status();
-
-  EXPECT_EQ(tree_->rootNode()->status(), BT::NodeStatus::FAILURE);
+  EXPECT_EQ(tree_->rootNode()->executeTick(), BT::NodeStatus::RUNNING);
   EXPECT_EQ(config_->blackboard->get<int>("number_recoveries"), 1);
   EXPECT_EQ(action_server_->getCurrentGoal()->target_yaw, 3.14f);
 }

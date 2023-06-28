@@ -15,6 +15,7 @@
 #include <experimental/filesystem>
 #include <string>
 #include <memory>
+#include <chrono>
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav2_map_server/map_io.hpp"
@@ -22,6 +23,7 @@
 
 #define TEST_DIR TEST_DIRECTORY
 
+using namespace std::chrono_literals;
 using namespace nav2_map_server;  // NOLINT
 using std::experimental::filesystem::path;
 
@@ -32,8 +34,7 @@ public:
   : Node("map_publisher")
   {
     std::string pub_map_file = path(TEST_DIR) / path(g_valid_yaml_file);
-    nav_msgs::msg::OccupancyGrid msg;
-    LOAD_MAP_STATUS status = loadMapFromYaml(pub_map_file, msg);
+    LOAD_MAP_STATUS status = loadMapFromYaml(pub_map_file, msg_);
     if (status != LOAD_MAP_SUCCESS) {
       RCLCPP_ERROR(get_logger(), "Can not load %s map file", pub_map_file.c_str());
       return;
@@ -42,11 +43,19 @@ public:
     map_pub_ = create_publisher<nav_msgs::msg::OccupancyGrid>(
       "map",
       rclcpp::QoS(rclcpp::KeepLast(1)).transient_local().reliable());
-    map_pub_->publish(msg);
+
+    timer_ = create_wall_timer(300ms, std::bind(&TestPublisher::mapPublishCallback, this));
   }
 
 protected:
+  void mapPublishCallback()
+  {
+    map_pub_->publish(msg_);
+  }
+
   rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr map_pub_;
+  rclcpp::TimerBase::SharedPtr timer_;
+  nav_msgs::msg::OccupancyGrid msg_;
 };
 
 int main(int argc, char ** argv)

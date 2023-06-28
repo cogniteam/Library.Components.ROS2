@@ -12,57 +12,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef NAV2_BEHAVIOR_TREE__BACK_UP_ACTION_HPP_
+#define NAV2_BEHAVIOR_TREE__BACK_UP_ACTION_HPP_
+
 #include <string>
 #include <memory>
+#include <cmath>
 
-#include "nav2_behavior_tree/plugins/action/back_up_action.hpp"
+#include "nav2_behavior_tree/bt_action_node.hpp"
+#include "nav2_msgs/action/back_up.hpp"
 
 namespace nav2_behavior_tree
 {
 
-BackUpAction::BackUpAction(
-  const std::string & xml_tag_name,
-  const std::string & action_name,
-  const BT::NodeConfiguration & conf)
-: BtActionNode<nav2_msgs::action::BackUp>(xml_tag_name, action_name, conf)
+class BackUpAction : public BtActionNode<nav2_msgs::action::BackUp>
 {
-  double dist;
-  getInput("backup_dist", dist);
-  double speed;
-  getInput("backup_speed", speed);
-  double time_allowance;
-  getInput("time_allowance", time_allowance);
+public:
+  BackUpAction(
+    const std::string & xml_tag_name,
+    const std::string & action_name,
+    const BT::NodeConfiguration & conf)
+  : BtActionNode<nav2_msgs::action::BackUp>(xml_tag_name, action_name, conf)
+  {
+    double dist;
+    getInput("backup_dist", dist);
+    double speed;
+    getInput("backup_speed", speed);
 
-  // Populate the input message
-  goal_.target.x = dist;
-  goal_.target.y = 0.0;
-  goal_.target.z = 0.0;
-  goal_.speed = speed;
-  goal_.time_allowance = rclcpp::Duration::from_seconds(time_allowance);
-}
+    // silently fix, vector direction determined by distance sign
+    if (speed < 0.0) {
+      speed *= -1.0;
+    }
 
-void BackUpAction::on_tick()
-{
-  increment_recovery_count();
-}
+    // Populate the input message
+    goal_.target.x = dist;
+    goal_.target.y = 0.0;
+    goal_.target.z = 0.0;
+    goal_.speed = speed;
+  }
 
-BT::NodeStatus BackUpAction::on_success()
-{
-  setOutput("error_code_id", ActionGoal::NONE);
-  return BT::NodeStatus::SUCCESS;
-}
+  void on_tick() override
+  {
+    increment_recovery_count();
+  }
 
-BT::NodeStatus BackUpAction::on_aborted()
-{
-  setOutput("error_code_id", result_.result->error_code);
-  return BT::NodeStatus::FAILURE;
-}
-
-BT::NodeStatus BackUpAction::on_cancelled()
-{
-  setOutput("error_code_id", ActionGoal::NONE);
-  return BT::NodeStatus::SUCCESS;
-}
+  static BT::PortsList providedPorts()
+  {
+    return providedBasicPorts(
+      {
+        BT::InputPort<double>("backup_dist", -0.15, "Distance to backup"),
+        BT::InputPort<double>("backup_speed", 0.025, "Speed at which to backup")
+      });
+  }
+};
 
 }  // namespace nav2_behavior_tree
 
@@ -73,8 +75,10 @@ BT_REGISTER_NODES(factory)
     [](const std::string & name, const BT::NodeConfiguration & config)
     {
       return std::make_unique<nav2_behavior_tree::BackUpAction>(
-        name, "backup", config);
+        name, "back_up", config);
     };
 
   factory.registerBuilder<nav2_behavior_tree::BackUpAction>("BackUp", builder);
 }
+
+#endif  // NAV2_BEHAVIOR_TREE__BACK_UP_ACTION_HPP_

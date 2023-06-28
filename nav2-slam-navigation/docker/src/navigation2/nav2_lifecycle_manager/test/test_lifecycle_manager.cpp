@@ -82,12 +82,11 @@ private:
 TEST(LifecycleClientTest, BasicTest)
 {
   LifecycleClientTestFixture fix;
-  auto node = std::make_shared<rclcpp::Node>("lifecycle_manager_test_service_client");
-  nav2_lifecycle_manager::LifecycleManagerClient client("lifecycle_manager_test", node);
+  nav2_lifecycle_manager::LifecycleManagerClient client("lifecycle_manager_test");
+  EXPECT_TRUE(client.startup());
   EXPECT_EQ(
     nav2_lifecycle_manager::SystemStatus::TIMEOUT,
     client.is_active(std::chrono::nanoseconds(1000)));
-  EXPECT_TRUE(client.startup());
   EXPECT_EQ(
     nav2_lifecycle_manager::SystemStatus::ACTIVE,
     client.is_active(std::chrono::nanoseconds(1000000000)));
@@ -105,8 +104,7 @@ TEST(LifecycleClientTest, BasicTest)
 
 TEST(LifecycleClientTest, WithoutFixture)
 {
-  auto node = std::make_shared<rclcpp::Node>("lifecycle_manager_test_service_client");
-  nav2_lifecycle_manager::LifecycleManagerClient client("lifecycle_manager_test", node);
+  nav2_lifecycle_manager::LifecycleManagerClient client("lifecycle_manager_test");
   EXPECT_EQ(
     nav2_lifecycle_manager::SystemStatus::TIMEOUT,
     client.is_active(std::chrono::nanoseconds(1000)));

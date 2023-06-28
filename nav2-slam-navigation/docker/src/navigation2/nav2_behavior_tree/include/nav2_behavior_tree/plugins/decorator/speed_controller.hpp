@@ -18,7 +18,6 @@
 
 #include <memory>
 #include <string>
-#include <vector>
 #include <deque>
 
 #include "nav_msgs/msg/odometry.hpp"
@@ -29,27 +28,14 @@
 namespace nav2_behavior_tree
 {
 
-/**
- * @brief A BT::DecoratorNode that ticks its child every at a rate proportional to
- * the speed of the robot. If the robot travels faster, this node will tick its child at a
- * higher frequency and reduce the tick frequency if the robot slows down
- */
 class SpeedController : public BT::DecoratorNode
 {
 public:
-  /**
-   * @brief A constructor for nav2_behavior_tree::SpeedController
-   * @param name Name for the XML tag for this node
-   * @param conf BT node configuration
-   */
   SpeedController(
     const std::string & name,
     const BT::NodeConfiguration & conf);
 
-  /**
-   * @brief Creates list of BT ports
-   * @return BT::PortsList Containing node-specific ports
-   */
+  // Any BT node that accepts parameters must provide a requiredNodeParameters method
   static BT::PortsList providedPorts()
   {
     return {
@@ -57,20 +43,14 @@ public:
       BT::InputPort<double>("max_rate", 1.0, "Maximum rate"),
       BT::InputPort<double>("min_speed", 0.0, "Minimum speed"),
       BT::InputPort<double>("max_speed", 0.5, "Maximum speed"),
+      BT::InputPort<double>("filter_duration", 0.3, "Duration (secs) for velocity smoothing filter")
     };
   }
 
 private:
-  /**
-   * @brief The main override required by a BT action
-   * @return BT::NodeStatus Status of tick execution
-   */
   BT::NodeStatus tick() override;
 
-  /**
-   * @brief Scale the rate based speed
-   * @return double Rate scaled by speed limits and clamped
-   */
+  // Scale the rate based speed
   inline double getScaledRate(const double & speed)
   {
     return std::max(
@@ -79,9 +59,7 @@ private:
         max_rate_), min_rate_);
   }
 
-  /**
-   * @brief Update period based on current smoothed speed and reset timer
-   */
+  // Update period based on current smoothed speed and reset timer
   inline void updatePeriod()
   {
     auto velocity = odom_smoother_->getTwist();
@@ -115,7 +93,6 @@ private:
 
   // current goal
   geometry_msgs::msg::PoseStamped goal_;
-  std::vector<geometry_msgs::msg::PoseStamped> goals_;
 };
 
 }  // namespace nav2_behavior_tree

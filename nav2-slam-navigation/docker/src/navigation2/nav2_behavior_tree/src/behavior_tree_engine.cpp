@@ -44,24 +44,17 @@ BehaviorTreeEngine::run(
   BT::NodeStatus result = BT::NodeStatus::RUNNING;
 
   // Loop until something happens with ROS or the node completes
-  try {
-    while (rclcpp::ok() && result == BT::NodeStatus::RUNNING) {
-      if (cancelRequested()) {
-        tree->rootNode()->halt();
-        return BtStatus::CANCELED;
-      }
-
-      result = tree->tickRoot();
-
-      onLoop();
-
-      loopRate.sleep();
+  while (rclcpp::ok() && result == BT::NodeStatus::RUNNING) {
+    if (cancelRequested()) {
+      tree->rootNode()->halt();
+      return BtStatus::CANCELED;
     }
-  } catch (const std::exception & ex) {
-    RCLCPP_ERROR(
-      rclcpp::get_logger("BehaviorTreeEngine"),
-      "Behavior tree threw exception: %s. Exiting with failure.", ex.what());
-    return BtStatus::FAILED;
+
+    result = tree->tickRoot();
+
+    onLoop();
+
+    loopRate.sleep();
   }
 
   return (result == BT::NodeStatus::SUCCESS) ? BtStatus::SUCCEEDED : BtStatus::FAILED;
@@ -83,14 +76,29 @@ BehaviorTreeEngine::createTreeFromFile(
   return factory_.createTreeFromFile(file_path, blackboard);
 }
 
+void
+BehaviorTreeEngine::addGrootMonitoring(
+  BT::Tree * tree,
+  uint16_t publisher_port,
+  uint16_t server_port,
+  uint16_t max_msg_per_second)
+{
+  // This logger publish status changes using ZeroMQ. Used by Groot
+  groot_monitor_ = std::make_unique<BT::PublisherZMQ>(
+    *tree, max_msg_per_second, publisher_port,
+    server_port);
+}
+
+void
+BehaviorTreeEngine::resetGrootMonitor()
+{
+  groot_monitor_.reset();
+}
+
 // In order to re-run a Behavior Tree, we must be able to reset all nodes to the initial state
 void
 BehaviorTreeEngine::haltAllActions(BT::TreeNode * root_node)
 {
-  if (!root_node) {
-    return;
-  }
-
   // this halt signal should propagate through the entire tree.
   root_node->halt();
 

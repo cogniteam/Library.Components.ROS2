@@ -45,41 +45,22 @@
 namespace nav2_costmap_2d
 {
 
-/**
- * @class CostmapLayer
- * @brief A costmap layer base class for costmap plugin layers.
- * Rather than just a layer, this object also contains an internal
- * costmap object to populate and maintain state.
- */
 class CostmapLayer : public Layer, public Costmap2D
 {
 public:
-  /**
-   * @brief CostmapLayer constructor
-   */
   CostmapLayer()
   : has_extra_bounds_(false),
     extra_min_x_(1e6), extra_max_x_(-1e6),
     extra_min_y_(1e6), extra_max_y_(-1e6) {}
 
-  /**
-   * @brief If layer is discrete
-   */
   bool isDiscretized()
   {
     return true;
   }
 
-  /**
-   * @brief Match the size of the master costmap
-   */
   virtual void matchSize();
 
-  /**
-   * @brief Clear an are in the costmap with the given dimension
-   * if invert, then clear everything except these dimensions
-   */
-  virtual void clearArea(int start_x, int start_y, int end_x, int end_y, bool invert);
+  virtual void clearArea(int start_x, int start_y, int end_x, int end_y);
 
   /**
    * If an external source changes values in the costmap,
@@ -132,19 +113,6 @@ protected:
    * Updates the master_grid within the specified
    * bounding box using this layer's values.
    *
-   * Sets the new value to the maximum of the master_grid's value
-   * and this layer's value. If the master value is NO_INFORMATION,
-   * it is NOT overwritten. If the layer's value is NO_INFORMATION,
-   * the master value does not change.
-   */
-  void updateWithMaxWithoutUnknownOverwrite(
-    nav2_costmap_2d::Costmap2D & master_grid, int min_i, int min_j, int max_i,
-    int max_j);
-
-  /*
-   * Updates the master_grid within the specified
-   * bounding box using this layer's values.
-   *
    * Sets the new value to the sum of the master grid's value
    * and this layer's value. If the master value is NO_INFORMATION,
    * it is overwritten with the layer's value. If the layer's value
@@ -184,13 +152,6 @@ protected:
    */
   void useExtraBounds(double * min_x, double * min_y, double * max_x, double * max_y);
   bool has_extra_bounds_;
-
-  /**
- * @brief Converts an integer to a CombinationMethod enum and logs on failure
- * @param value The integer to convert
- * @param function_name The name of the function calling this conversion (for logging)
- */
-  CombinationMethod combination_method_from_int(const int value);
 
 private:
   double extra_min_x_, extra_max_x_, extra_min_y_, extra_max_y_;

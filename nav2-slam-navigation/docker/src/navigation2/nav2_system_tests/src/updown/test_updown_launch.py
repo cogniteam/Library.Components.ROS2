@@ -42,13 +42,13 @@ def generate_launch_description():
         package='tf2_ros',
         executable='static_transform_publisher',
         output='screen',
-        arguments=['0', '0', '0', '0', '0', '0', 'odom', 'base_footprint'])
+        arguments=['0', '0', '0', '0', '0', '0', 'odom', 'base_link'])
 
     start_tf_cmd_3 = Node(
        package='tf2_ros',
        executable='static_transform_publisher',
        output='screen',
-       arguments=['0', '0', '0', '0', '0', '0', 'base_footprint', 'base_link'])
+       arguments=['0', '0', '0', '0', '0', '0', 'base_link', 'base_link'])
 
     start_tf_cmd_4 = Node(
         package='tf2_ros',
@@ -61,7 +61,6 @@ def generate_launch_description():
             os.path.join(launch_dir, 'bringup_launch.py')),
         launch_arguments={'map': map_yaml_file,
                           'use_sim_time': 'True',
-                          'use_composition': 'False',
                           'autostart': 'False'}.items())
 
     start_test = launch.actions.ExecuteProcess(

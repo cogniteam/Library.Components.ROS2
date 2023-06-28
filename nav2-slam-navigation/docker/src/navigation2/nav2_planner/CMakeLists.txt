@@ -6,7 +6,6 @@ find_package(nav2_common REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
-find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(nav2_util REQUIRED)
@@ -32,7 +31,6 @@ set(dependencies
   rclcpp
   rclcpp_action
   rclcpp_lifecycle
-  rclcpp_components
   std_msgs
   visualization_msgs
   nav2_util
@@ -54,6 +52,8 @@ ament_target_dependencies(${library_name}
   ${dependencies}
 )
 
+target_compile_definitions(${library_name} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
+
 add_executable(${executable_name}
   src/main.cpp
 )
@@ -64,7 +64,8 @@ ament_target_dependencies(${executable_name}
   ${dependencies}
 )
 
-rclcpp_components_register_nodes(${library_name} "nav2_planner::PlannerServer")
+# prevent pluginlib from using boost
+target_compile_definitions(${library_name} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 
 install(TARGETS ${library_name}
   ARCHIVE DESTINATION lib
@@ -82,12 +83,11 @@ install(DIRECTORY include/
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  find_package(ament_cmake_gtest REQUIRED)
   ament_lint_auto_find_test_dependencies()
-  add_subdirectory(test)
 endif()
 
 ament_export_include_directories(include)
 ament_export_libraries(${library_name})
 ament_export_dependencies(${dependencies})
+ament_export_definitions("PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 ament_package()

@@ -47,21 +47,19 @@ BT::NodeStatus RecoveryNode::tick()
       switch (child_status) {
         case BT::NodeStatus::SUCCESS:
           {
-            // reset node and return success when first child returns success
+            retry_count_ = 0;
             halt();
             return BT::NodeStatus::SUCCESS;
           }
 
         case BT::NodeStatus::FAILURE:
           {
+            // tick second child
             if (retry_count_ < number_of_retries_) {
-              // halt first child and tick second child in next iteration
-              ControlNode::haltChild(0);
               current_child_idx_++;
               break;
             } else {
-              // reset node and return failure when max retries has been exceeded
-              halt();
+              ControlNode::haltChildren();
               return BT::NodeStatus::FAILURE;
             }
           }
@@ -73,7 +71,8 @@ BT::NodeStatus RecoveryNode::tick()
 
         default:
           {
-            throw BT::LogicError("A child node must never return IDLE");
+            halt();
+            return BT::NodeStatus::FAILURE;
           }
       }  // end switch
 
@@ -81,16 +80,16 @@ BT::NodeStatus RecoveryNode::tick()
       switch (child_status) {
         case BT::NodeStatus::SUCCESS:
           {
-            // halt second child, increment recovery count, and tick first child in next iteration
-            ControlNode::haltChild(1);
             retry_count_++;
             current_child_idx_--;
+            ControlNode::haltChildren();
           }
           break;
 
         case BT::NodeStatus::FAILURE:
           {
-            // reset node and return failure if second child fails
+            current_child_idx_--;
+            retry_count_ = 0;
             halt();
             return BT::NodeStatus::FAILURE;
           }
@@ -102,13 +101,13 @@ BT::NodeStatus RecoveryNode::tick()
 
         default:
           {
-            throw BT::LogicError("A child node must never return IDLE");
+            halt();
+            return BT::NodeStatus::FAILURE;
           }
       }  // end switch
     }
   }  // end while loop
-
-  // reset node and return failure
+  retry_count_ = 0;
   halt();
   return BT::NodeStatus::FAILURE;
 }
@@ -116,8 +115,8 @@ BT::NodeStatus RecoveryNode::tick()
 void RecoveryNode::halt()
 {
   ControlNode::halt();
-  retry_count_ = 0;
   current_child_idx_ = 0;
+  retry_count_ = 0;
 }
 
 }  // namespace nav2_behavior_tree

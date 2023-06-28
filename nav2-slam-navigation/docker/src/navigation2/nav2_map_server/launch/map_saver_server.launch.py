@@ -23,7 +23,7 @@ def generate_launch_description():
     lifecycle_nodes = ['map_saver']
     use_sim_time = True
     autostart = True
-    save_map_timeout = 2.0
+    save_map_timeout = 2000
     free_thresh_default = 0.25
     occupied_thresh_default = 0.65
 

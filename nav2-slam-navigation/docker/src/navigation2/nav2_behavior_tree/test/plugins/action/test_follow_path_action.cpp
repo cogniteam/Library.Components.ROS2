@@ -23,7 +23,7 @@
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "utils/test_action_server.hpp"
+#include "../../test_action_server.hpp"
 #include "nav2_behavior_tree/plugins/action/follow_path_action.hpp"
 
 class FollowPathActionServer : public TestActionServer<nav2_msgs::action::FollowPath>
@@ -63,10 +63,8 @@ public:
       node_);
     config_->blackboard->set<std::chrono::milliseconds>(
       "server_timeout",
-      std::chrono::milliseconds(20));
-    config_->blackboard->set<std::chrono::milliseconds>(
-      "bt_loop_duration",
       std::chrono::milliseconds(10));
+    config_->blackboard->set<bool>("path_updated", false);
     config_->blackboard->set<bool>("initial_pose_received", false);
 
     BT::NodeBuilder builder =
@@ -121,7 +119,9 @@ TEST_F(FollowPathActionTestFixture, test_tick)
         </BehaviorTree>
       </root>)";
 
+  config_->blackboard->set<bool>("path_updated", true);
   tree_ = std::make_shared<BT::Tree>(factory_->createTreeFromText(xml_txt, config_->blackboard));
+  EXPECT_EQ(config_->blackboard->get<bool>("path_updated"), false);
 
   // set new path on blackboard
   nav_msgs::msg::Path path;
@@ -129,17 +129,18 @@ TEST_F(FollowPathActionTestFixture, test_tick)
   path.poses[0].pose.position.x = 1.0;
   config_->blackboard->set<nav_msgs::msg::Path>("path", path);
 
-  // tick until node succeeds
-  while (tree_->rootNode()->status() != BT::NodeStatus::SUCCESS) {
-    tree_->rootNode()->executeTick();
-  }
-
-  // the goal should have reached our server
-  EXPECT_EQ(tree_->rootNode()->status(), BT::NodeStatus::SUCCESS);
+  // first tick should send the goal to our server
+  EXPECT_EQ(tree_->rootNode()->executeTick(), BT::NodeStatus::RUNNING);
   EXPECT_EQ(tree_->rootNode()->getInput<std::string>("controller_id"), std::string("FollowPath"));
   EXPECT_EQ(action_server_->getCurrentGoal()->path.poses.size(), 1u);
   EXPECT_EQ(action_server_->getCurrentGoal()->path.poses[0].pose.position.x, 1.0);
   EXPECT_EQ(action_server_->getCurrentGoal()->controller_id, std::string("FollowPath"));
+
+  // tick until node succeeds
+  while (tree_->rootNode()->status() != BT::NodeStatus::SUCCESS) {
+    tree_->rootNode()->executeTick();
+  }
+  EXPECT_EQ(tree_->rootNode()->status(), BT::NodeStatus::SUCCESS);
 
   // halt node so another goal can be sent
   tree_->rootNode()->halt();
@@ -149,13 +150,17 @@ TEST_F(FollowPathActionTestFixture, test_tick)
   path.poses[0].pose.position.x = -2.5;
   config_->blackboard->set<nav_msgs::msg::Path>("path", path);
 
+  EXPECT_EQ(tree_->rootNode()->executeTick(), BT::NodeStatus::RUNNING);
+  EXPECT_EQ(action_server_->getCurrentGoal()->path.poses.size(), 1u);
+  EXPECT_EQ(action_server_->getCurrentGoal()->path.poses[0].pose.position.x, -2.5);
+  config_->blackboard->set<bool>("path_updated", true);
+
   while (tree_->rootNode()->status() != BT::NodeStatus::SUCCESS) {
     tree_->rootNode()->executeTick();
   }
 
-  EXPECT_EQ(tree_->rootNode()->status(), BT::NodeStatus::SUCCESS);
-  EXPECT_EQ(action_server_->getCurrentGoal()->path.poses.size(), 1u);
-  EXPECT_EQ(action_server_->getCurrentGoal()->path.poses[0].pose.position.x, -2.5);
+  // path is updated on new goal
+  EXPECT_EQ(config_->blackboard->get<bool>("path_updated"), false);
 }
 
 int main(int argc, char ** argv)

@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef TESTING_HELPER_HPP_
-#define TESTING_HELPER_HPP_
+#ifndef NAV2_COSTMAP_2D__TESTING_HELPER_HPP_
+#define NAV2_COSTMAP_2D__TESTING_HELPER_HPP_
 
 #include <memory>
 
@@ -29,6 +29,16 @@
 #include "nav2_util/lifecycle_node.hpp"
 
 const double MAX_Z(1.0);
+
+void setValues(nav2_costmap_2d::Costmap2D & costmap, const unsigned char * map)
+{
+  int index = 0;
+  for (unsigned int i = 0; i < costmap.getSizeInCellsY(); i++) {
+    for (unsigned int j = 0; j < costmap.getSizeInCellsX(); j++) {
+      costmap.setCost(j, i, map[index]);
+    }
+  }
+}
 
 char printableCost(unsigned char cost)
 {
@@ -71,43 +81,36 @@ unsigned int countValues(
 void addStaticLayer(
   nav2_costmap_2d::LayeredCostmap & layers,
   tf2_ros::Buffer & tf, nav2_util::LifecycleNode::SharedPtr node,
-  std::shared_ptr<nav2_costmap_2d::StaticLayer> & slayer,
-  rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+  std::shared_ptr<nav2_costmap_2d::StaticLayer> & slayer)
 {
   slayer = std::make_shared<nav2_costmap_2d::StaticLayer>();
   layers.addPlugin(std::shared_ptr<nav2_costmap_2d::Layer>(slayer));
-  slayer->initialize(&layers, "static", &tf, node, callback_group);
+  slayer->initialize(&layers, "static", &tf, node, nullptr, nullptr /*TODO*/);
 }
 
 void addObstacleLayer(
   nav2_costmap_2d::LayeredCostmap & layers,
   tf2_ros::Buffer & tf, nav2_util::LifecycleNode::SharedPtr node,
-  std::shared_ptr<nav2_costmap_2d::ObstacleLayer> & olayer,
-  rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+  std::shared_ptr<nav2_costmap_2d::ObstacleLayer> & olayer)
 {
   olayer = std::make_shared<nav2_costmap_2d::ObstacleLayer>();
-  olayer->initialize(&layers, "obstacles", &tf, node, callback_group);
+  olayer->initialize(&layers, "obstacles", &tf, node, nullptr, nullptr /*TODO*/);
   layers.addPlugin(std::shared_ptr<nav2_costmap_2d::Layer>(olayer));
 }
 
 void addRangeLayer(
   nav2_costmap_2d::LayeredCostmap & layers,
   tf2_ros::Buffer & tf, nav2_util::LifecycleNode::SharedPtr node,
-  std::shared_ptr<nav2_costmap_2d::RangeSensorLayer> & rlayer,
-  rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+  std::shared_ptr<nav2_costmap_2d::RangeSensorLayer> & rlayer)
 {
   rlayer = std::make_shared<nav2_costmap_2d::RangeSensorLayer>();
-  rlayer->initialize(&layers, "range", &tf, node, callback_group);
+  rlayer->initialize(&layers, "range", &tf, node, nullptr, nullptr /*TODO*/);
   layers.addPlugin(std::shared_ptr<nav2_costmap_2d::Layer>(rlayer));
 }
 
 void addObservation(
   std::shared_ptr<nav2_costmap_2d::ObstacleLayer> olayer, double x, double y, double z = 0.0,
-  double ox = 0.0, double oy = 0.0, double oz = MAX_Z, bool marking = true, bool clearing = true,
-  double raytrace_max_range = 100.0,
-  double raytrace_min_range = 0.0,
-  double obstacle_max_range = 100.0,
-  double obstacle_min_range = 0.0)
+  double ox = 0.0, double oy = 0.0, double oz = MAX_Z, bool marking = true, bool clearing = true)
 {
   sensor_msgs::msg::PointCloud2 cloud;
   sensor_msgs::PointCloud2Modifier modifier(cloud);
@@ -125,22 +128,21 @@ void addObservation(
   p.y = oy;
   p.z = oz;
 
-  nav2_costmap_2d::Observation obs(p, cloud, obstacle_max_range, obstacle_min_range,
-    raytrace_max_range, raytrace_min_range);
+  // obstacle range = raytrace range = 100.0
+  nav2_costmap_2d::Observation obs(p, cloud, 100.0, 100.0);
   olayer->addStaticObservation(obs, marking, clearing);
 }
 
 void addInflationLayer(
   nav2_costmap_2d::LayeredCostmap & layers,
   tf2_ros::Buffer & tf, nav2_util::LifecycleNode::SharedPtr node,
-  std::shared_ptr<nav2_costmap_2d::InflationLayer> & ilayer,
-  rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+  std::shared_ptr<nav2_costmap_2d::InflationLayer> & ilayer)
 {
   ilayer = std::make_shared<nav2_costmap_2d::InflationLayer>();
-  ilayer->initialize(&layers, "inflation", &tf, node, callback_group);
+  ilayer->initialize(&layers, "inflation", &tf, node, nullptr, nullptr /*TODO*/);
   std::shared_ptr<nav2_costmap_2d::Layer> ipointer(ilayer);
   layers.addPlugin(ipointer);
 }
 
 
-#endif  // TESTING_HELPER_HPP_
+#endif  // NAV2_COSTMAP_2D__TESTING_HELPER_HPP_

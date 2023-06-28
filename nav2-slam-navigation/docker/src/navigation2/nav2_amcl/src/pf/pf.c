@@ -35,7 +35,7 @@
 #include "nav2_amcl/pf/pf_pdf.hpp"
 #include "nav2_amcl/pf/pf_kdtree.hpp"
 
-#include "nav2_amcl/portable_utils.hpp"
+#include "portable_utils.h"
 
 
 // Compute the required number of samples, given that there are k bins
@@ -47,7 +47,7 @@ static int pf_resample_limit(pf_t * pf, int k);
 pf_t * pf_alloc(
   int min_samples, int max_samples,
   double alpha_slow, double alpha_fast,
-  pf_init_model_fn_t random_pose_fn)
+  pf_init_model_fn_t random_pose_fn, void * random_pose_data)
 {
   int i, j;
   pf_t * pf;
@@ -59,6 +59,7 @@ pf_t * pf_alloc(
   pf = calloc(1, sizeof(pf_t));
 
   pf->random_pose_fn = random_pose_fn;
+  pf->random_pose_data = random_pose_data;
 
   pf->min_samples = min_samples;
   pf->max_samples = max_samples;
@@ -237,14 +238,14 @@ int pf_update_converged(pf_t * pf)
 }
 
 // Update the filter with some new action
-// void pf_update_action(pf_t * pf, pf_action_model_fn_t action_fn, void * action_data)
-// {
-//   pf_sample_set_t * set;
+void pf_update_action(pf_t * pf, pf_action_model_fn_t action_fn, void * action_data)
+{
+  pf_sample_set_t * set;
 
-//   set = pf->sets + pf->current_set;
+  set = pf->sets + pf->current_set;
 
-//   (*action_fn)(action_data, set);
-// }
+  (*action_fn)(action_data, set);
+}
 
 // Update the filter with some new sensor observation
 void pf_update_sensor(pf_t * pf, pf_sensor_model_fn_t sensor_fn, void * sensor_data)
@@ -290,7 +291,7 @@ void pf_update_sensor(pf_t * pf, pf_sensor_model_fn_t sensor_fn, void * sensor_d
 
 
 // Resample the distribution
-void pf_update_resample(pf_t * pf, void * random_pose_data)
+void pf_update_resample(pf_t * pf)
 {
   int i;
   double total;
@@ -343,7 +344,7 @@ void pf_update_resample(pf_t * pf, void * random_pose_data)
     sample_b = set_b->samples + set_b->sample_count++;
 
     if (drand48() < w_diff) {
-      sample_b->pose = (pf->random_pose_fn)(random_pose_data);
+      sample_b->pose = (pf->random_pose_fn)(pf->random_pose_data);
     } else {
       // Can't (easily) combine low-variance sampler with KLD adaptive
       // sampling, so we'll take the more traditional route.
@@ -596,36 +597,36 @@ void pf_cluster_stats(pf_t * pf, pf_sample_set_t * set)
 
 
 // Compute the CEP statistics (mean and variance).
-// void pf_get_cep_stats(pf_t * pf, pf_vector_t * mean, double * var)
-// {
-//   int i;
-//   double mn, mx, my, mrr;
-//   pf_sample_set_t * set;
-//   pf_sample_t * sample;
+void pf_get_cep_stats(pf_t * pf, pf_vector_t * mean, double * var)
+{
+  int i;
+  double mn, mx, my, mrr;
+  pf_sample_set_t * set;
+  pf_sample_t * sample;
 
-//   set = pf->sets + pf->current_set;
+  set = pf->sets + pf->current_set;
 
-//   mn = 0.0;
-//   mx = 0.0;
-//   my = 0.0;
-//   mrr = 0.0;
+  mn = 0.0;
+  mx = 0.0;
+  my = 0.0;
+  mrr = 0.0;
 
-//   for (i = 0; i < set->sample_count; i++) {
-//     sample = set->samples + i;
+  for (i = 0; i < set->sample_count; i++) {
+    sample = set->samples + i;
 
-//     mn += sample->weight;
-//     mx += sample->weight * sample->pose.v[0];
-//     my += sample->weight * sample->pose.v[1];
-//     mrr += sample->weight * sample->pose.v[0] * sample->pose.v[0];
-//     mrr += sample->weight * sample->pose.v[1] * sample->pose.v[1];
-//   }
+    mn += sample->weight;
+    mx += sample->weight * sample->pose.v[0];
+    my += sample->weight * sample->pose.v[1];
+    mrr += sample->weight * sample->pose.v[0] * sample->pose.v[0];
+    mrr += sample->weight * sample->pose.v[1] * sample->pose.v[1];
+  }
 
-//   mean->v[0] = mx / mn;
-//   mean->v[1] = my / mn;
-//   mean->v[2] = 0.0;
+  mean->v[0] = mx / mn;
+  mean->v[1] = my / mn;
+  mean->v[2] = 0.0;
 
-//   *var = mrr / mn - (mx * mx / (mn * mn) + my * my / (mn * mn));
-// }
+  *var = mrr / mn - (mx * mx / (mn * mn) + my * my / (mn * mn));
+}
 
 
 // Get the statistics for a particular cluster.

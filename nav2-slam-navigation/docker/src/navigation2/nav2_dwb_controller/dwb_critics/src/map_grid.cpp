@@ -35,8 +35,6 @@
 #include "dwb_critics/map_grid.hpp"
 #include <cmath>
 #include <string>
-#include <vector>
-#include <utility>
 #include <algorithm>
 #include <memory>
 #include "dwb_core/exceptions.hpp"
@@ -63,18 +61,13 @@ void MapGridCritic::onInit()
   // Always set to true, but can be overriden by subclasses
   stop_on_failure_ = true;
 
-  auto node = node_.lock();
-  if (!node) {
-    throw std::runtime_error{"Failed to lock node"};
-  }
-
   nav2_util::declare_parameter_if_not_declared(
-    node,
+    nh_,
     dwb_plugin_name_ + "." + name_ + ".aggregation_type",
     rclcpp::ParameterValue(std::string("last")));
 
   std::string aggro_str;
-  node->get_parameter(dwb_plugin_name_ + "." + name_ + ".aggregation_type", aggro_str);
+  nh_->get_parameter(dwb_plugin_name_ + "." + name_ + ".aggregation_type", aggro_str);
   std::transform(aggro_str.begin(), aggro_str.end(), aggro_str.begin(), ::tolower);
   if (aggro_str == "last") {
     aggregationType_ = ScoreAggregationType::Last;
@@ -166,24 +159,23 @@ double MapGridCritic::scorePose(const geometry_msgs::msg::Pose2D & pose)
   return getScore(cell_x, cell_y);
 }
 
-void MapGridCritic::addCriticVisualization(
-  std::vector<std::pair<std::string, std::vector<float>>> & cost_channels)
+void MapGridCritic::addCriticVisualization(sensor_msgs::msg::PointCloud & pc)
 {
-  std::pair<std::string, std::vector<float>> grid_scores;
-  grid_scores.first = name_;
+  sensor_msgs::msg::ChannelFloat32 grid_scores;
+  grid_scores.name = name_;
 
   nav2_costmap_2d::Costmap2D * costmap = costmap_ros_->getCostmap();
   unsigned int size_x = costmap->getSizeInCellsX();
   unsigned int size_y = costmap->getSizeInCellsY();
-  grid_scores.second.resize(size_x * size_y);
+  grid_scores.values.resize(size_x * size_y);
   unsigned int i = 0;
   for (unsigned int cy = 0; cy < size_y; cy++) {
     for (unsigned int cx = 0; cx < size_x; cx++) {
-      grid_scores.second[i] = getScore(cx, cy);
+      grid_scores.values[i] = getScore(cx, cy);
       i++;
     }
   }
-  cost_channels.push_back(grid_scores);
+  pc.channels.push_back(grid_scores);
 }
 
 }  // namespace dwb_critics

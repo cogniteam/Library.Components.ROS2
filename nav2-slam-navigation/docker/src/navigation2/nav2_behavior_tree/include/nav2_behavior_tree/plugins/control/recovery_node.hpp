@@ -35,24 +35,13 @@ namespace nav2_behavior_tree
 class RecoveryNode : public BT::ControlNode
 {
 public:
-  /**
-   * @brief A constructor for nav2_behavior_tree::RecoveryNode
-   * @param name Name for the XML tag for this node
-   * @param conf BT node configuration
-   */
   RecoveryNode(
     const std::string & name,
     const BT::NodeConfiguration & conf);
 
-  /**
-   * @brief A destructor for nav2_behavior_tree::RecoveryNode
-   */
   ~RecoveryNode() override = default;
 
-  /**
-   * @brief Creates list of BT ports
-   * @return BT::PortsList Containing basic ports along with node-specific ports
-   */
+  // Any BT node that accepts parameters must provide a requiredNodeParameters method
   static BT::PortsList providedPorts()
   {
     return {
@@ -65,15 +54,7 @@ private:
   unsigned int number_of_retries_;
   unsigned int retry_count_;
 
-  /**
-   * @brief The main override required by a BT action
-   * @return BT::NodeStatus Status of tick execution
-   */
   BT::NodeStatus tick() override;
-
-  /**
-   * @brief The other (optional) override required by a BT action to reset node state
-   */
   void halt() override;
 };
 
