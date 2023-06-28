@@ -28,7 +28,7 @@
       "commands": [
         "ros2",
         "launch",
-        "nav2_slam_navigation_cogniteam",
+        "nav2_bringup",
         "nav2_slam_navigation_cogniteam.launch.py"
       ],
       "privileged": false,
@@ -64,7 +64,7 @@
         "expectedRate": 0
       },
       {
-        "name": "pose",
+        "name": "goal",
         "type": "",
         "description": "",
         "streamMode": "STREAM_MODE_TOPIC",
