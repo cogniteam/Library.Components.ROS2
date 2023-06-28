@@ -45,7 +45,9 @@ RUN sudo make install
 
 # Rebuild your workspace
 WORKDIR /root/rover_driver_ws
-RUN rosdep install -i --from-path src --ignore-src
+#RUN rosdep install -i --from-path src --ignore-src
+RUN cd src/roverrobotics_ros2/roverrobotics_driver/config/ && rm -r mini_config.yaml 
+COPY mini_config.yaml /root/rover_driver_ws/src/roverrobotics_ros2/roverrobotics_driver/config/mini_config.yaml
 RUN . /opt/ros/foxy/setup.sh && colcon build
 
 COPY entrypoint.sh /entrypoint.sh

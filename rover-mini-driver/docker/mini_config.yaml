@@ -35,3 +35,4 @@ joint_state_publisher:
   ros__parameters:
     publish_default_positions: true
     rate: 30
+
