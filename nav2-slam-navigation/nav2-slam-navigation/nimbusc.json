@@ -92,7 +92,7 @@
         "expectedRate": 0
       },
       {
-        "name": "odom",
+        "name": "odom_base_link",
         "type": "Nimbus.Messages.nav_msgs.Odometry",
         "description": "A valid transform from your configured odom_frame to base_frame.",
         "streamMode": "STREAM_MODE_TOPIC",
