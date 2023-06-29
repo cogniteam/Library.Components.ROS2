@@ -43,7 +43,15 @@
     "onExit": "IGNORE"
   },
   "parameters": {
-    "parameters": []
+    "parameters": [
+      {
+        "name": "ros_domain_id",
+        "description": "The ros_domain_id",
+        "Category": "Static",
+        "node": "",
+        "integerValue": "1"
+      }
+    ]
   },
   "state": "COMPONENT_STATE_UNLOADED",
   "message": "",
@@ -57,7 +65,7 @@
         "rosTopic": {
           "topic": "/scan",
           "type": "Messages.sensor_msgs.LaserScan",
-          "qosProfile": ""
+          "qosProfile": "sensors_data"
         },
         "latched": false,
         "maxRate": 0,
@@ -71,7 +79,7 @@
         "rosTopic": {
           "topic": "/goal_pose",
           "type": "Messages.geometry_msgs.PoseStamped",
-          "qosProfile": ""
+          "qosProfile": "sensors_data"
         },
         "latched": false,
         "maxRate": 0,
@@ -85,10 +93,10 @@
         "rosTopic": {
           "topic": "/odom",
           "type": "Messages.nav_msgs.Odometry",
-          "qosProfile": ""
+          "qosProfile": "sensors_data"
         },
         "latched": false,
-        "maxRate": 15,
+        "maxRate": 0,
         "expectedRate": 0
       },
       {
@@ -190,7 +198,7 @@
     "rosMasterUri": "",
     "rosIp": "",
     "autoDetectIp": false,
-    "ros2DomainId": 0
+    "ros2DomainId": 1
   },
   "tags": {},
   "category": "Algorithms/SLAM 2D",
