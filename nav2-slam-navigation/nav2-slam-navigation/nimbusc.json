@@ -159,6 +159,20 @@
         "expectedRate": 0
       },
       {
+        "name": "nimbus_robot_pose",
+        "type": "",
+        "description": "Publishes /nimbus_robot_pose",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/nimbus_robot_pose",
+          "type": "Messages.geometry_msgs.PoseStamped",
+          "qosProfile": ""
+        },
+        "latched": true,
+        "maxRate": 0,
+        "expectedRate": 0
+      },
+      {
         "name": "robot_pose",
         "type": "Messages.geometry_msgs.Pose",
         "description": "TF from map to base_link, the position of the robot on the map.",
