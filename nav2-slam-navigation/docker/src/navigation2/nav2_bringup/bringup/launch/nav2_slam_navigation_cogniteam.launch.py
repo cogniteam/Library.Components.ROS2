@@ -21,8 +21,9 @@ from launch.actions import (DeclareLaunchArgument, GroupAction,
                             IncludeLaunchDescription, SetEnvironmentVariable)
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PythonExpression
+from launch.substitutions import LaunchConfiguration, PythonExpression,PathJoinSubstitution, TextSubstitution
 from launch_ros.actions import PushRosNamespace
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
@@ -138,6 +139,14 @@ def generate_launch_description():
                     "params_file" : params_file_slam
                     }.items(),
                 ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([
+                PathJoinSubstitution([
+                    FindPackageShare('nimbus_robot_pose'),
+                    'nimbus_robot_pose.launch.py'
+                ])
+            ]),
+        )
     ])
 
     # Create the launch description and populate
