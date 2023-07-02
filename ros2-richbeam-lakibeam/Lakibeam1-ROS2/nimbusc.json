@@ -1,0 +1,165 @@
+{
+  "name": "nimbus/Ouster-OS0_OS1_OS2-driver-ROS1",
+  "type": "COMPONENT_TYPE_COMPONENT",
+  "className": "Ros2Component",
+  "instanceName": "",
+  "description": "richbeam-lakibeam-lidar driver\nLicense: BSD",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0,
+    "build": ""
+  },
+  "start": "START_MODE_AUTO",
+  "environment": {
+    "name": "",
+    "ipAddress": "",
+    "state": "ENVIRONMENT_STATE_UNLOADED",
+    "message": "",
+    "progress": 0,
+    "requiredDevices": [],
+    "ports": [],
+    "hostIpAddress": "",
+    "variables": [],
+    "dockerInfo": {
+      "image": "cognimbus/ros1-richbeam-lakibeam-driver",
+      "containerId": "",
+      "imageSize": 0,
+      "commands": [
+        "ros2",
+        "launch",
+        "lakibeam1",
+        "lakibeam1_scan.launch.py",
+        "inverted:=${inverted}",
+        "hostip:=${hostip}",
+        "port:=${port}",
+        "angle_offset:=${angle_offset}",
+        "scanfreq:=${scanfreq}",
+        "filter:={filter}",
+        "laser_enable:=${laser_enable}",
+        "scan_range_start:=${scan_range_start}",
+        "scan_range_stop:=${scan_range_stop}"
+      ],
+      "privileged": false,
+      "gpu": false,
+      "networkHost": true,
+      "binds": [],
+      "user": "",
+      "runtime": ""
+    },
+    "log": "",
+    "convertedCommands": "",
+    "onExit": "IGNORE"
+  },
+  "parameters": {
+    "parameters": [
+      {
+        "name": "ros_domain_id",
+        "description": "The ros_domain_id",
+        "Category": "Static",
+        "node": "",
+        "integerValue": "3"
+      },
+      {
+        "name": "inverted",
+        "description": "Invert the sensor, ”true” is inverted.",
+        "Category": "Static",
+        "node": "",
+        "booleanValue": "false"
+      },
+      {
+        "name": "hostip",
+        "description": "Destination IP address, monitoring to all IP address when set to 0.0.0.0",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "0.0.0.0"
+      },
+      {
+        "name": "port",
+        "description": "Monitoring port, must be same with port number set on web server when using dual sensors in one PC.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "2368"
+      },
+      {
+        "name": "angle_offset",
+        "description": "Point cloud rotation angle around Z-axes, can be set to a negative number.",
+        "Category": "Static",
+        "node": "",
+        "integerValue": "0"
+      },
+      {
+        "name": "scanfreq",
+        "description": "Scan frequency, range: 10, 20, 25, 30",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "30"
+      },
+      {
+        "name": "filter",
+        "description": "Filter options, range: 0, 1, 2, 3",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "3"
+      },
+      {
+        "name": "laser_enable",
+        "description": "Scan enable, range: true, false",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "true"
+      },
+      {
+        "name": "scan_range_start",
+        "description": "Scanning start angle, range: 45°~315°",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "45"
+      },
+      {
+        "name": "scan_range_stop",
+        "description": "Scanning end angle, range: 45°~315°, the end angle must be greater than the start angle.",
+        "Category": "Static",
+        "node": "",
+        "stringValue": "315"
+      }
+    ]
+  },
+  "state": "COMPONENT_STATE_UNLOADED",
+  "message": "",
+  "streams": {
+    "inputStreams": [],
+    "outputStreams": [
+      {
+        "name": "scan",
+        "type": "",
+        "description": "Publishes a scan from the laser scanner",
+        "streamMode": "STREAM_MODE_TOPIC",
+        "rosTopic": {
+          "topic": "/scan",
+          "type": "Messages.sensor_msgs.LaserScan",
+          "qosProfile": ""
+        },
+        "latched": false,
+        "maxRate": 0,
+        "expectedRate": 0
+      }
+    ]
+  },
+  "requiredDevices": [],
+  "ros": {
+    "baseFrame": "base_link",
+    "rate": 10,
+    "publishTfDevices": true,
+    "rosMasterUri": "",
+    "rosIp": "",
+    "autoDetectIp": false,
+    "ros2DomainId": 0
+  },
+  "tags": {},
+  "category": "Drivers/3D Lidars",
+  "simulation": false,
+  "pluginFile": "",
+  "license": "BSD",
+  "id": "5d6863e3-afd2-44c2-8322-3f644f209101"
+}
