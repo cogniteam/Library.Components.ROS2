@@ -48,8 +48,13 @@ WORKDIR /root/rover_driver_ws
 #RUN rosdep install -i --from-path src --ignore-src
 RUN cd src/roverrobotics_ros2/roverrobotics_driver/config/ && rm -r mini_config.yaml 
 COPY mini_config.yaml /root/rover_driver_ws/src/roverrobotics_ros2/roverrobotics_driver/config/mini_config.yaml
+COPY odom_from_imu /root/rover_driver_ws/src/odom_from_imu
+COPY serial-ros2 /root/rover_driver_ws/src/serial-ros2
+
 RUN . /opt/ros/foxy/setup.sh && colcon build
 
+
+# ip link set can0 up type can bitrate 500000 -> need to add to the entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
