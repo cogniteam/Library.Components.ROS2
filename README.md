@@ -1,38 +1,22 @@
-# Nimbus.Library.Components.ROS2
-
-
-# Deployment CI
-
-### branches:
-once deploying into the `master` branch, all the environments will be updated with the modified components 
-## Library Deployment Flow
-### Prepare
-* The job `create directory for modified components` use the script `.filter_only_updated_items.py` and collect all the items that has been modified compare to the last commit branch into a new directory (this new directory is available in the job artifact).
-
-### test
-In the `test` stage there are 3 jobs which are responsible to test that all the components are valid. 
-
-each job execute the <a href="https://git.cognimbus.com/nimbus/nimbus.library.loader/-/tree/develop/script_cli/PushComponentsDevices">library.loader script</a> in test mode according to the environment make sure the user credentials and json files are valid as a `ComponentInfo` instance.
-### deploy
-The stage `deploy` contains 3 jobs for deploying modified components - each job deploy to another environment.
-<a href="https://git.cognimbus.com/nimbus/nimbus.library.loader/-/tree/develop/script_cli/PushComponentsDevices">library.loader script</a>
-</br>
-</br>
-In addition, there are 3 manual jobs for deploying all the components in the repository - each job use different environment.  
-
-## Dependencies
-the source code for the device/component deployment is located in https://git.cognimbus.com/nimbus/nimbus.library.loader. any changes in the deployment source code should be in this repository. 
-
-# Images in Docker Hub
-Algorithm | Architecture | Link
---- | --- | ---
-generic-webcam | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-usb-cam/general
-kobuki-action | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-kobuki-action
-lynx-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-lynx/general
-realsense-camera | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-realsense-camera/general
-ros2-gateway | linux/amd64 , linux/arm64 | N/A
-rover-mini-driver | linux/amd64 , linux/arm64 | https://git.cognimbus.com/nimbus/Nimbus.Library.Components.ROS2/-/tree/master/rover-mini-driver
-slam-toolbox | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-slam-toolbox/general
-slamtec-rplidar-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-slamtec-rplidar-a2/general
-slamtec-rplidar-s2-driver | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/slamtec-rplidar-driver-ros2/general
-tutorials-talker | linux/amd64 , linux/arm64 | https://hub.docker.com/repository/docker/cognimbus/ros2-tutorials-talker/general
+Image | Link
+--- | ---
+<img src="./cogniteam-text-detection/cogniteam-text-detection/text_detection.png" alt="cogniteam-text-detection" width="40"/> | [cogniteam-text-detection](cogniteam-text-detection)
+<img src="./generic-webcam/ros2-generic-webcam/generic-webcam-driver.jpg" alt="ros2-generic-webcam" width="40"/> | [generic-webcam](generic-webcam)
+<img src="./lynx/lynx-gps-localization/lynx.png" alt="lynx-gps-localization" width="40"/> | [lynx](lynx)
+<img src="./lynx/lynx-navigation/lynx.png" alt="lynx-navigation" width="40"/> | [lynx](lynx)
+<img src="./lynx/ros2-lynx-driver/lynx.png" alt="ros2-lynx-driver" width="40"/> | [lynx](lynx)
+<img src="./nav2-slam-navigation/nav2-slam-navigation/nav2-slam-navigation.png" alt="nav2-slam-navigation" width="40"/> | [nav2-slam-navigation](nav2-slam-navigation)
+<img src="./olei-lidar-driver/ros2-olei-3d-lidar-driver/olei3D.jpg" alt="ros2-olei-3d-lidar-driver" width="40"/> | [olei-lidar-driver](olei-lidar-driver)
+<img src="./olei-lidar-driver/ros2-olei-2d-lidar-driver/olei2D.jpg" alt="ros2-olei-2d-lidar-driver" width="40"/> | [olei-lidar-driver](olei-lidar-driver)
+<img src="./realsense-camera/ros2-realsense-d435/intel-realsense-d435-driver.jpg" alt="ros2-realsense-d435" width="40"/> | [realsense-camera](realsense-camera)
+<img src="./ros-tutorials-talker/ros2-tutorials-talker/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="ros2-tutorials-talker" width="40"/> | [ros-tutorials-talker](ros-tutorials-talker)
+None | [ros2-gateway](ros2-gateway)
+<img src="./ros2-kobuki-action/ros2-kobuki-action/nimbusc.jpg" alt="ros2-kobuki-action" width="40"/> | [ros2-kobuki-action](ros2-kobuki-action)
+<img src="./ros2-leg-detector/ros2-leg-detector/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="ros2-leg-detector" width="40"/> | [ros2-leg-detector](ros2-leg-detector)
+<img src="./ros2-richbeam-lakibeam/Lakibeam1-ROS2/lakibeam.png" alt="Lakibeam1-ROS2" width="40"/> | [ros2-richbeam-lakibeam](ros2-richbeam-lakibeam)
+<img src="./rover-mini-driver/rover-driver/rover-mini-driver.jpg" alt="rover-driver" width="40"/> | [rover-mini-driver](rover-mini-driver)
+<img src="./slam-toolbox/ros2-slam-toolbox-mapping/nimbusc.jpeg" alt="ros2-slam-toolbox-mapping" width="40"/> | [slam-toolbox](slam-toolbox)
+<img src="./slamtec-rplidar-driver/ros2-slamtec-rplidar-a2/slamtec-rplidar-a2-driver.jpg" alt="ros2-slamtec-rplidar-a2" width="40"/> | [slamtec-rplidar-driver](slamtec-rplidar-driver)
+<img src="./slamtec-rplidar-s2-driver/ros2-slamtec-rplidar-driver-s2/slamtec-rplidar--s2.jpg" alt="ros2-slamtec-rplidar-driver-s2" width="40"/> | [slamtec-rplidar-s2-driver](slamtec-rplidar-s2-driver)
+<img src="./tracer-mobile-driver/tracer-mobile-driver/tracer-mobile-driver.png" alt="tracer-mobile-driver" width="40"/> | [tracer-mobile-driver](tracer-mobile-driver)
+<img src="./tracer-mobile-driver-mini/tracer-mobile-driver-mini/tracer-mobile-driver.png" alt="tracer-mobile-driver-mini" width="40"/> | [tracer-mobile-driver-mini](tracer-mobile-driver-mini)
