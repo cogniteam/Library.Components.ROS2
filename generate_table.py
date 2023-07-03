@@ -47,3 +47,4 @@ def generate_table():
     f.write(table)
     
 generate_table()
+
