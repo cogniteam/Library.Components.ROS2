@@ -34,11 +34,7 @@
       "privileged": true,
       "gpu": false,
       "networkHost": true,
-      "binds": [
-        {
-
-        }
-      ],
+      "binds": [],
       "user": "",
       "runtime": ""
     },
