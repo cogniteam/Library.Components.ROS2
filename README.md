@@ -1,24 +1,20 @@
-# ROS2 Robotics Applications Dockerized Repository
-
-Welcome to the Dockerized repository for ROS2 robotic applications! This repository contains various Dockerfiles, each designed to containerize a specific ROS2 application.
-
-# Components Table
 Image | Link
 --- | ---
 <img src="./components/cogniteam-text-detection/cogniteam-text-detection/text_detection.png" alt="cogniteam-text-detection" width="40"/> | [cogniteam-text-detection](components/cogniteam-text-detection)
-<img src="./components/generic-webcam/ros2-generic-webcam/generic-webcam-driver.jpg" alt="ros2-generic-webcam" width="40"/> | [generic-webcam](components/generic-webcam)
+<img src="./components/generic-webcam/ros2-generic-webcam/generic-webcam-driver.jpg" alt="ros2-generic-webcam" width="40"/> | [ros2-generic-webcam](components/ros2-generic-webcam)
 <img src="./components/nav2-slam-navigation/nav2-slam-navigation/nav2-slam-navigation.png" alt="nav2-slam-navigation" width="40"/> | [nav2-slam-navigation](components/nav2-slam-navigation)
-<img src="./components/olei-lidar-driver/ros2-olei-3d-lidar-driver/olei3D.jpg" alt="ros2-olei-3d-lidar-driver" width="40"/> | [olei-lidar-driver](components/olei-lidar-driver)
-<img src="./components/olei-lidar-driver/ros2-olei-2d-lidar-driver/olei2D.jpg" alt="ros2-olei-2d-lidar-driver" width="40"/> | [olei-lidar-driver](components/olei-lidar-driver)
-<img src="./components/ros-tutorials-talker/ros2-tutorials-talker/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="ros2-tutorials-talker" width="40"/> | [ros-tutorials-talker](components/ros-tutorials-talker)
+<img src="./components/olei-lidar-driver/ros2-olei-3d-lidar-driver/olei3D.jpg" alt="ros2-olei-3d-lidar-driver" width="40"/> | [ros2-olei-3d-lidar-driver](components/ros2-olei-3d-lidar-driver)
+<img src="./components/olei-lidar-driver/ros2-olei-2d-lidar-driver/olei2D.jpg" alt="ros2-olei-2d-lidar-driver" width="40"/> | [ros2-olei-2d-lidar-driver](components/ros2-olei-2d-lidar-driver)
+<img src="./components/ros-tutorials-talker/ros2-tutorials-talker/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="ros2-tutorials-talker" width="40"/> | [ros2-tutorials-talker](components/ros2-tutorials-talker)
 None | [ros2-gateway](components/ros2-gateway)
 <img src="./components/ros2-leg-detector/ros2-leg-detector/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="ros2-leg-detector" width="40"/> | [ros2-leg-detector](components/ros2-leg-detector)
-<img src="./components/ros2-richbeam-lakibeam/Lakibeam1-ROS2/lakibeam.png" alt="Lakibeam1-ROS2" width="40"/> | [ros2-richbeam-lakibeam](components/ros2-richbeam-lakibeam)
-<img src="./components/rover-mini-driver/rover-driver/rover-mini-driver.jpg" alt="rover-driver" width="40"/> | [rover-mini-driver](components/rover-mini-driver)
-<img src="./components/slamtec-rplidar-driver/ros2-slamtec-rplidar-a2/slamtec-rplidar-a2-driver.jpg" alt="ros2-slamtec-rplidar-a2" width="40"/> | [slamtec-rplidar-driver](components/slamtec-rplidar-driver)
-<img src="./components/slamtec-rplidar-s2-driver/ros2-slamtec-rplidar-driver-s2/slamtec-rplidar--s2.jpg" alt="ros2-slamtec-rplidar-driver-s2" width="40"/> | [slamtec-rplidar-s2-driver](components/slamtec-rplidar-s2-driver)
+<img src="./components/ros2-richbeam-lakibeam/Lakibeam1-ROS2/lakibeam.png" alt="Lakibeam1-ROS2" width="40"/> | [Lakibeam1-ROS2](components/Lakibeam1-ROS2)
+<img src="./components/rover-mini-driver/rover-driver/rover-mini-driver.jpg" alt="rover-driver" width="40"/> | [rover-driver](components/rover-driver)
+<img src="./components/slamtec-rplidar-driver/ros2-slamtec-rplidar-a2/slamtec-rplidar-a2-driver.jpg" alt="ros2-slamtec-rplidar-a2" width="40"/> | [ros2-slamtec-rplidar-a2](components/ros2-slamtec-rplidar-a2)
+<img src="./components/slamtec-rplidar-s2-driver/ros2-slamtec-rplidar-driver-s2/slamtec-rplidar--s2.jpg" alt="ros2-slamtec-rplidar-driver-s2" width="40"/> | [ros2-slamtec-rplidar-driver-s2](components/ros2-slamtec-rplidar-driver-s2)
 <img src="./components/tracer-mobile-driver/tracer-mobile-driver/tracer-mobile-driver.png" alt="tracer-mobile-driver" width="40"/> | [tracer-mobile-driver](components/tracer-mobile-driver)
 <img src="./components/tracer-mobile-driver-mini/tracer-mobile-driver-mini/tracer-mobile-driver.png" alt="tracer-mobile-driver-mini" width="40"/> | [tracer-mobile-driver-mini](components/tracer-mobile-driver-mini)
+
 
 # Contribution
  If you wish to contribute by adding a new component to our library as part of our ongoing competition, please follow the instructions below:
