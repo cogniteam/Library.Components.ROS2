@@ -22,7 +22,7 @@
     "hostIpAddress": "",
     "variables": [],
     "dockerInfo": {
-      "image": "cognimbus/lynx",
+      "image": "cognimbus/lynx:eloquent",
       "containerId": "",
       "imageSize": 0,
       "commands": [
