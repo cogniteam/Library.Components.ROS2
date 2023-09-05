@@ -37,7 +37,7 @@ def generate_table():
     repos = os.listdir(components_dir_path)
 
     non_components = ['generate_readme.py', 'generate_table.py', 'docker_retag.py', '.git', '.gitignore', '.gitlab-ci.yml', '.filter_only_updated_items.py',
-                      'isaac-skeleton-viewer', 'README.md']
+                      'isaac-skeleton-viewer', 'README.md', 'json_retag.py']
     
     for element in non_components:
         try:
@@ -61,7 +61,7 @@ def generate_table():
                 except ValueError:
                     pass
                 
-            for dir in dirs:
+            for dir in dirs: 
                 table += f'{generate_img_src(components_dir_path, repo, dir)} | {get_repo_url(dir)}\n'
             
         f.write(table)

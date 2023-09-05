@@ -1,223 +1,223 @@
 {
-  "name": "nimbus/ros2-nav2-slam-navigation",
-  "type": "COMPONENT_TYPE_COMPONENT",
-  "className": "Ros2Component",
-  "instanceName": "",
-  "description": "This package combines the power of Nav2 and SLAM to provide accurate localization, mapping, and autonomous navigation capabilities to your robot. \nLicense:  GPL",
-  "version": {
-    "major": 1,
-    "minor": 0,
-    "patch": 7,
-    "build": ""
-  },
-  "start": "START_MODE_AUTO",
-  "environment": {
-    "name": "",
-    "ipAddress": "",
-    "state": "ENVIRONMENT_STATE_UNLOADED",
-    "message": "",
-    "progress": 0,
-    "requiredDevices": [],
-    "ports": [],
-    "hostIpAddress": "",
-    "variables": [],
-    "dockerInfo": {
-      "image": "cognimbus/nav2-slam-navigation:foxy",
-      "containerId": "",
-      "imageSize": 0,
-      "commands": [
-        "ros2",
-        "launch",
-        "nav2_bringup",
-        "nav2_slam_navigation_cogniteam.launch.py"
-      ],
-      "privileged": false,
-      "gpu": false,
-      "networkHost": false,
-      "binds": [],
-      "user": "",
-      "runtime": ""
+    "name": "nimbus/ros2-nav2-slam-navigation",
+    "type": "COMPONENT_TYPE_COMPONENT",
+    "className": "Ros2Component",
+    "instanceName": "",
+    "description": "This package combines the power of Nav2 and SLAM to provide accurate localization, mapping, and autonomous navigation capabilities to your robot. \nLicense:  GPL",
+    "version": {
+        "major": 1,
+        "minor": 0,
+        "patch": 7,
+        "build": ""
     },
-    "log": "",
-    "convertedCommands": "",
-    "onExit": "IGNORE"
-  },
-  "parameters": {
-    "parameters": [
-      {
-        "name": "ros_domain_id",
-        "description": "The ros_domain_id",
-        "Category": "Static",
-        "node": "",
-        "integerValue": "1"
-      }
-    ]
-  },
-  "state": "COMPONENT_STATE_UNLOADED",
-  "message": "",
-  "streams": {
-    "inputStreams": [
-      {
-        "name": "scan",
-        "type": "",
-        "description": "The input scan from your laser to utilize.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/scan",
-          "type": "Messages.sensor_msgs.LaserScan",
-          "qosProfile": "sensors_data"
+    "start": "START_MODE_AUTO",
+    "environment": {
+        "name": "",
+        "ipAddress": "",
+        "state": "ENVIRONMENT_STATE_UNLOADED",
+        "message": "",
+        "progress": 0,
+        "requiredDevices": [],
+        "ports": [],
+        "hostIpAddress": "",
+        "variables": [],
+        "dockerInfo": {
+            "image": "cognimbus/nav2-slam-navigation:foxy",
+            "containerId": "",
+            "imageSize": 0,
+            "commands": [
+                "ros2",
+                "launch",
+                "nav2_bringup",
+                "nav2_slam_navigation_cogniteam.launch.py"
+            ],
+            "privileged": false,
+            "gpu": false,
+            "networkHost": false,
+            "binds": [],
+            "user": "",
+            "runtime": ""
         },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "goal",
-        "type": "",
-        "description": "",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/goal_pose",
-          "type": "Messages.geometry_msgs.PoseStamped",
-          "qosProfile": "sensors_data"
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "odom",
-        "type": "",
-        "description": "The odometry of the robot based on the gyro and motor encoders.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/odom",
-          "type": "Messages.nav_msgs.Odometry",
-          "qosProfile": "sensors_data"
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "odom_base_link",
-        "type": "Nimbus.Messages.nav_msgs.Odometry",
-        "description": "A valid transform from your configured odom_frame to base_frame.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTf": {
-          "baseFrame": "odom",
-          "childFrame": "base_link",
-          "rate": 10,
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      }
-    ],
-    "outputStreams": [
-      {
-        "name": "map",
-        "type": "",
-        "description": "Occupancy grid representation of the pose-graph at map_update_interval frequency.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/map",
-          "type": "Messages.nav_msgs.OccupancyGrid",
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "local_costmap",
-        "type": "",
-        "description": "",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/local_costmap/costmap",
-          "type": "Messages.nav_msgs.OccupancyGrid",
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "plan",
-        "type": "",
-        "description": "",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/plan",
-          "type": "Messages.nav_msgs.Path",
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "nimbus_robot_pose",
-        "type": "",
-        "description": "Publishes /nimbus_robot_pose",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/nimbus_robot_pose",
-          "type": "Messages.geometry_msgs.PoseStamped",
-          "qosProfile": ""
-        },
-        "latched": true,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "robot_pose",
-        "type": "Messages.geometry_msgs.Pose",
-        "description": "TF from map to base_link, the position of the robot on the map.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTf": {
-          "baseFrame": "map",
-          "childFrame": "base_link",
-          "rate": 10,
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      },
-      {
-        "name": "cmd_vel",
-        "type": "",
-        "description": "Command velocity.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/cmd_vel",
-          "type": "Messages.geometry_msgs.Twist",
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      }
-    ]
-  },
-  "requiredDevices": [],
-  "ros": {
-    "baseFrame": "base_link",
-    "rate": 10,
-    "publishTfDevices": true,
-    "generatePort": false,
-    "rosMasterUri": "",
-    "rosIp": "",
-    "autoDetectIp": false,
-    "ros2DomainId": 1
-  },
-  "tags": {},
-  "category": "Algorithms/SLAM 2D",
-  "simulation": false,
-  "pluginFile": "",
-  "license": "BSD",
-  "id": "366f3302-9d5a-44f2-a883-2ae0dbf09101"
+        "log": "",
+        "convertedCommands": "",
+        "onExit": "IGNORE"
+    },
+    "parameters": {
+        "parameters": [
+            {
+                "name": "ros_domain_id",
+                "description": "The ros_domain_id",
+                "Category": "Static",
+                "node": "",
+                "integerValue": "1"
+            }
+        ]
+    },
+    "state": "COMPONENT_STATE_UNLOADED",
+    "message": "",
+    "streams": {
+        "inputStreams": [
+            {
+                "name": "scan",
+                "type": "",
+                "description": "The input scan from your laser to utilize.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/scan",
+                    "type": "Messages.sensor_msgs.LaserScan",
+                    "qosProfile": "sensors_data"
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "goal",
+                "type": "",
+                "description": "",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/goal_pose",
+                    "type": "Messages.geometry_msgs.PoseStamped",
+                    "qosProfile": "sensors_data"
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "odom",
+                "type": "",
+                "description": "The odometry of the robot based on the gyro and motor encoders.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/odom",
+                    "type": "Messages.nav_msgs.Odometry",
+                    "qosProfile": "sensors_data"
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "odom_base_link",
+                "type": "Nimbus.Messages.nav_msgs.Odometry",
+                "description": "A valid transform from your configured odom_frame to base_frame.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTf": {
+                    "baseFrame": "odom",
+                    "childFrame": "base_link",
+                    "rate": 10,
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ],
+        "outputStreams": [
+            {
+                "name": "map",
+                "type": "",
+                "description": "Occupancy grid representation of the pose-graph at map_update_interval frequency.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/map",
+                    "type": "Messages.nav_msgs.OccupancyGrid",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "local_costmap",
+                "type": "",
+                "description": "",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/local_costmap/costmap",
+                    "type": "Messages.nav_msgs.OccupancyGrid",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "plan",
+                "type": "",
+                "description": "",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/plan",
+                    "type": "Messages.nav_msgs.Path",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "nimbus_robot_pose",
+                "type": "",
+                "description": "Publishes /nimbus_robot_pose",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/nimbus_robot_pose",
+                    "type": "Messages.geometry_msgs.PoseStamped",
+                    "qosProfile": ""
+                },
+                "latched": true,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "robot_pose",
+                "type": "Messages.geometry_msgs.Pose",
+                "description": "TF from map to base_link, the position of the robot on the map.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTf": {
+                    "baseFrame": "map",
+                    "childFrame": "base_link",
+                    "rate": 10,
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "cmd_vel",
+                "type": "",
+                "description": "Command velocity.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/cmd_vel",
+                    "type": "Messages.geometry_msgs.Twist",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ]
+    },
+    "requiredDevices": [],
+    "ros": {
+        "baseFrame": "base_link",
+        "rate": 10,
+        "publishTfDevices": true,
+        "generatePort": false,
+        "rosMasterUri": "",
+        "rosIp": "",
+        "autoDetectIp": false,
+        "ros2DomainId": 1
+    },
+    "tags": {},
+    "category": "Algorithms/SLAM 2D",
+    "simulation": false,
+    "pluginFile": "",
+    "license": "BSD",
+    "id": "366f3302-9d5a-44f2-a883-2ae0dbf09101"
 }
