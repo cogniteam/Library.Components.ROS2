@@ -49,7 +49,7 @@ def generate_table():
 
     library_dir_path = os.path.dirname(components_dir_path)
     with open(os.path.join(library_dir_path, 'README.md'), 'w') as f:
-        table = f"# Coogniteam Component library for ROS {get_git_branch()}\n"
+        table = f"# Cogniteam Component library for ROS {get_git_branch()}\n"
         table += "This library contains open dockerized components for ROS2\n"
         table += "If you wish to use ROS check out our [ROS library](https://github.com/cogniteam/Library.Components.ROS/tree/master)\n"
         with open('ROSCon_comp.md') as comp:

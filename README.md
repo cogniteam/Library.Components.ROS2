@@ -1,4 +1,4 @@
-# Coogniteam Component library for ROS foxy
+# Cogniteam Component library for ROS foxy
 This library contains open dockerized components for ROS2
 If you wish to use ROS check out our [ROS library](https://github.com/cogniteam/Library.Components.ROS/tree/master)
 # ROSCon 2023 
