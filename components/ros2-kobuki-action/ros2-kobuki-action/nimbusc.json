@@ -22,7 +22,7 @@
     "hostIpAddress": "",
     "variables": [],
     "dockerInfo": {
-      "image": "cognimbus/ros2-kobuki-action:latest",
+      "image": "cognimbus/ros2-kobuki-action:galactic",
       "containerId": "",
       "imageSize": 0,
       "commands": [
