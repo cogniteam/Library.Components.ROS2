@@ -49,7 +49,12 @@ def generate_table():
 
     library_dir_path = os.path.dirname(components_dir_path)
     with open(os.path.join(library_dir_path, 'README.md'), 'w') as f:
-        table = f"# Components Table For ROS {get_git_branch()}\n"
+        table = f"# Cogniteam Component library for ROS {get_git_branch()}\n"
+        table += "This library contains open dockerized components for ROS2\n"
+        table += "If you wish to use ROS check out our [ROS library](https://github.com/cogniteam/Library.Components.ROS/tree/master)\n"
+        with open('ROSCon_comp.md') as comp:
+            table += comp.read() + '\n'
+        table += "# Cogniteam’s Components Table\n"
         table += "Image | Link\n--- | ---\n"
         for repo in sorted(repos):
             print(repo)
@@ -70,6 +75,9 @@ def generate_table():
                     table += f'{generate_img_src(components_dir_path, repo, dir)} | {get_repo_url(repo, dir)}\n'
             
         f.write(table)
+        f.write('\n')
+        with open('ContributedComponents.md') as comps:
+            f.write(comps.read() + '\n')
         with open(os.path.join(library_dir_path, 'instructions.md')) as instructions:
             f.write(instructions.read())
 

@@ -1,8 +1,23 @@
-# Components Table For ROS galactic
+# Cogniteam Component library for ROS galactic
+This library contains open dockerized components for ROS2
+If you wish to use ROS check out our [ROS library](https://github.com/cogniteam/Library.Components.ROS/tree/master)
+# ROSCon 2023 
+
+To participate in the contest and stand a chance to win a [Leo Rover](https://www.leorover.tech/), start by forking our library. Following this, you have two options to proceed:
+
+1. Initiate a merge request to include a folder containing your component's Dockerfile. For guidance on this, please [refer to these instructions](#option-1-add-a-folder-with-your-components-dockerfile).
+   
+2. Create a merge request to add your git repository details to the `ContributedComponents.MD` file. Detailed steps can be found [here](#option-2-add-your-git-repository-to-contributedcomponentsmd).
+# Cogniteam’s Components Table
 Image | Link
 --- | ---
 <img src="./components/realsense-camera/ros2-realsense-d435/intel-realsense-d435-driver.jpg" alt="ros2-realsense-d435" width="40"/> | [realsense-camera](components/realsense-camera)
 <img src="./components/ros2-kobuki-action/ros2-kobuki-action/nimbusc.jpg" alt="ros2-kobuki-action" width="40"/> | [ros2-kobuki-action](components/ros2-kobuki-action)
+
+# Contributed Components Table 
+This branch don't have contributed components yet
+Image | Link
+--- | ---
 # Contribution
  If you wish to contribute by adding a new component to our library as part of our ongoing competition, please follow the instructions below:
 
@@ -24,12 +39,14 @@ Before you begin, ensure you have met the following requirements:
 
 ## Adding a New Component
 
-### 1. **Prepare Your Component Structure**
+### Option 1: Add a folder with your component's Dockerfile
+
+#### 1. **Prepare Your Component Structure**
    - `comp_name`: Directory for your component
       - `docker`: Contains code and the Docker file
-      - `nimbus`: Contains the Nimbus component JSON file and image with the name nimbusc (nimbusc.json, nimbusc.jpg, etc)
+      - `img_file`: image represents the component
 
-### 2. **Create and Test Your Dockerfile**
+#### 2. **Create and Test Your Dockerfile**
    - Navigate to the cloned repository on your local machine.
    - Create a new Dockerfile with the required configurations for the ROS/ROS2 application you wish to containerize.
    - Test your Dockerfile locally with:
@@ -38,15 +55,46 @@ Before you begin, ensure you have met the following requirements:
      docker run --rm -it ros_app:<tag>
      ```
 
-### 3. **Place Your Files in the Directory Structure**
+#### 3. **Place Your Files in the Directory Structure**
    - Place the Dockerfile and code into the appropriate directory structure within `comp_name/docker`.
 
-### 4. **Commit Your Changes**
+#### 4. **Commit Your Changes**
    - After testing, commit your changes:
      ```bash
      git add .
      git commit -m "Your detailed commit message"
      ```
+### Option 2: Add your git repository to ContributedComponents.MD
+
+If you already have a git repository with a Dockerfile, simply add a link in ContributedComponents.MD and request to merge it. Make sure to add a relevant image from your git and make sure your git includes a valid Dockerfile that uses this version of ROS. 
+
+#### Step 1: Prepare Your Image and Repository URL
+
+Before adding a new row to the table, make sure you have the following:
+
+1. **Image URL**: The URL of the image that represents your component. This should be hosted inside your Git repository. You can obtain the URL by navigating to the image file in your Git repository (e.g., on GitHub) and copying the URL.
+   
+2. **Repository URL**: The URL of your Git repository where the component is hosted.
+
+#### Step 2: Add a New Row to the Table
+
+To add a new component to the table, follow these steps:
+
+1. **Open the Markdown File**: Open the markdown file where the table is located.
+
+2. **Add a New Row**: Add a new row to the table with the following format:
+
+   ```markdown
+   Image | Link
+   --- | ---
+   <img src="IMAGE_URL" alt="COMPONENT_NAME" width="40"/> | [COMPONENT_NAME](REPOSITORY_URL)
+   ```
+
+3. **Replace Placeholders**: Replace `IMAGE_URL`, `COMPONENT_NAME`, and `REPOSITORY_URL` with the actual values:
+   
+   - `IMAGE_URL`: The URL of the image you prepared in step 1.
+   - `COMPONENT_NAME`: The name of your component.
+   - `REPOSITORY_URL`: The URL of your Git repository.
 
 ## Submitting a Merge Request
 

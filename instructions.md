@@ -19,12 +19,14 @@ Before you begin, ensure you have met the following requirements:
 
 ## Adding a New Component
 
-### 1. **Prepare Your Component Structure**
+### Option 1: Add a folder with your component's Dockerfile
+
+#### 1. **Prepare Your Component Structure**
    - `comp_name`: Directory for your component
       - `docker`: Contains code and the Docker file
-      - `nimbus`: Contains the Nimbus component JSON file and image with the name nimbusc (nimbusc.json, nimbusc.jpg, etc)
+      - `img_file`: image represents the component
 
-### 2. **Create and Test Your Dockerfile**
+#### 2. **Create and Test Your Dockerfile**
    - Navigate to the cloned repository on your local machine.
    - Create a new Dockerfile with the required configurations for the ROS/ROS2 application you wish to containerize.
    - Test your Dockerfile locally with:
@@ -33,15 +35,46 @@ Before you begin, ensure you have met the following requirements:
      docker run --rm -it ros_app:<tag>
      ```
 
-### 3. **Place Your Files in the Directory Structure**
+#### 3. **Place Your Files in the Directory Structure**
    - Place the Dockerfile and code into the appropriate directory structure within `comp_name/docker`.
 
-### 4. **Commit Your Changes**
+#### 4. **Commit Your Changes**
    - After testing, commit your changes:
      ```bash
      git add .
      git commit -m "Your detailed commit message"
      ```
+### Option 2: Add your git repository to ContributedComponents.MD
+
+If you already have a git repository with a Dockerfile, simply add a link in ContributedComponents.MD and request to merge it. Make sure to add a relevant image from your git and make sure your git includes a valid Dockerfile that uses this version of ROS. 
+
+#### Step 1: Prepare Your Image and Repository URL
+
+Before adding a new row to the table, make sure you have the following:
+
+1. **Image URL**: The URL of the image that represents your component. This should be hosted inside your Git repository. You can obtain the URL by navigating to the image file in your Git repository (e.g., on GitHub) and copying the URL.
+   
+2. **Repository URL**: The URL of your Git repository where the component is hosted.
+
+#### Step 2: Add a New Row to the Table
+
+To add a new component to the table, follow these steps:
+
+1. **Open the Markdown File**: Open the markdown file where the table is located.
+
+2. **Add a New Row**: Add a new row to the table with the following format:
+
+   ```markdown
+   Image | Link
+   --- | ---
+   <img src="IMAGE_URL" alt="COMPONENT_NAME" width="40"/> | [COMPONENT_NAME](REPOSITORY_URL)
+   ```
+
+3. **Replace Placeholders**: Replace `IMAGE_URL`, `COMPONENT_NAME`, and `REPOSITORY_URL` with the actual values:
+   
+   - `IMAGE_URL`: The URL of the image you prepared in step 1.
+   - `COMPONENT_NAME`: The name of your component.
+   - `REPOSITORY_URL`: The URL of your Git repository.
 
 ## Submitting a Merge Request
 
