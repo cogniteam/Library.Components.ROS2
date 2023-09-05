@@ -1,133 +1,133 @@
 {
-  "name": "nimbus/ros2-rover-driver",
-  "type": "COMPONENT_TYPE_COMPONENT",
-  "className": "Ros2Component",
-  "instanceName": "",
-  "description": "Rover driver for communicating with a Rover Robotics Rover mini.",
-  "version": {
-    "major": 1,
-    "minor": 0,
-    "patch": 0,
-    "build": ""
-  },
-  "start": "START_MODE_AUTO",
-  "environment": {
-    "name": "",
-    "ipAddress": "",
-    "state": "ENVIRONMENT_STATE_UNLOADED",
-    "message": "",
-    "progress": 0,
-    "requiredDevices": [],
-    "ports": [],
-    "hostIpAddress": "",
-    "variables": [],
-    "dockerInfo": {
-      "image": "cognimbus/rover-mini-driver:latest",
-      "containerId": "",
-      "imageSize": 0,
-      "commands": [
-        "ros2",
-        "launch",
-        "roverrobotics_driver",
-        "mini.launch.py"
-      ],
-      "privileged": true,
-      "gpu": false,
-      "networkHost": true,
-      "binds": [
-        {
-          "source": "/etc/udev/rules.d/",
-          "target": "/etc/udev/rules.d/"
-        }
-      ],
-      "user": "",
-      "runtime": ""
+    "name": "nimbus/ros2-rover-driver",
+    "type": "COMPONENT_TYPE_COMPONENT",
+    "className": "Ros2Component",
+    "instanceName": "",
+    "description": "Rover driver for communicating with a Rover Robotics Rover mini.",
+    "version": {
+        "major": 1,
+        "minor": 0,
+        "patch": 0,
+        "build": ""
     },
-    "log": "",
-    "convertedCommands": "",
-    "onExit": "IGNORE"
-  },
-  "parameters": {
-    "parameters": []
-  },
-  "state": "COMPONENT_STATE_UNLOADED",
-  "message": "",
-  "streams": {
-    "inputStreams": [
-      {
-        "name": "cmd_vel",
-        "type": "",
-        "description": "Command velocity.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/cmd_vel",
-          "type": "Messages.geometry_msgs.Twist",
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      }
-    ],
-    "outputStreams": [
-      {
-        "name": "odom",
-        "type": "",
-        "description": "The odometry of the robot based on the gyro and motor encoders.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/odom_raw",
-          "type": "Messages.nav_msgs.Odometry",
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      }
-    ]
-  },
-  "requiredDevices": [
-    {
-      "name": "rover-mini",
-      "info": {
-        "type": "USB_PORT_TYPE_NETWORK",
-        "productId": "606f",
-        "vendorId": "1d50",
-        "revision": "",
-        "serial": "",
-        "vendorName": "",
-        "productName": "",
-        "attributes": {},
-        "ports": [],
-        "portIndex": 0,
-        "simulation": false,
-        "ip": "",
-        "id": "",
-        "internalId": ""
-      },
-      "attachedDevice": {
+    "start": "START_MODE_AUTO",
+    "environment": {
         "name": "",
-        "connected": false,
-        "id": ""
-      },
-      "mountAs": "can0",
-      "optional": true
-    }
-  ],
-  "ros": {
-    "baseFrame": "base_link",
-    "rate": 10,
-    "publishTfDevices": true,
-    "generatePort": false,
-    "rosMasterUri": "",
-    "rosIp": "",
-    "autoDetectIp": false,
-    "ros2DomainId": 0
-  },
-  "tags": {},
-  "category": "Drivers/Robots",
-  "simulation": false,
-  "pluginFile": "",
-  "license": "Apache 2.0",
-  "id": "ab121952-fc46-464c-bf5e-5daf61871db1"
+        "ipAddress": "",
+        "state": "ENVIRONMENT_STATE_UNLOADED",
+        "message": "",
+        "progress": 0,
+        "requiredDevices": [],
+        "ports": [],
+        "hostIpAddress": "",
+        "variables": [],
+        "dockerInfo": {
+            "image": "cognimbus/rover-mini-driver:foxy",
+            "containerId": "",
+            "imageSize": 0,
+            "commands": [
+                "ros2",
+                "launch",
+                "roverrobotics_driver",
+                "mini.launch.py"
+            ],
+            "privileged": true,
+            "gpu": false,
+            "networkHost": true,
+            "binds": [
+                {
+                    "source": "/etc/udev/rules.d/",
+                    "target": "/etc/udev/rules.d/"
+                }
+            ],
+            "user": "",
+            "runtime": ""
+        },
+        "log": "",
+        "convertedCommands": "",
+        "onExit": "IGNORE"
+    },
+    "parameters": {
+        "parameters": []
+    },
+    "state": "COMPONENT_STATE_UNLOADED",
+    "message": "",
+    "streams": {
+        "inputStreams": [
+            {
+                "name": "cmd_vel",
+                "type": "",
+                "description": "Command velocity.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/cmd_vel",
+                    "type": "Messages.geometry_msgs.Twist",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ],
+        "outputStreams": [
+            {
+                "name": "odom",
+                "type": "",
+                "description": "The odometry of the robot based on the gyro and motor encoders.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/odom_raw",
+                    "type": "Messages.nav_msgs.Odometry",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ]
+    },
+    "requiredDevices": [
+        {
+            "name": "rover-mini",
+            "info": {
+                "type": "USB_PORT_TYPE_NETWORK",
+                "productId": "606f",
+                "vendorId": "1d50",
+                "revision": "",
+                "serial": "",
+                "vendorName": "",
+                "productName": "",
+                "attributes": {},
+                "ports": [],
+                "portIndex": 0,
+                "simulation": false,
+                "ip": "",
+                "id": "",
+                "internalId": ""
+            },
+            "attachedDevice": {
+                "name": "",
+                "connected": false,
+                "id": ""
+            },
+            "mountAs": "can0",
+            "optional": true
+        }
+    ],
+    "ros": {
+        "baseFrame": "base_link",
+        "rate": 10,
+        "publishTfDevices": true,
+        "generatePort": false,
+        "rosMasterUri": "",
+        "rosIp": "",
+        "autoDetectIp": false,
+        "ros2DomainId": 0
+    },
+    "tags": {},
+    "category": "Drivers/Robots",
+    "simulation": false,
+    "pluginFile": "",
+    "license": "Apache 2.0",
+    "id": "ab121952-fc46-464c-bf5e-5daf61871db1"
 }

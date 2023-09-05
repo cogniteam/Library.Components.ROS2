@@ -1,135 +1,135 @@
 {
-  "name": "nimbus/ros2-olei-2d-lidar",
-  "type": "COMPONENT_TYPE_COMPONENT",
-  "className": "Ros2Component",
-  "instanceName": "",
-  "description": "OLEI 2D Lidar driver in ROS2\nLicense: BSD",
-  "version": {
-    "major": 1,
-    "minor": 0,
-    "patch": 0,
-    "build": ""
-  },
-  "start": "START_MODE_AUTO",
-  "environment": {
-    "name": "",
-    "ipAddress": "",
-    "state": "ENVIRONMENT_STATE_UNLOADED",
-    "message": "",
-    "progress": 0,
-    "requiredDevices": [],
-    "ports": [],
-    "hostIpAddress": "",
-    "variables": [],
-    "dockerInfo": {
-      "image": "cognimbus/olei-lidar-driver:foxy",
-      "containerId": "",
-      "imageSize": 0,
-      "commands": [
-        "ros2",
-        "launch",
-        "ros2_ouster",
-        "ole2dv2_launch.py",
-        "laser_frame:=${laser.name}",
-        "lidar_ip:=${lidar_ip}",
-        "computer_ip:=${computer_ip}",
-        "lidar_port:=${lidar_port}",
-        "imu_port:=${imu_port}"
-      ],
-      "privileged": false,
-      "gpu": false,
-      "networkHost": true,
-      "binds": []
+    "name": "nimbus/ros2-olei-2d-lidar",
+    "type": "COMPONENT_TYPE_COMPONENT",
+    "className": "Ros2Component",
+    "instanceName": "",
+    "description": "OLEI 2D Lidar driver in ROS2\nLicense: BSD",
+    "version": {
+        "major": 1,
+        "minor": 0,
+        "patch": 0,
+        "build": ""
     },
-    "log": "",
-    "convertedCommands": "",
-    "onExit": "IGNORE"
-  },
-  "parameters": {
-    "parameters": [
-      {
-        "name": "lidar_ip",
-        "description": "lidar ip",
-        "Category": "Static",
-        "node": "",
-        "stringValue": "192.168.1.100"
-      },
-      {
-        "name": "computer_ip",
-        "description": "computer ip",
-        "Category": "Static",
-        "node": "",
-        "stringValue": "192.168.1.10"
-      },
-      {
-        "name": "lidar_port",
-        "description": "lidar port",
-        "Category": "Static",
-        "node": "",
-        "stringValue": "2368"
-      },
-      {
-        "name": "imu_port",
-        "description": "imu port",
-        "Category": "Static",
-        "node": "",
-        "stringValue": "9866"
-      }
-    ]
-  },
-  "state": "COMPONENT_STATE_UNLOADED",
-  "message": "",
-  "streams": {
-    "inputStreams": [],
-    "outputStreams": [
-      {
-        "name": "scan",
-        "type": "",
-        "description": "Scan data from the rplidar-a2.",
-        "streamMode": "STREAM_MODE_TOPIC",
-        "rosTopic": {
-          "topic": "/scan",
-          "type": "Messages.sensor_msgs.LaserScan",
-          "qosProfile": ""
-        },
-        "latched": false,
-        "maxRate": 0,
-        "expectedRate": 0
-      }
-    ]
-  },
-  "requiredDevices": [
-    {
-      "name": "laser",
-      "info": {
-        "type": "USB_PORT_TYPE_NETWORK",
-        "productId": "",
-        "vendorId": "",
-        "revision": "",
-        "serial": "",
-        "vendorName": "",
-        "productName": "",
-        "attributes": {},
-        "ports": [],
-        "portIndex": 0,
-        "simulation": false,
-        "ip": "",
-        "id": "",
-        "internalId": ""
-      },
-      "attachedDevice": {
+    "start": "START_MODE_AUTO",
+    "environment": {
         "name": "",
-        "connected": false,
-        "id": ""
-      },
-      "mountAs": "et0",
-      "optional": true
-    }
-  ],
-  "tags": {},
-  "category": "Drivers/2D Lidars",
-  "simulation": false,
-  "pluginFile": "",
-  "license": "BSD",
-  "id": ""
+        "ipAddress": "",
+        "state": "ENVIRONMENT_STATE_UNLOADED",
+        "message": "",
+        "progress": 0,
+        "requiredDevices": [],
+        "ports": [],
+        "hostIpAddress": "",
+        "variables": [],
+        "dockerInfo": {
+            "image": "cognimbus/olei-lidar-driver:foxy",
+            "containerId": "",
+            "imageSize": 0,
+            "commands": [
+                "ros2",
+                "launch",
+                "ros2_ouster",
+                "ole2dv2_launch.py",
+                "laser_frame:=${laser.name}",
+                "lidar_ip:=${lidar_ip}",
+                "computer_ip:=${computer_ip}",
+                "lidar_port:=${lidar_port}",
+                "imu_port:=${imu_port}"
+            ],
+            "privileged": false,
+            "gpu": false,
+            "networkHost": true,
+            "binds": []
+        },
+        "log": "",
+        "convertedCommands": "",
+        "onExit": "IGNORE"
+    },
+    "parameters": {
+        "parameters": [
+            {
+                "name": "lidar_ip",
+                "description": "lidar ip",
+                "Category": "Static",
+                "node": "",
+                "stringValue": "192.168.1.100"
+            },
+            {
+                "name": "computer_ip",
+                "description": "computer ip",
+                "Category": "Static",
+                "node": "",
+                "stringValue": "192.168.1.10"
+            },
+            {
+                "name": "lidar_port",
+                "description": "lidar port",
+                "Category": "Static",
+                "node": "",
+                "stringValue": "2368"
+            },
+            {
+                "name": "imu_port",
+                "description": "imu port",
+                "Category": "Static",
+                "node": "",
+                "stringValue": "9866"
+            }
+        ]
+    },
+    "state": "COMPONENT_STATE_UNLOADED",
+    "message": "",
+    "streams": {
+        "inputStreams": [],
+        "outputStreams": [
+            {
+                "name": "scan",
+                "type": "",
+                "description": "Scan data from the rplidar-a2.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/scan",
+                    "type": "Messages.sensor_msgs.LaserScan",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ]
+    },
+    "requiredDevices": [
+        {
+            "name": "laser",
+            "info": {
+                "type": "USB_PORT_TYPE_NETWORK",
+                "productId": "",
+                "vendorId": "",
+                "revision": "",
+                "serial": "",
+                "vendorName": "",
+                "productName": "",
+                "attributes": {},
+                "ports": [],
+                "portIndex": 0,
+                "simulation": false,
+                "ip": "",
+                "id": "",
+                "internalId": ""
+            },
+            "attachedDevice": {
+                "name": "",
+                "connected": false,
+                "id": ""
+            },
+            "mountAs": "et0",
+            "optional": true
+        }
+    ],
+    "tags": {},
+    "category": "Drivers/2D Lidars",
+    "simulation": false,
+    "pluginFile": "",
+    "license": "BSD",
+    "id": ""
 }

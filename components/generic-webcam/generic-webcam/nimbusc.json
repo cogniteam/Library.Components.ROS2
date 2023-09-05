@@ -1,0 +1,160 @@
+{
+    "name": "nimbus/ros2-generic-webcam",
+    "type": "COMPONENT_TYPE_COMPONENT",
+    "className": "Ros2Component",
+    "instanceName": "",
+    "description": "Generic webcam driver in ROS2\nLicense: BSD",
+    "start": "START_MODE_AUTO",
+    "environment": {
+        "name": "The usb_cam_node interfaces with standard USB cameras\nLicense: BSD",
+        "ipAddress": "",
+        "state": "ENVIRONMENT_STATE_UNLOADED",
+        "message": "",
+        "progress": 0,
+        "requiredDevices": [],
+        "ports": [],
+        "hostIpAddress": "",
+        "variables": [],
+        "dockerInfo": {
+            "image": "cognimbus/ros2-usb-cam:foxy",
+            "containerId": "",
+            "imageSize": 0,
+            "commands": [
+                "ros2",
+                "run",
+                "usb_cam",
+                "usb_cam_node_exe",
+                "--ros-args",
+                "-p",
+                "image_width:=${image_width}",
+                "-p",
+                "image_height:=${image_height}",
+                "-p",
+                "framerate:=${framerate}",
+                "-p",
+                "video_device:=${video_device}",
+                "-p",
+                "pixel_format:=${pixel_format}",
+                "-p",
+                "frame_id:=${frame_id}"
+            ],
+            "privileged": true,
+            "gpu": false,
+            "networkHost": false,
+            "binds": []
+        },
+        "log": "",
+        "convertedCommands": "",
+        "onExit": "IGNORE"
+    },
+    "parameters": {
+        "parameters": [
+            {
+                "name": "image_width",
+                "description": "Image width.",
+                "Category": "Static",
+                "node": "",
+                "integerValue": "640"
+            },
+            {
+                "name": "image_height",
+                "description": "Image height.",
+                "Category": "Static",
+                "node": "",
+                "integerValue": "480"
+            },
+            {
+                "name": "framerate",
+                "description": "Frames per second.",
+                "Category": "Static",
+                "node": "",
+                "doubleValue": 30.0
+            },
+            {
+                "name": "pixel_format",
+                "description": "Pixel format of the image",
+                "Category": "Static",
+                "node": "",
+                "stringValue": "yuyv"
+            },
+            {
+                "name": "video_device",
+                "description": "The serial port of the usb camera, defaults to /dev/video0.",
+                "Category": "Static",
+                "node": "",
+                "stringValue": "/dev/video0"
+            },
+            {
+                "name": "frame_id",
+                "description": "Transform frame_id of the camera, defaults to 'camera'.",
+                "Category": "Static",
+                "node": "",
+                "stringValue": "camera"
+            }
+        ]
+    },
+    "state": "COMPONENT_STATE_UNLOADED",
+    "message": "",
+    "streams": {
+        "inputStreams": [],
+        "outputStreams": [
+            {
+                "name": "image_compressed",
+                "type": "",
+                "description": "Compressed raw image stream from the camera.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/image_raw/compressed",
+                    "type": "Messages.sensor_msgs.CompressedImage",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "image_raw",
+                "type": "",
+                "description": "Raw image stream from the camera.",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/image_raw",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ]
+    },
+    "requiredDevices": [
+        {
+            "name": "camera",
+            "info": {
+                "type": "USB_PORT_TYPE_CAMERA",
+                "productId": "",
+                "vendorId": "",
+                "revision": "",
+                "serial": "",
+                "vendorName": "",
+                "productName": "",
+                "attributes": {},
+                "ports": [],
+                "portIndex": 0,
+                "simulation": false,
+                "ip": "",
+                "id": "",
+                "internalId": ""
+            },
+            "mountAs": "/dev/video0",
+            "optional": false
+        }
+    ],
+    "tags": {},
+    "category": "Drivers/RGB Cameras",
+    "simulation": false,
+    "pluginFile": "",
+    "license": "BSD",
+    "id": ""
+}

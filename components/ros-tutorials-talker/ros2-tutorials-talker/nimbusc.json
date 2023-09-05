@@ -6,71 +6,71 @@
     "description": "The generic talker from the ros2 tutorials\nLicense: BSD",
     "start": "START_MODE_AUTO",
     "environment": {
-      "name": "",
-      "ipAddress": "",
-      "state": "ENVIRONMENT_STATE_UNLOADED",
-      "message": "",
-      "progress": 0,
-      "requiredDevices": [],
-      "ports": [],
-      "hostIpAddress": "",
-      "variables": [],
-      "dockerInfo": {
-        "image": "cognimbus/ros2-tutorials-talker",
-        "containerId": "",
-        "imageSize": 0,
-        "commands": [
-          "ros2",
-          "run",
-          "talker",
-          "talker_node"
-        ],
-        "privileged": false,
-        "gpu": false,
-        "networkHost": true,
-        "binds": []
-      },
-      "log": "",
-      "convertedCommands": "",
-      "onExit": "IGNORE"
+        "name": "",
+        "ipAddress": "",
+        "state": "ENVIRONMENT_STATE_UNLOADED",
+        "message": "",
+        "progress": 0,
+        "requiredDevices": [],
+        "ports": [],
+        "hostIpAddress": "",
+        "variables": [],
+        "dockerInfo": {
+            "image": "cognimbus/ros2-tutorials-talker:foxy",
+            "containerId": "",
+            "imageSize": 0,
+            "commands": [
+                "ros2",
+                "run",
+                "talker",
+                "talker_node"
+            ],
+            "privileged": false,
+            "gpu": false,
+            "networkHost": true,
+            "binds": []
+        },
+        "log": "",
+        "convertedCommands": "",
+        "onExit": "IGNORE"
     },
     "parameters": {
-      "parameters": []
+        "parameters": []
     },
     "state": "COMPONENT_STATE_UNLOADED",
     "message": "",
     "streams": {
-      "inputStreams": [],
-      "outputStreams": [
-        {
-          "name": "message",
-          "type": "",
-          "description": "",
-          "streamMode": "STREAM_MODE_TOPIC",
-          "rosTopic": {
-            "topic": "/chatter",
-            "type": "Messages.std_msgs.String",
-            "qosProfile": ""
-          },
-          "latched": false,
-          "maxRate": 0,
-          "expectedRate": 0
-        }
-      ]
+        "inputStreams": [],
+        "outputStreams": [
+            {
+                "name": "message",
+                "type": "",
+                "description": "",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/chatter",
+                    "type": "Messages.std_msgs.String",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ]
     },
     "requiredDevices": [],
     "ros": {
-      "baseFrame": "base_link",
-      "rate": 10,
-      "publishTfDevices": true,
-      "generatePort": false,
-      "rosMasterUri": "",
-      "rosIp": "",
-      "autoDetectIp": false
+        "baseFrame": "base_link",
+        "rate": 10,
+        "publishTfDevices": true,
+        "generatePort": false,
+        "rosMasterUri": "",
+        "rosIp": "",
+        "autoDetectIp": false
     },
     "tags": {},
     "category": "Algorithms/Test",
     "simulation": false,
     "pluginFile": "",
     "license": "BSD"
-  }
+}
