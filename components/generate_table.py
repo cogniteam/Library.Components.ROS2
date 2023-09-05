@@ -18,8 +18,10 @@ def get_git_branch():
         return None
 
 
-def get_repo_url(repo_name):
-    return f"[{repo_name}]({CONTAINING_DIR}/{repo_name})"
+def get_repo_url(repo_name, subdir=None):
+    if not subdir:
+        return f"[{repo_name}]({CONTAINING_DIR}/{repo_name})"
+    return f"[{subdir}]({CONTAINING_DIR}/{repo_name})"
 
 # This method generates a link to the repo image
 def generate_img_src(dir_path, repo_name, dir_name):
@@ -60,9 +62,12 @@ def generate_table():
                     dirs.remove(file_name)
                 except ValueError:
                     pass
-                
-            for dir in dirs: 
-                table += f'{generate_img_src(components_dir_path, repo, dir)} | {get_repo_url(dir)}\n'
+
+            if len(dirs) == 1:
+                table += f'{generate_img_src(components_dir_path, repo, dirs[0])} | {get_repo_url(repo)}\n'    
+            else:
+                for dir in dirs:
+                    table += f'{generate_img_src(components_dir_path, repo, dir)} | {get_repo_url(repo, dir)}\n'
             
         f.write(table)
         with open(os.path.join(library_dir_path, 'instructions.md')) as instructions:
