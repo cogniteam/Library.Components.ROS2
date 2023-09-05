@@ -1,25 +1,3 @@
-# Cogniteam Component library for ROS eloquent
-This library contains open dockerized components for ROS2
-If you wish to use ROS check out our [ROS library](https://github.com/cogniteam/Library.Components.ROS/tree/master)
-# ROSCon 2023 
-
-To participate in the contest and stand a chance to win a [Leo Rover](https://www.leorover.tech/), start by forking our library. Following this, you have two options to proceed:
-
-1. Initiate a merge request to include a folder containing your component's Dockerfile. For guidance on this, please [refer to these instructions](#option-1-add-a-folder-with-your-components-dockerfile).
-   
-2. Create a merge request to add your git repository details to the `ContributedComponents.MD` file. Detailed steps can be found [here](#option-2-add-your-git-repository-to-contributedcomponentsmd).
-# Cogniteam’s Components Table
-Image | Link
---- | ---
-<img src="./components/lynx/lynx-gps-localization/lynx.png" alt="lynx-gps-localization" width="40"/> | [lynx-gps-localization](components/lynx)
-<img src="./components/lynx/lynx-navigation/lynx.png" alt="lynx-navigation" width="40"/> | [lynx-navigation](components/lynx)
-<img src="./components/lynx/ros2-lynx-driver/lynx.png" alt="ros2-lynx-driver" width="40"/> | [ros2-lynx-driver](components/lynx)
-<img src="./components/slam-toolbox/ros2-slam-toolbox-mapping/nimbusc.jpeg" alt="ros2-slam-toolbox-mapping" width="40"/> | [slam-toolbox](components/slam-toolbox)
-
-# Contributed Components Table 
-This branch don't have contributed components yet
-Image | Link
---- | ---
 # Contribution
  If you wish to contribute by adding a new component to our library as part of our ongoing competition, please follow the instructions below:
 
