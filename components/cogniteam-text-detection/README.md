@@ -12,7 +12,7 @@
 
 # Example usage
 ```
-docker run -it --network=host cognimbus/cogniteam-text-detection:latest ros2 launch cogniteam-text-detection cogniteam-text-detection.launch.py model:=src/cogniteam-text-detection/resource/frozen_east_text_detection.pb width:=640 height:=480 thr:=0.5 nms:=0.4 device:=cpu
+docker run -it --network=host cognimbus/cogniteam-text-detection:foxy ros2 launch cogniteam-text-detection cogniteam-text-detection.launch.py model:=src/cogniteam-text-detection/resource/frozen_east_text_detection.pb width:=640 height:=480 thr:=0.5 nms:=0.4 device:=cpu
 ```
 
 # Subscribers

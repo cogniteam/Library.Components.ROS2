@@ -12,7 +12,7 @@
 
 # Example usage
 ```
-docker run -it --network=host --privileged -v /etc/udev/rules.d/:/etc/udev/rules.d/ cognimbus/rover-mini-driver:latest ros2 launch roverrobotics_driver mini.launch.py
+docker run -it --network=host --privileged -v /etc/udev/rules.d/:/etc/udev/rules.d/ cognimbus/rover-mini-driver:foxy ros2 launch roverrobotics_driver mini.launch.py
 ```
 
 # Subscribers

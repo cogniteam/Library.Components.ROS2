@@ -13,7 +13,7 @@ License:  GPL
 
 # Example usage
 ```
-docker run -it --network=host --privileged -v /lib/modules/:/lib/modules/ cognimbus/tracer-mobile-driver:latest ros2 launch tracer_base tracer_mini_base.launch.py
+docker run -it --network=host --privileged -v /lib/modules/:/lib/modules/ cognimbus/tracer-mobile-driver:foxy ros2 launch tracer_base tracer_mini_base.launch.py
 ```
 
 # Subscribers

@@ -1,6 +1,6 @@
-# Ros2-Leg-Detector
+# Leg-Detector
 
-<img src="./ros2-leg-detector/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="ros2-leg-detector" width="400"/>
+<img src="./leg-detector/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="leg-detector" width="400"/>
 
 * Dockerhub image https://hub.docker.com/r/cognimbus/ros2-legs-detector
 * Supported architectures <b>amd64/arm64/unknown/unknown</b>
@@ -13,7 +13,7 @@ License: LGPL
 
 # Example usage
 ```
-docker run -it --network=host cognimbus/ros2-legs-detector:latest ros2 launch leg_detector cogniteam_leg_detector.py
+docker run -it --network=host cognimbus/ros2-legs-detector:foxy ros2 launch leg_detector cogniteam_leg_detector.py
 ```
 
 # Subscribers

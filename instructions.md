@@ -80,7 +80,7 @@ To add a new component to the table, follow these steps:
 
 1. **Push Your Changes**: Push to your forked repository:
    ```bash
-   git push origin master
+   git push origin <ros-distro>
    ```
 2. **Create a Pull Request**: Navigate to your forked repository's GitHub page, click 'Pull request', and write a detailed comment.
 3. **Submit**: Click 'Submit pull request'.
