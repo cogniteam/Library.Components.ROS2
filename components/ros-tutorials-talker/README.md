@@ -1,6 +1,6 @@
 # Ros2-Tutorials-Talker
 
-<img src="./ros2-tutorials-talker/Cogniteam_CMYK_Social_white_on_aubergine.jpg" alt="ros2-tutorials-talker" width="400"/>
+<img src="./ros2-tutorials-talker/Cogniteam.jpg" alt="ros2-tutorials-talker" width="400"/>
 
 * Dockerhub image https://hub.docker.com/r/cognimbus/ros2-tutorials-talker
 * Supported architectures <b>arm64/amd64</b>
@@ -13,7 +13,7 @@ License: BSD
 
 # Example usage
 ```
-docker run -it --network=host cognimbus/ros2-tutorials-talker ros2 run talker talker_node
+docker run -it --network=host cognimbus/ros2-tutorials-talker:foxy ros2 run talker talker_node
 ```
 
 # Subscribers

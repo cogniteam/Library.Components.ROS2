@@ -13,7 +13,7 @@ License: BSD
 
 # Example usage
 ```
-docker run -it --network=host cognimbus/ros2-slamtec-rplidar-a2 ros2 launch rplidar_ros rplidar.launch.py frame_id:=laser serial_baudrate:=115200
+docker run -it --network=host cognimbus/ros2-slamtec-rplidar-a2:foxy ros2 launch rplidar_ros rplidar.launch.py frame_id:=laser serial_baudrate:=115200
 ```
 
 # Subscribers
