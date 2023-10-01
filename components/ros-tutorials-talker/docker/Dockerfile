@@ -1,4 +1,4 @@
-FROM ros:foxy
+FROM ros:humble
 
 
 # USE BASH
@@ -13,10 +13,10 @@ COPY ./talker /talker_ws/src/talker
  
 WORKDIR /talker_ws
 
-RUN apt-get install ros-foxy-std-msgs -y && \
+RUN apt-get install ros-humble-std-msgs -y && \
     rm /var/lib/apt/lists/* -rf
 
-RUN . /opt/ros/foxy/setup.sh && colcon build
+RUN . /opt/ros/humble/setup.sh && colcon build
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

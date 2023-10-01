@@ -1,4 +1,4 @@
-FROM ros:foxy
+FROM ros:humble
 
 # USE BASH
 SHELL ["/bin/bash", "-c"]
@@ -14,11 +14,11 @@ COPY ./usb_cam /ros2_usb_camera_ws/src
 
 WORKDIR /ros2_usb_camera_ws
 
-#RUN apt-get install ros-foxy-usb-cam -y 
+#RUN apt-get install ros-humble-usb-cam -y 
 
 RUN apt-get update && rosdep install --from-paths src --ignore-src -y
 
-RUN . /opt/ros/foxy/setup.sh && colcon build
+RUN . /opt/ros/humble/setup.sh && colcon build
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
