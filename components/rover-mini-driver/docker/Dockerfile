@@ -1,14 +1,14 @@
-FROM ros:foxy
+FROM ros:humble
 
 SHELL ["/bin/bash", "-c"]
 
 # RUN LINE BELOW TO REMOVE debconf ERRORS (MUST RUN BEFORE ANY apt-get CALLS)
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update && apt-get upgrade -y && apt-get -y install python3-pip && apt-get install -y --no-install-recommends apt-utils && apt-get install -y ros-foxy-joy
+RUN apt-get update && apt-get upgrade -y && apt-get -y install python3-pip && apt-get install -y --no-install-recommends apt-utils && apt-get install -y ros-humble-joy
 
 # Rover tools
-RUN apt install ros-foxy-desktop python3-argcomplete -y
+RUN apt install ros-humble-desktop python3-argcomplete -y
 
 RUN apt-get install python3-pip -y
 RUN apt-get install screen -y
@@ -31,7 +31,7 @@ RUN apt install python3-colcon-common-extensions -y
 # Cloning this repository into your workspace
 RUN mkdir -p ~/rover_driver_ws/src
 WORKDIR /root/rover_driver_ws/src
-RUN git clone https://github.com/RoverRobotics/roverrobotics_ros2.git -b ros2-foxy-driver
+RUN git clone https://github.com/RoverRobotics/roverrobotics_ros2.git -b humble
 
 
 # Install shared library
@@ -48,7 +48,7 @@ WORKDIR /root/rover_driver_ws
 #RUN rosdep install -i --from-path src --ignore-src
 RUN cd src/roverrobotics_ros2/roverrobotics_driver/config/ && rm -r mini_config.yaml 
 COPY mini_config.yaml /root/rover_driver_ws/src/roverrobotics_ros2/roverrobotics_driver/config/mini_config.yaml
-RUN . /opt/ros/foxy/setup.sh && colcon build
+RUN . /opt/ros/humble/setup.sh && colcon build
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
