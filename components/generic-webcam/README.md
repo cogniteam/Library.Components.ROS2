@@ -4,7 +4,7 @@
 
 * Dockerhub image https://hub.docker.com/r/cognimbus/ros2-usb-cam
 * Supported architectures <b>arm64/amd64</b>
-* ROS version <b>foxy
+* ROS version <b>humble
 </b>
 
 # Short description

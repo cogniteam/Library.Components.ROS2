@@ -4,7 +4,7 @@
 
 * Dockerhub image https://hub.docker.com/r/cognimbus/slamtec-rplidar-driver-ros2
 * Supported architectures <b>amd64/arm64</b>
-* ROS version <b>foxy
+* ROS version <b>humble
 </b>
 
 # Short description
