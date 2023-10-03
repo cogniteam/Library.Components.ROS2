@@ -1,0 +1,274 @@
+{
+    "name": "cogniteam/ydlidar-tg30",
+    "type": "COMPONENT_TYPE_COMPONENT",
+    "className": "Ros2Component",
+    "instanceName": "",
+    "description": "ydlidar driver for ros2",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "patch": 2,
+      "build": ""
+    },
+    "start": "START_MODE_AUTO",
+    "environment": {
+      "name": "",
+      "ipAddress": "",
+      "state": "ENVIRONMENT_STATE_UNLOADED",
+      "message": "",
+      "progress": 0,
+      "requiredDevices": [],
+      "ports": [],
+      "hostIpAddress": "",
+      "variables": [],
+      "dockerInfo": {
+        "image": "cognimbus/ros2-ydlidar-driver:humble",
+        "containerId": "",
+        "imageSize": 0,
+        "commands": [
+            "ros2",
+            "launch",
+            "ydlidar_ros2_driver",  
+            "ydlidar_launch.py",
+            "port:=${port}",
+            "frame_id:=${laser.name}",
+            "baudrate:=${baudrate}",
+            "lidar_type:=${lidar_type}",
+            "device_type:=${device_type}",
+            "sample_rate:=${sample_rate}",
+            "abnormal_check_count:=${abnormal_check_count}",
+            "fixed_resolution:=${fixed_resolution}",
+            "reversion:=${reversion}",
+            "inverted:=${inverted}",
+            "auto_reconnect:=${auto_reconnect}",
+            "isSingleChannel:=${isSingleChannel}",
+            "intensity:=${intensity}",
+            "support_motor_dtr:=${support_motor_dtr}",
+            "angle_min:=${angle_min}",
+            "angle_max:=${angle_max}",
+            "range_min:=${range_min}",
+            "range_max:=${range_max}",
+            "frequency:=${frequency}",
+            "invalid_range_is_inf:=${invalid_range_is_inf}",
+            "point_cloud_preservative:=${point_cloud_preservative}"
+        ],
+        "privileged": true,
+        "gpu": false,
+        "networkHost": false,
+        "binds": [],
+        "user": "",
+        "runtime": "",
+        "portBindings": {},
+        "mounts": []
+      },
+      "log": "",
+      "convertedCommands": "",
+      "onExit": "IGNORE"
+    },
+    "parameters": {
+        "parameters": [
+          {
+            "name": "port",
+            "description": "Set Lidar the serial port or IP address",
+            "Category": "Static",
+            "node": "",
+            "stringValue": "/dev/ydlidar"
+          },
+          {
+            "name": "ignore_array",
+            "description": "LiDAR filtering angle area",
+            "Category": "Static",
+            "node": "",
+            "stringValue": "-90, -80, 30, 40"
+          },
+          {
+            "name": "baudrate",
+            "description": "Lidar baudrate or network port.",
+            "Category": "Static",
+            "node": "",
+            "integerValue": "230400"
+          },
+          {
+            "name": "lidar_type",
+            "description": "Set lidar type",
+            "Category": "Static",
+            "node": "",
+            "integerValue": "1"
+          },
+          {
+            "name": "device_type",
+            "description": "Set device type",
+            "Category": "Static",
+            "node": "",
+            "integerValue": "0"
+          },
+          {
+            "name": "sample_rate",
+            "description": "Set Lidar Sample Rate.",
+            "Category": "Static",
+            "node": "",
+            "integerValue": "9"
+          },
+          {
+            "name": "abnormal_check_count",
+            "description": "Set the number of abnormal startup data attempts.",
+            "Category": "Static",
+            "node": "",
+            "integerValue": "4"
+          },
+          {
+            "name": "fixed_resolution",
+            "description": "Fixed angluar resolution.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "true"
+          },
+          {
+            "name": "reversion",
+            "description": "Reversion LiDAR.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "true"
+          },
+          {
+            "name": "inverted",
+            "description": "Inverted LiDAR. false -- ClockWise. true -- CounterClockWise",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "true"
+          },
+          {
+            "name": "auto_reconnect",
+            "description": "Automatically reconnect the LiDAR. true -- hot plug.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "true"
+          },
+          {
+            "name": "isSingleChannel",
+            "description": "Whether LiDAR is a single-channel.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "false"
+          },
+          {
+            "name": "intensity",
+            "description": "Whether LiDAR has intensity. true -- G2 LiDAR.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "false"
+          },
+          {
+            "name": "support_motor_dtr",
+            "description": "Whether the Lidar can be started and stopped by Serial DTR.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "false"
+          },
+          {
+            "name": "angle_min",
+            "description": "Minimum Valid Angle.",
+            "Category": "Static",
+            "node": "",
+            "doubleValue": "-180"
+          },
+          {
+            "name": "angle_max",
+            "description": "Maximum Valid Angle.",
+            "Category": "Static",
+            "node": "",
+            "doubleValue": "180"
+          },
+          {
+            "name": "range_min",
+            "description": "Minimum Valid range.",
+            "Category": "Static",
+            "node": "",
+            "doubleValue": "0.1"
+          },
+          {
+            "name": "range_max",
+            "description": "Maximum Valid range.",
+            "Category": "Static",
+            "node": "",
+            "doubleValue": "16.0"
+          },
+          {
+            "name": "frequency",
+            "description": "Set Scanning Frequency.",
+            "Category": "Static",
+            "node": "",
+            "doubleValue": "10.0"
+          },
+          {
+            "name": "invalid_range_is_inf",
+            "description": "Invalid Range is inf. true -- inf. false -- 0.0.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "false"
+          },
+          {
+            "name": "point_cloud_preservative",
+            "description": "Keep invalid range. true -- Keep. false -- Reject.",
+            "Category": "Static",
+            "node": "",
+            "booleanValue": "false"
+          }
+        ]
+    },      
+    "state": "COMPONENT_STATE_UNLOADED",
+    "message": "",
+    "streams": {
+      "inputStreams": [],
+      "outputStreams": [
+        {
+          "name": "scan",
+          "type": "",
+          "description": "Publishes scan data from the ydlidar",
+          "streamMode": "STREAM_MODE_TOPIC",
+          "rosTopic": {
+            "topic": "/scan",
+            "type": "Messages.sensor_msgs.LaserScan",
+            "qosProfile": ""
+          },
+          "latched": false,
+          "maxRate": 0,
+          "expectedRate": 0
+        }
+      ]
+    },
+    "requiredDevices": [
+      {
+        "name": "laser",
+        "info": {
+          "type": "USB_PORT_TYPE_SERIAL",
+          "productId": "ea60",
+          "vendorId": "10c4",
+          "revision": "",
+          "serial": "",
+          "vendorName": "",
+          "productName": "",
+          "attributes": {},
+          "ports": [],
+          "portIndex": 0,
+          "simulation": false,
+          "ip": "",
+          "id": "",
+          "internalId": ""
+        },
+        "attachedDevice": {
+          "name": "",
+          "connected": false,
+          "id": ""
+        },
+        "mountAs": "/dev/ttyUSB0",
+        "optional": false
+      }
+    ],
+    "tags": {},
+    "category": "Drivers/2D Lidars",
+    "simulation": false,
+    "pluginFile": "",
+    "license": "",
+    "id": "a7d7f143-8c7a-4eb9-bdc2-738d1834e63c"
+  }

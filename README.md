@@ -18,6 +18,7 @@ Image | Link
 <img src="./components/rover-mini-driver/rover-driver/rover-mini-driver.jpg" alt="rover-driver" width="40"/> | [rover-mini-driver](components/rover-mini-driver)
 <img src="./components/slamtec-rplidar-driver/ros2-slamtec-rplidar-a2/slamtec-rplidar-a2-driver.jpg" alt="ros2-slamtec-rplidar-a2" width="40"/> | [slamtec-rplidar-driver](components/slamtec-rplidar-driver)
 <img src="./components/slamtec-rplidar-s2-driver/ros2-slamtec-rplidar-driver-s2/slamtec-rplidar--s2.jpg" alt="ros2-slamtec-rplidar-driver-s2" width="40"/> | [slamtec-rplidar-s2-driver](components/slamtec-rplidar-s2-driver)
+<img src="./components/ydlidar-driver/ydlidar-driver/ydlidar-tia.png" alt="ydlidar-driver" width="40"/> | [ydlidar-driver](components/ydlidar-driver)
 
 # Contirbuted Components Table 
 Image | Link

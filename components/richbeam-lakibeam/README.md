@@ -4,7 +4,7 @@
 
 * Dockerhub image https://hub.docker.com/r/cognimbus/ros1-richbeam-lakibeam-driver
 * Supported architectures <b>arm64/amd64/unknown/unknown</b>
-* ROS version <b>foxy
+* ROS version <b>humble
 </b>
 
 # Short description
