@@ -1,0 +1,323 @@
+{
+    "name": "nimbus/ros2-ZED-wrapper",
+    "type": "COMPONENT_TYPE_COMPONENT",
+    "className": "Ros2Component",
+    "instanceName": "",
+    "description": "This package lets you use the ZED stereo cameras with ROS2",
+    "version": {
+        "major": 1,
+        "minor": 0,
+        "patch": 0,
+        "build": ""
+    },
+    "start": "START_MODE_AUTO",
+    "environment": {
+        "name": "",
+        "ipAddress": "",
+        "state": "ENVIRONMENT_STATE_UNLOADED",
+        "message": "",
+        "progress": 0,
+        "requiredDevices": [],
+        "ports": [],
+        "hostIpAddress": "",
+        "variables": [],
+        "dockerInfo": {
+            "image": "cognimbus/ros2-zed-wrapper:foxy",
+            "containerId": "",
+            "imageSize": 0,
+            "commands": [
+                "ros2",
+                "launch",
+                "zed_wrapper",
+                "zed2.launch.py"
+            ],
+            "privileged": true,
+            "gpu": false,
+            "networkHost": false,
+            "binds": [],
+            "user": "",
+            "runtime": "nvidia"
+        },
+        "log": "",
+        "convertedCommands": "",
+        "onExit": "IGNORE"
+    },
+    "parameters": {
+        "parameters": []
+    },
+    "state": "COMPONENT_STATE_UNLOADED",
+    "message": "",
+    "streams": {
+        "inputStreams": [],
+        "outputStreams": [
+            {
+                "name": "joint_states",
+                "type": "",
+                "description": "The joint_states",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/joint_states",
+                    "type": "Messages.sensor_msgs.JointState",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "confidence_map",
+                "type": "",
+                "description": "The confidence_map",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/confidence/confidence_map",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "depth_camera_info",
+                "type": "",
+                "description": "The depth_camera_info",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/depth/camera_info",
+                    "type": "Messages.sensor_msgs.CameraInfo",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "depth_registered",
+                "type": "",
+                "description": "The depth_registered",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/depth/depth_registered",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "imu",
+                "type": "",
+                "description": "The imu",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/imu/data",
+                    "type": "Messages.sensor_msgs.Imu",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "imu_raw",
+                "type": "",
+                "description": "The imu data_raw",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/imu/data_raw",
+                    "type": "Messages.sensor_msgs.Imu",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "odom",
+                "type": "",
+                "description": "The odom",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/odom",
+                    "type": "Messages.nav_msgs.Odometry",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "point_cloud",
+                "type": "",
+                "description": "The point_cloud",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/point_cloud/cloud_registered",
+                    "type": "Messages.sensor_msgs.PointCloud2",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "camera_info",
+                "type": "",
+                "description": "The camera_info",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/rgb/camera_info",
+                    "type": "Messages.sensor_msgs.CameraInfo",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "image_rect_color",
+                "type": "",
+                "description": "The image_rect_color",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/rgb/image_rect_color",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "image_rect_gray",
+                "type": "",
+                "description": "The image_rect_gray",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/rgb/image_rect_gray",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "camera_info_raw",
+                "type": "",
+                "description": "The camera_info",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/rgb_raw/camera_info ",
+                    "type": "Messages.sensor_msgs.CameraInfo",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "image_raw_color",
+                "type": "",
+                "description": "The image_rect_color",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/rgb_raw/image_raw_color",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "image_raw_gray",
+                "type": "",
+                "description": "The image_rect_gray",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/rgb_raw/image_raw_gray",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "stereo_image_rect_color",
+                "type": "",
+                "description": "The image_rect_color",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/stereo/image_rect_color",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            },
+            {
+                "name": "stereo_image_raw_color",
+                "type": "",
+                "description": "The image_rect_color",
+                "streamMode": "STREAM_MODE_TOPIC",
+                "rosTopic": {
+                    "topic": "/zed2/zed_node/stereo_raw/image_raw_color",
+                    "type": "Messages.sensor_msgs.Image",
+                    "qosProfile": ""
+                },
+                "latched": false,
+                "maxRate": 0,
+                "expectedRate": 0
+            }
+        ]
+    },
+    "requiredDevices": [
+        {
+            "name": "stereolabs-zed-camera",
+            "info": {
+                "type": "USB_PORT_TYPE_SERIAL",
+                "productId": "",
+                "vendorId": "",
+                "revision": "",
+                "serial": "",
+                "vendorName": "",
+                "productName": "",
+                "attributes": {},
+                "ports": [],
+                "portIndex": 0,
+                "simulation": false,
+                "ip": "",
+                "id": "",
+                "internalId": ""
+            },
+            "attachedDevice": {
+                "name": "",
+                "connected": false,
+                "id": ""
+            },
+            "mountAs": "",
+            "optional": true
+        }
+    ],
+    "ros": {
+        "baseFrame": "base_link",
+        "rate": 10,
+        "publishTfDevices": true,
+        "generatePort": false,
+        "rosMasterUri": "",
+        "rosIp": "",
+        "autoDetectIp": false,
+        "ros2DomainId": 0
+    },
+    "tags": {},
+    "category": "Drivers/Robots",
+    "simulation": false,
+    "pluginFile": "",
+    "license": "Apache 2.0",
+    "id": "ab121952-fc46-464c-bf5e-5daf61871db1"
+}
