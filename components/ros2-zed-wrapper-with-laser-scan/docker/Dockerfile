@@ -30,6 +30,7 @@ RUN git clone https://github.com/ros-perception/image_common.git --branch 3.0.0 
     git clone  --recursive https://github.com/stereolabs/zed-ros2-wrapper.git
     
 COPY zed2.launch.py /zed_ros2_wrapper_ws/src/zed-ros2-wrapper/zed_wrapper/launch/zed2.launch.py
+COPY zed_camera.launch.py /zed_ros2_wrapper_ws/src/zed-ros2-wrapper/zed_wrapper/launch/include/zed_camera.launch.py
 
 WORKDIR /zed_ros2_wrapper_ws/
 RUN source /opt/ros/foxy/setup.bash && \
