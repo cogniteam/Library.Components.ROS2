@@ -38,7 +38,7 @@ class YoloDetectorNode(Node):
         self.cv_bridge = CvBridge()
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.get_logger().info(f"YOLO Using device: {self.device}")
-        self.model = YOLO('/yolo_detector_ws/yolov8n.pt')  # Load the YOLOv8 model
+        self.model = YOLO('/yolo_detector_ws/yolo11x.pt')  # Load the YOLOv8 model
         self.color_map:dict = None
         self.load_color_map()
         self.get_logger().info(f"YOLO initialization complete")
